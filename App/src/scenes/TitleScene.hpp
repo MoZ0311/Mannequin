@@ -1,10 +1,10 @@
 ﻿// TitleScene class
 
-#pragma once
+# pragma once
 
-#include "../core/Constants.hpp"
+# include "../core/Config.hpp"
 
-using namespace SceneConfig;
+using namespace Config::Scene;
 
 class TitleScene : public App::Scene
 {
@@ -22,10 +22,10 @@ public:
 private:
 
 	// START ボタンの設定
-	const Rect startButton;
-	Transition startTransition;
+	const Rect m_startButton;
+	Transition m_startTransition;
 
 	// EXIT ボタンの設定
-	const Rect exitButton;
-	Transition exitTransition;
+	const Rect m_exitButton;
+	Transition m_exitTransition;
 };

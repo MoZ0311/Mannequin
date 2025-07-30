@@ -1,15 +1,18 @@
 ﻿// Application class
 
-#include "Application.hpp"
+# include "Application.hpp"
 
 Application::Application()
-	: manager{}
+	: m_sceneManager{}
 {
-	manager.add<TitleScene>(State::Title);
-	manager.add<FieldScene>(State::Field);
+	// ウィンドウサイズの設定
+	Window::Resize(Config::ScreenSize);
+
+	m_sceneManager.add<TitleScene>(State::Title);
+	m_sceneManager.add<FieldScene>(State::Field);
 
 	// 最初のシーンを設定
-	manager.init(State::Title, SceneConfig::ChangeDuration);
+	m_sceneManager.init(State::Title, Config::Scene::ChangeDuration);
 }
 
 Application::~Application()
@@ -19,5 +22,5 @@ Application::~Application()
 
 bool Application::run()
 {
-	return manager.update();
+	return m_sceneManager.update();
 }

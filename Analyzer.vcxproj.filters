@@ -153,6 +153,9 @@
     <ClCompile Include="App\src\scenes\FieldScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="App\src\player\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -821,7 +824,7 @@
     <ClInclude Include="App\src\core\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\core\Constants.hpp">
+    <ClInclude Include="App\src\core\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\scenes\TitleScene.hpp">
@@ -830,7 +833,10 @@
     <ClInclude Include="App\src\scenes\FieldScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\util\Assets.hpp">
+    <ClInclude Include="App\src\player\Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\player\PlayerInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

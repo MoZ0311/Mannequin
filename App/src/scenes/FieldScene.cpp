@@ -1,37 +1,55 @@
 ﻿// FieldScene class
 
-#include "FieldScene.hpp"
+# include "FieldScene.hpp"
 
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
-	, renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
-	, cam{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } }
+	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
+	, m_camera{ m_renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } }
 {
 	initLighting();
+
+	// シングルトン生成
+	Player::Init();
+}
+
+FieldScene::~FieldScene()
+{
+	// シングルトン破棄
+	Player::Release();
 }
 
 void FieldScene::update()
 {
-	cam.update(2.0);
+	double deltaTime = Scene::DeltaTime();
+	m_camera.setView(m_camera.getEyePosition(), Player::GetInstance()->GetPlayerPosition());
+	Player::GetInstance()->update(deltaTime);
+
+	if (PlayerInput::KeyMenu())
+	{
+		Print << U"Menu";
+	}
 }
 
 void FieldScene::draw() const
 {
-	Graphics3D::SetCameraTransform(cam);
+	Graphics3D::SetCameraTransform(m_camera);
 
 	// 3D描画
 	{
-		const ScopedRenderTarget3D target{ renderTexture.clear(SceneConfig::Field::BackgroundColor.removeSRGBCurve()) };
+		const ScopedRenderTarget3D target{ m_renderTexture.clear(Field::BackgroundColor.removeSRGBCurve()) };
 
-		Plane{ 64 }.draw(TextureAsset(U"UV"));
+		Plane{ 64 }.draw(TextureAsset(Assets::UV));
 		Box{ -8, 2, 0, 4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+
+		Player::GetInstance()->draw();
 	}
 
 	// 2Dに転送
 	{
 		Graphics3D::Flush();
-		renderTexture.resolve();
-		Shader::LinearToScreen(renderTexture);
+		m_renderTexture.resolve();
+		Shader::LinearToScreen(m_renderTexture);
 	}
 }
 

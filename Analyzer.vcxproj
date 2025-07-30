@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App\src\core\Application.cpp" />
+    <ClCompile Include="App\src\player\Player.cpp" />
     <ClCompile Include="App\src\scenes\FieldScene.cpp" />
     <ClCompile Include="App\src\scenes\TitleScene.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -329,10 +330,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\src\core\Application.hpp" />
-    <ClInclude Include="App\src\core\Constants.hpp" />
+    <ClInclude Include="App\src\core\Config.hpp" />
+    <ClInclude Include="App\src\player\Player.hpp" />
+    <ClInclude Include="App\src\player\PlayerInput.hpp" />
     <ClInclude Include="App\src\scenes\FieldScene.hpp" />
     <ClInclude Include="App\src\scenes\TitleScene.hpp" />
-    <ClInclude Include="App\src\util\Assets.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

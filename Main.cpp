@@ -1,10 +1,8 @@
-﻿#include "App/src/core/Application.hpp"
-#include "App/src/util/Assets.hpp"
+﻿# include "App/src/core/Application.hpp"
 
 void Main()
 {
 	Assets::Register();
-	Window::Resize(Config::ScreenSize);
 	Application app{};
 
 	while (System::Update())

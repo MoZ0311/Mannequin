@@ -1,10 +1,11 @@
 ﻿// FieldScene class
 
-#pragma once
+# pragma once
 
-#include "../core/Constants.hpp"
+# include "../core/Config.hpp"
+# include "../player/Player.hpp"
 
-using namespace SceneConfig;
+using namespace Config::Scene;
 
 class FieldScene : public App::Scene
 {
@@ -12,6 +13,9 @@ public:
 
 	// コンストラクタ
 	FieldScene(const InitData& init);
+
+	// デストラクタ
+	~FieldScene();
 
 	// 更新処理
 	void update() override;
@@ -25,8 +29,8 @@ private:
 	void initLighting() const;
 
 	// レンダーテクスチャ
-	const MSRenderTexture renderTexture;
+	const MSRenderTexture m_renderTexture;
 
 	// カメラ
-	DebugCamera3D cam;
+	BasicCamera3D m_camera;
 };

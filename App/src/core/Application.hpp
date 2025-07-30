@@ -1,9 +1,9 @@
 ﻿// Application class
 
-#pragma once
+# pragma once
 
-#include "../scenes/TitleScene.hpp"
-#include "../scenes/FieldScene.hpp"
+# include "../scenes/TitleScene.hpp"
+# include "../scenes/FieldScene.hpp"
 
 class Application
 {
@@ -21,5 +21,5 @@ public:
 private:
 
 	// シーンマネージャー
-	SceneConfig::App manager;
+	Config::Scene::App m_sceneManager;
 };
