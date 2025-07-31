@@ -4,6 +4,7 @@
 
 # include "../core/Config.hpp"
 # include "../player/Player.hpp"
+# include "../player/CameraController.hpp"
 
 using namespace Config::Scene;
 
@@ -13,9 +14,6 @@ public:
 
 	// コンストラクタ
 	FieldScene(const InitData& init);
-
-	// デストラクタ
-	~FieldScene();
 
 	// 更新処理
 	void update() override;
@@ -33,4 +31,9 @@ private:
 
 	// カメラ
 	BasicCamera3D m_camera;
+
+	// カメラ操作クラス
+	CameraController m_cameraController;
+
+	Player& m_player;
 };

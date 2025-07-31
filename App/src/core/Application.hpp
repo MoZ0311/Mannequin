@@ -12,9 +12,6 @@ public:
 	// コンストラクタ
 	Application();
 
-	// デストラクタ
-	~Application();
-
 	// アプリケーション実行
 	bool run();
 

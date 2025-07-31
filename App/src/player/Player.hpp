@@ -8,19 +8,15 @@ class Player
 {
 public:
 
-	// インスタンスの作成
-	static void Init();
-
-	// インスタンスの解放
-	static void Release();
+	// インスタンスの作成 / 取得
+	static Player& GetInstance();
 
 	// 更新処理
-	void update(double& deltaTime);
+	void update(const double& deltaTime, const Vec3& forwardVector);
 
 	// 描画処理
 	void draw() const;
 
-	static Player* GetInstance();
 	Vec3 GetPlayerPosition() const;
 
 private:
@@ -28,13 +24,11 @@ private:
 	// コンストラクタ
 	Player();
 
-	// デストラクタ
-	~Player();
-
-	static Player* instance;
+	// シングルトン
+	static std::unique_ptr<Player> instance;
 
 	// 移動速度
-	double m_moveSpeed;
+	Vec3 m_velocity;
 
 	Sphere m_sphere;
 };

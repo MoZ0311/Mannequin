@@ -6,29 +6,24 @@ FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_camera{ m_renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } }
+	, m_cameraController{ m_camera }
+	, m_player{ Player::GetInstance() }
 {
 	initLighting();
-
-	// シングルトン生成
-	Player::Init();
-}
-
-FieldScene::~FieldScene()
-{
-	// シングルトン破棄
-	Player::Release();
 }
 
 void FieldScene::update()
 {
-	double deltaTime = Scene::DeltaTime();
-	m_camera.setView(m_camera.getEyePosition(), Player::GetInstance()->GetPlayerPosition());
-	Player::GetInstance()->update(deltaTime);
+	const double deltaTime = Scene::DeltaTime();
 
-	if (PlayerInput::KeyMenu())
-	{
-		Print << U"Menu";
-	}
+	// プレイヤーのインスタンスをキャッシュ
+	auto& player = Player::GetInstance();
+
+	// プレイヤーの更新
+	player.update(deltaTime, m_cameraController.GetCameraForward());
+
+	// カメラの更新
+	m_cameraController.Update(player.GetPlayerPosition());
 }
 
 void FieldScene::draw() const
@@ -42,7 +37,7 @@ void FieldScene::draw() const
 		Plane{ 64 }.draw(TextureAsset(Assets::UV));
 		Box{ -8, 2, 0, 4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
 
-		Player::GetInstance()->draw();
+		Player::GetInstance().draw();
 	}
 
 	// 2Dに転送

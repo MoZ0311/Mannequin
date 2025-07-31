@@ -15,11 +15,6 @@ Application::Application()
 	m_sceneManager.init(State::Title, Config::Scene::ChangeDuration);
 }
 
-Application::~Application()
-{
-
-}
-
 bool Application::run()
 {
 	return m_sceneManager.update();
