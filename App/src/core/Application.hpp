@@ -18,5 +18,5 @@ public:
 private:
 
 	// シーンマネージャー
-	Config::Scene::App m_sceneManager;
+	Config::Scene::SceneApp m_sceneManager;
 };

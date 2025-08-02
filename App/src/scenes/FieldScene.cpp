@@ -2,6 +2,8 @@
 
 # include "FieldScene.hpp"
 
+using namespace Config::Scene;
+
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
@@ -14,20 +16,19 @@ FieldScene::FieldScene(const InitData& init)
 
 void FieldScene::update()
 {
-	const double deltaTime = Scene::DeltaTime();
-
-	// プレイヤーのインスタンスをキャッシュ
-	auto& player = Player::GetInstance();
+	// シーンにおける前フレームからの経過時間
+	const double deltaTime{ Scene::DeltaTime() };
 
 	// プレイヤーの更新
-	player.update(deltaTime, m_cameraController.GetCameraForward());
+	m_player.update(deltaTime, m_cameraController.getCameraForward());
 
 	// カメラの更新
-	m_cameraController.Update(player.GetPlayerPosition());
+	m_cameraController.update(deltaTime, m_player.GetPlayerPosition());
 }
 
 void FieldScene::draw() const
 {
+	// 3Dシーンにカメラを設定
 	Graphics3D::SetCameraTransform(m_camera);
 
 	// 3D描画
@@ -37,7 +38,8 @@ void FieldScene::draw() const
 		Plane{ 64 }.draw(TextureAsset(Assets::UV));
 		Box{ -8, 2, 0, 4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
 
-		Player::GetInstance().draw();
+		// プレイヤーの描画
+		m_player.draw();
 	}
 
 	// 2Dに転送

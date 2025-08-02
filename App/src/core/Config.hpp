@@ -5,7 +5,14 @@
 
 namespace Config
 {
+	// 画面サイズ
 	inline constexpr Size ScreenSize{ 1280, 720 };
+
+	namespace Camera
+	{
+		// カメラ距離
+		inline constexpr double CameraDistance{ 35.0 };
+	}
 
 	namespace Scene
 	{
@@ -23,11 +30,13 @@ namespace Config
 			Vec3 prevWorldPosition;
 		};
 
-		inline constexpr SecondsF ChangeDuration = 0.5s;
-		using App = SceneManager<State, GameData>;
+		// シーン遷移の間隔
+		inline constexpr SecondsF ChangeDuration{ 0.5s };
+		using SceneApp = SceneManager<State, GameData>;
 
 		namespace Field
 		{
+			// 背景色
 			inline constexpr ColorF BackgroundColor{ 0.4, 0.6, 0.8 };
 		}
 	}
@@ -35,18 +44,26 @@ namespace Config
 
 namespace Assets
 {
+	// アセット登録
 	inline void Register()
 	{
 		TextureAsset::Register(U"UV", U"example/texture/uv.png", TextureDesc::MippedSRGB);
 	}
 
-	inline const String UV = U"UV";
+	inline const String UV{ U"UV" };
 }
 
 namespace Components
 {
+	// ボタンのサイズ
 	inline constexpr Size ButtonSize{ 300, 60 };
+
+	// ボタンのトランジション
 	inline constexpr Transition ButtonTransition{ 0.4s, 0.2s };
+
+	// ボタン同士の間隔
 	inline constexpr Point ButtonOffset{ 0, 100 };
+
+	// ボタンの文字の色
 	inline constexpr ColorF ButtonTextCollor{ 0.25 };
 }

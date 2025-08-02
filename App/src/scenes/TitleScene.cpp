@@ -2,6 +2,8 @@
 
 # include "TitleScene.hpp"
 
+using namespace Config::Scene;
+
 TitleScene::TitleScene(const InitData& init)
 	: IScene{ init }
 	, m_startButton{
@@ -17,8 +19,8 @@ TitleScene::TitleScene(const InitData& init)
 
 void TitleScene::update()
 {
-	const bool onStart = m_startButton.mouseOver();
-	const bool onExit = m_exitButton.mouseOver();
+	const bool onStart{ m_startButton.mouseOver() };
+	const bool onExit{ m_exitButton.mouseOver() };
 
 	m_startTransition.update(onStart);
 	m_exitTransition.update(onExit);

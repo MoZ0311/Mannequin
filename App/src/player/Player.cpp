@@ -19,25 +19,27 @@ Vec3 Player::GetPlayerPosition() const
 }
 
 Player::Player()
-	: m_velocity{ 0, 0, 0 }
+	: m_moveSpeed{ 10.0 }
 	, m_sphere{ { 0, 0, 0 }, 1.0 }
 {
 
 }
 
-void Player::update(const double& deltaTime, const Vec3& forwardVector)
+void Player::update(const double deltaTime, const Vec3 forwardVector)
 {
-	const Vec2 inputVector2D = PlayerInput::GetInputAxis();
+	// 平面移動ベクトル(x : 左右, y : 前後)
+	const Vec2 movementVector2D{ PlayerInput::GetMovementAxis() };
 
+	// カメラの向きを基準にした右向きベクトル
 	const Vec3 rightVector{ -forwardVector.cross(Vec3::Up()).normalized() };
 
-	m_velocity = inputVector2D.y * forwardVector + inputVector2D.x * rightVector;
-	m_sphere.moveBy(m_velocity * 10 * deltaTime);
+	// 空間移動ベクトル
+	const Vec3 velocity{ movementVector2D.y * forwardVector + movementVector2D.x * rightVector };
+
+	m_sphere.moveBy(velocity * m_moveSpeed * deltaTime);
 }
 
 void Player::draw() const
 {
 	m_sphere.draw();
-
-	Print << U"Hello";
 }

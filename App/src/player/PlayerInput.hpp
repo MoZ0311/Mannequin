@@ -5,30 +5,56 @@
 struct PlayerInput
 {
 	// プレイヤーの移動方向の算出
-	static Vec2 GetInputAxis()
+	static Vec2 GetMovementAxis()
 	{
+		// 入力された平面ベクトル
 		Vec2 inputVector{};
 
-		// コントローラー接続確認
-		auto& controller{ XInput(0) };
-
+		// コントローラー入力を取得
+		detail::XInput_impl controller{ XInput(0) };
 		if (controller.isConnected())
 		{
-			// 左スティックの値を使用
+			// デッドゾーン設定
+			controller.setLeftThumbDeadZone();
+
+			// 左スティックの入力値を使用
 			inputVector = { controller.leftThumbX, controller.leftThumbY };
+
+			// 値が0でなければ、return
+			if (!inputVector.isZero())
+			{
+				return inputVector;
+			}
 		}
-		else
+		
+		// キー入力を平面ベクトルに変換(trueを1, falseを0として算術演算)
+		inputVector = Vec2{ KeyD.pressed() - KeyA.pressed(), KeyW.pressed() - KeyS.pressed() }.normalize();
+		return inputVector;
+	}
+
+	// カメラの操作
+	static Vec2 GetCameraAxis()
+	{
+		// コントローラー入力を取得
+		detail::XInput_impl controller{ XInput(0) };
+		if (controller.isConnected())
 		{
-			// キー入力を二次元ベクトルに
-			int32 forwardInput = KeyW.pressed() ? 1 : 0;
-			int32 backwardInput = KeyS.pressed() ? 1 : 0;
-			int32 leftInput = KeyA.pressed() ? 1 : 0;
-			int32 rightInput = KeyD.pressed() ? 1 : 0;
+			// デッドゾーン設定
+			controller.setRightThumbDeadZone();
 
-			inputVector = { rightInput - leftInput, forwardInput - backwardInput };
+			// 右スティックの入力値を使用
+			const Vec2 inputVector{ controller.rightThumbX, controller.rightThumbY };
+
+			// 値が0でなければ、return
+			if (!inputVector.isZero())
+			{
+				return inputVector;
+			}
 		}
 
-		return inputVector.normalized();
+		// カーソルの移動量を取得
+		return Cursor::DeltaF();
+
 	}
 
 	static bool KeyMenu()

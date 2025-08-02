@@ -4,9 +4,7 @@
 
 # include "../core/Config.hpp"
 
-using namespace Config::Scene;
-
-class TitleScene : public App::Scene
+class TitleScene : public Config::Scene::SceneApp::Scene
 {
 public:
 

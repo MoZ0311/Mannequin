@@ -6,9 +6,7 @@
 # include "../player/Player.hpp"
 # include "../player/CameraController.hpp"
 
-using namespace Config::Scene;
-
-class FieldScene : public App::Scene
+class FieldScene : public Config::Scene::SceneApp::Scene
 {
 public:
 
@@ -29,11 +27,12 @@ private:
 	// レンダーテクスチャ
 	const MSRenderTexture m_renderTexture;
 
+	// プレイヤー
+	Player& m_player;
+
 	// カメラ
 	BasicCamera3D m_camera;
 
 	// カメラ操作クラス
-	CameraController m_cameraController;
-
-	Player& m_player;
+	CameraController m_cameraController;	
 };

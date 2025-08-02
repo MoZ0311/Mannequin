@@ -2,17 +2,21 @@
 
 # include "Application.hpp"
 
+using namespace Config;
+using namespace Config::Scene;
+
 Application::Application()
 	: m_sceneManager{}
 {
 	// ウィンドウサイズの設定
-	Window::Resize(Config::ScreenSize);
+	Window::Resize(ScreenSize);
 
+	// 各シーン登録
 	m_sceneManager.add<TitleScene>(State::Title);
 	m_sceneManager.add<FieldScene>(State::Field);
 
 	// 最初のシーンを設定
-	m_sceneManager.init(State::Title, Config::Scene::ChangeDuration);
+	m_sceneManager.init(State::Title, ChangeDuration);
 }
 
 bool Application::run()

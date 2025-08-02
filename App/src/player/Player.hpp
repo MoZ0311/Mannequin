@@ -12,11 +12,12 @@ public:
 	static Player& GetInstance();
 
 	// 更新処理
-	void update(const double& deltaTime, const Vec3& forwardVector);
+	void update(const double deltaTime, const Vec3 forwardVector);
 
 	// 描画処理
 	void draw() const;
 
+	// プレイヤー座標の取得
 	Vec3 GetPlayerPosition() const;
 
 private:
@@ -28,7 +29,7 @@ private:
 	static std::unique_ptr<Player> instance;
 
 	// 移動速度
-	Vec3 m_velocity;
+	double m_moveSpeed;
 
 	Sphere m_sphere;
 };
