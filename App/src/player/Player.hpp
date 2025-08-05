@@ -8,11 +8,11 @@ class Player
 {
 public:
 
-	// インスタンスの作成 / 取得
-	static Player& GetInstance();
+	// コンストラクタ
+	Player();
 
 	// 更新処理
-	void update(const double deltaTime, const Vec3 forwardVector);
+	void update(const double deltaTime, const Vec3 cameraForward);
 
 	// 描画処理
 	void draw() const;
@@ -20,16 +20,17 @@ public:
 	// プレイヤー座標の取得
 	Vec3 GetPlayerPosition() const;
 
-private:
+protected:
 
-	// コンストラクタ
-	Player();
+	// プレイヤーの位置
+	Vec3 m_playerPosition;
 
-	// シングルトン
-	static std::unique_ptr<Player> instance;
+	// プレイヤーの回転
+	Quaternion m_playerRotation;
 
-	// 移動速度
-	double m_moveSpeed;
+	// プレイヤーの攻撃範囲
+	Circle m_attackRing;
 
-	Sphere m_sphere;
+	// モデル
+	const Model m_siv3dkun;
 };

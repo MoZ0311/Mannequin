@@ -7,9 +7,6 @@ struct PlayerInput
 	// プレイヤーの移動方向の算出
 	static Vec2 GetMovementAxis()
 	{
-		// 入力された平面ベクトル
-		Vec2 inputVector{};
-
 		// コントローラー入力を取得
 		detail::XInput_impl controller{ XInput(0) };
 		if (controller.isConnected())
@@ -18,7 +15,7 @@ struct PlayerInput
 			controller.setLeftThumbDeadZone();
 
 			// 左スティックの入力値を使用
-			inputVector = { controller.leftThumbX, controller.leftThumbY };
+			const Vec2 inputVector{ controller.leftThumbX, controller.leftThumbY };
 
 			// 値が0でなければ、return
 			if (!inputVector.isZero())
@@ -28,8 +25,8 @@ struct PlayerInput
 		}
 		
 		// キー入力を平面ベクトルに変換(trueを1, falseを0として算術演算)
-		inputVector = Vec2{ KeyD.pressed() - KeyA.pressed(), KeyW.pressed() - KeyS.pressed() }.normalize();
-		return inputVector;
+		const Vec2 keyInputVector{ KeyD.pressed() - KeyA.pressed(), KeyW.pressed() - KeyS.pressed() };
+		return keyInputVector.normalized();
 	}
 
 	// カメラの操作
@@ -43,7 +40,7 @@ struct PlayerInput
 			controller.setRightThumbDeadZone();
 
 			// 右スティックの入力値を使用
-			const Vec2 inputVector{ controller.rightThumbX, controller.rightThumbY };
+			const Vec2 inputVector{ controller.rightThumbX, -controller.rightThumbY };
 
 			// 値が0でなければ、return
 			if (!inputVector.isZero())
@@ -57,9 +54,14 @@ struct PlayerInput
 
 	}
 
+	static bool KeyDash()
+	{
+		return KeyShift.pressed() || XInput(0).rightTrigger > 0.3;
+	}
+
 	static bool KeyMenu()
 	{
-		InputGroup menuKey{ KeyTab | XInput(0).buttonY };
+		const InputGroup menuKey{ KeyTab | XInput(0).buttonY };
 		return menuKey.pressed();
 	}
 };

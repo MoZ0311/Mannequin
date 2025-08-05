@@ -11,7 +11,20 @@ namespace Config
 	namespace Camera
 	{
 		// カメラ距離
-		inline constexpr double CameraDistance{ 35.0 };
+		namespace Distance
+		{
+			inline constexpr double Near{ 10.0 };
+			inline constexpr double Far{ 12 };
+		}
+	}
+
+	namespace Player
+	{
+		// 移動速度
+		inline constexpr double MoveSpeed{ 10.0 };
+
+		// 回転速度
+		inline constexpr double RotateSpeed{ 10.0 };
 	}
 
 	namespace Scene

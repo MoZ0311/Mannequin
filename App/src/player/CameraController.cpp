@@ -7,6 +7,7 @@ using namespace Config::Camera;
 CameraController::CameraController(BasicCamera3D& camera)
 	: m_camera{ camera }
 	, m_eyePosition{ camera.getEyePosition() }
+	, m_cameraTransition{ 0.3s }
 	, m_theta{ 0.0 }
 	, m_phi{ 0.0 }
 {
@@ -46,6 +47,13 @@ void CameraController::rotateCamera(const double deltaTime)
 	// θ角をクランプ
 	m_theta = Clamp(m_theta, 30_deg, 85_deg);
 
+	// ダッシュ入力中か判定
+	m_cameraTransition.update(PlayerInput::KeyDash());
+
+	// カメラ距離にイースをつける
+	const double e = EaseOutExpo(m_cameraTransition.value());
+	const double cameraDistance{ Distance::Near + e * 2 };
+
 	// 球面座標からカメラ座標を計算
-	m_eyePosition = Spherical{ CameraDistance, m_theta, m_phi };
+	m_eyePosition = Spherical{ cameraDistance, m_theta, m_phi };
 }

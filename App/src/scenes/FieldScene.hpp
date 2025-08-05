@@ -28,7 +28,7 @@ private:
 	const MSRenderTexture m_renderTexture;
 
 	// プレイヤー
-	Player& m_player;
+	Player m_player;
 
 	// カメラ
 	BasicCamera3D m_camera;

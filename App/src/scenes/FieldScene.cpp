@@ -9,7 +9,7 @@ FieldScene::FieldScene(const InitData& init)
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_camera{ m_renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } }
 	, m_cameraController{ m_camera }
-	, m_player{ Player::GetInstance() }
+	, m_player{}
 {
 	initLighting();
 }

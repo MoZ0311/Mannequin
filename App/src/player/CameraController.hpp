@@ -29,6 +29,9 @@ private:
 	// カメラ位置
 	Vec3 m_eyePosition;
 
+	// カメラのトランジション
+	Transition m_cameraTransition;
+
 	// 球面座標系のθ
 	double m_theta;
 
