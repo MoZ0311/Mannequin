@@ -9,6 +9,11 @@ Vec3 Player::GetPlayerPosition() const
 	return m_siv3dkun.boundingBox().movedBy(m_playerPosition).center;
 }
 
+Quaternion  Player::GetPlayerRotation() const
+{
+	return m_playerRotation;
+}
+
 Player::Player()
 	: m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0, 0, 0, 0 }

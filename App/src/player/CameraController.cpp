@@ -8,19 +8,46 @@ CameraController::CameraController(BasicCamera3D& camera)
 	: m_camera{ camera }
 	, m_eyePosition{ camera.getEyePosition() }
 	, m_cameraTransition{ 0.3s }
-	, m_theta{ 0.0 }
-	, m_phi{ 0.0 }
+	, m_theta{ 75_deg }
+	, m_phi{ 180_deg }
 {
 
 }
 
-void CameraController::update(const double deltaTime, const Vec3 playerPosition)
+void CameraController::update(const double deltaTime, const Vec3 playerPosition, const Quaternion playerRotation)
 {
 	// カメラの回転
 	rotateCamera(deltaTime);
 
+	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
+	double playerYaw{ playerEuler.y };
+
+	// プレイヤー角度の正規化
+	if (playerEuler.xz().isZero())
+	{
+		playerYaw -= 180_deg;
+	}
+	else
+	{
+		if (playerYaw < 0_deg)
+		{
+			playerYaw += 360_deg;
+		}
+	}
+	playerYaw = Abs(playerYaw);
+
+	// カメラのリセット
+	if (PlayerInput::ResetCamera())
+	{
+		m_theta = 75_deg;
+		m_phi = playerYaw; 
+	}
+
 	// カメラ位置の更新
 	m_camera.setView(playerPosition + m_eyePosition, playerPosition);
+
+	Print << Math::ToDegrees(m_phi);
+	Print << Math::ToDegrees(playerYaw);
 }
 
 Vec3 CameraController::getCameraForward() const
@@ -41,19 +68,19 @@ void CameraController::rotateCamera(const double deltaTime)
 	const Vec2 mouseDelta{ PlayerInput::GetCameraAxis() * deltaTime };
 
 	// θ角とφ角を更新
-	m_theta -= mouseDelta.y;
-	m_phi -= mouseDelta.x;
+	m_theta += mouseDelta.y;
+	m_phi += mouseDelta.x;
 
 	// θ角をクランプ
-	m_theta = Clamp(m_theta, 30_deg, 85_deg);
+	m_theta = Clamp(m_theta, Pitch::Min, Pitch::Max);
 
 	// ダッシュ入力中か判定
-	m_cameraTransition.update(PlayerInput::KeyDash());
+	m_cameraTransition.update(PlayerInput::KeyDash() && !PlayerInput::GetMovementAxis().isZero());
 
 	// カメラ距離にイースをつける
 	const double e = EaseOutExpo(m_cameraTransition.value());
 	const double cameraDistance{ Distance::Near + e * 2 };
 
 	// 球面座標からカメラ座標を計算
-	m_eyePosition = Spherical{ cameraDistance, m_theta, m_phi };
+	m_eyePosition = Spherical{ cameraDistance, m_theta, m_phi + 90_deg };
 }

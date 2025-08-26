@@ -20,6 +20,9 @@ public:
 	// プレイヤー座標の取得
 	Vec3 GetPlayerPosition() const;
 
+	// プレイヤーの向きの取得
+	Quaternion GetPlayerRotation() const;
+
 protected:
 
 	// プレイヤーの位置

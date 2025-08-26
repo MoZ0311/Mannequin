@@ -4,6 +4,7 @@
 
 # include "../core/Config.hpp"
 # include "../player/PlayerInput.hpp"
+# include "../util/Util.hpp"
 
 class CameraController
 {
@@ -13,7 +14,7 @@ public:
 	CameraController(BasicCamera3D& camera);
 
 	// 更新処理
-	void update(const double deltaTime, const Vec3 playerPosition);
+	void update(const double deltaTime, const Vec3 playerPosition, const Quaternion playerRotation);
 
 	// カメラの前方ベクトル(y = 0)を取得
 	Vec3 getCameraForward() const;

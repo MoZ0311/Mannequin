@@ -3,15 +3,20 @@
 # include "FieldScene.hpp"
 
 using namespace Config::Scene;
+using namespace Config::Camera;
 
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
-	, m_camera{ m_renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } }
+	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
 	, m_player{}
 {
 	initLighting();
+
+	// マウスカーソル設定
+	Cursor::RequestStyle(CursorStyle::Hidden);
+	Cursor::SetPos(Scene::Center());
 }
 
 void FieldScene::update()
@@ -19,11 +24,15 @@ void FieldScene::update()
 	// シーンにおける前フレームからの経過時間
 	const double deltaTime{ Scene::DeltaTime() };
 
+	// マウスカーソル設定
+	Cursor::RequestStyle(CursorStyle::Hidden);
+	Cursor::SetPos(Scene::Center());
+
 	// プレイヤーの更新
 	m_player.update(deltaTime, m_cameraController.getCameraForward());
 
 	// カメラの更新
-	m_cameraController.update(deltaTime, m_player.GetPlayerPosition());
+	m_cameraController.update(deltaTime, m_player.GetPlayerPosition(), m_player.GetPlayerRotation());
 }
 
 void FieldScene::draw() const
@@ -36,7 +45,6 @@ void FieldScene::draw() const
 		const ScopedRenderTarget3D target{ m_renderTexture.clear(Field::BackgroundColor.removeSRGBCurve()) };
 
 		Plane{ 64 }.draw(TextureAsset(Assets::UV));
-		Box{ -8, 2, 0, 4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
 
 		// プレイヤーの描画
 		m_player.draw();

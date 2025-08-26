@@ -8,14 +8,34 @@ namespace Config
 	// 画面サイズ
 	inline constexpr Size ScreenSize{ 1280, 720 };
 
+	// トリガーの閾値
+	inline constexpr double TriggerThreshold{ 0.3 };
+
 	namespace Camera
 	{
-		// カメラ距離
+		// 視野角
+		namespace FOV
+		{
+			inline constexpr double Narrow{ 30_deg };
+			inline constexpr double Wide{ 60_deg };
+		}
+
+		// ピッチ
+		namespace Pitch
+		{
+			inline constexpr double Min{ 5_deg };
+			inline constexpr double Max{ 90_deg };
+		}
+
+		// 距離
 		namespace Distance
 		{
 			inline constexpr double Near{ 10.0 };
 			inline constexpr double Far{ 12 };
 		}
+
+		// 回転速度
+		inline constexpr double RotateSpeed{ 2.0 };
 	}
 
 	namespace Player

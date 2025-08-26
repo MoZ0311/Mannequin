@@ -12,8 +12,7 @@ Application::Application()
 	Window::Resize(ScreenSize);
 
 	// 各シーン登録
-	m_sceneManager.add<TitleScene>(State::Title);
-	m_sceneManager.add<FieldScene>(State::Field);
+	addScenes();
 
 	// 最初のシーンを設定
 	m_sceneManager.init(State::Title, ChangeDuration);
@@ -22,4 +21,11 @@ Application::Application()
 bool Application::run()
 {
 	return m_sceneManager.update();
+}
+
+void Application::addScenes()
+{
+	m_sceneManager.add<TitleScene>(State::Title);	// タイトルシーン
+	m_sceneManager.add<FieldScene>(State::Field);	// フィールド
+	m_sceneManager.add<BattleScene>(State::Battle);	// 戦闘シーン
 }

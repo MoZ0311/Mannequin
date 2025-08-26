@@ -45,7 +45,7 @@ struct PlayerInput
 			// 値が0でなければ、return
 			if (!inputVector.isZero())
 			{
-				return inputVector;
+				return inputVector * Config::Camera::RotateSpeed;
 			}
 		}
 
@@ -56,12 +56,19 @@ struct PlayerInput
 
 	static bool KeyDash()
 	{
-		return KeyShift.pressed() || XInput(0).rightTrigger > 0.3;
+		const bool pressedDashKey{ KeyShift.pressed() || XInput(0).rightTrigger > Config::TriggerThreshold };
+		return pressedDashKey;
 	}
 
 	static bool KeyMenu()
 	{
 		const InputGroup menuKey{ KeyTab | XInput(0).buttonY };
-		return menuKey.pressed();
+		return menuKey.down();
+	}
+
+	static bool ResetCamera()
+	{
+		const InputGroup resetKey{ KeyR | XInput(0).buttonA | XInput(0).buttonRThumb };
+		return resetKey.down();
 	}
 };

@@ -7,7 +7,7 @@ void Main()
 
 	while (System::Update())
 	{
-		// ClearPrint();
+		ClearPrint();
 		if (!app.run())
 		{
 			break;

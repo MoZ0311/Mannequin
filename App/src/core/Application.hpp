@@ -4,6 +4,7 @@
 
 # include "../scenes/TitleScene.hpp"
 # include "../scenes/FieldScene.hpp"
+# include "../scenes/BattleScene.hpp"
 
 class Application
 {
@@ -16,6 +17,9 @@ public:
 	bool run();
 
 private:
+
+	// シーンの登録処理
+	void addScenes();
 
 	// シーンマネージャー
 	Config::Scene::SceneApp m_sceneManager;
