@@ -25,6 +25,8 @@ namespace Config
 		{
 			inline constexpr double Min{ 5_deg };
 			inline constexpr double Max{ 90_deg };
+
+			inline constexpr double Default{ 75_deg };
 		}
 
 		// 距離
@@ -36,6 +38,12 @@ namespace Config
 
 		// 回転速度
 		inline constexpr double RotateSpeed{ 2.0 };
+
+		// 初期値のずれを修正するためのオフセット
+		inline constexpr double RotateOffset{ 90_deg };
+
+		// イース係数
+		inline constexpr double Interpolation{ 0.05 };
 	}
 
 	namespace Player

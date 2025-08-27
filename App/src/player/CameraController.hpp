@@ -24,14 +24,17 @@ private:
 	// カメラの回転処理
 	void rotateCamera(const double deltaTime);
 
+	// プレイヤーの回転角度の正規化処理
+	double normalizePlayerRotation(const Quaternion playerRotation);
+
 	// カメラのアドレス
 	BasicCamera3D& m_camera;
 
 	// カメラ位置
 	Vec3 m_eyePosition;
 
-	// カメラのトランジション
-	Transition m_cameraTransition;
+	// プレイヤーとカメラの距離
+	double m_cameraDistance;
 
 	// 球面座標系のθ
 	double m_theta;

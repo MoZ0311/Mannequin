@@ -7,8 +7,8 @@ using namespace Config::Camera;
 CameraController::CameraController(BasicCamera3D& camera)
 	: m_camera{ camera }
 	, m_eyePosition{ camera.getEyePosition() }
-	, m_cameraTransition{ 0.3s }
-	, m_theta{ 75_deg }
+	, m_cameraDistance{ Distance::Near }
+	, m_theta{ Pitch::Default }
 	, m_phi{ 180_deg }
 {
 
@@ -19,35 +19,19 @@ void CameraController::update(const double deltaTime, const Vec3 playerPosition,
 	// カメラの回転
 	rotateCamera(deltaTime);
 
-	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
-	double playerYaw{ playerEuler.y };
-
-	// プレイヤー角度の正規化
-	if (playerEuler.xz().isZero())
-	{
-		playerYaw -= 180_deg;
-	}
-	else
-	{
-		if (playerYaw < 0_deg)
-		{
-			playerYaw += 360_deg;
-		}
-	}
-	playerYaw = Abs(playerYaw);
+	// カメラ距離の計算
+	m_cameraDistance = PlayerInput::KeyDash() && !PlayerInput::GetMovementAxis().isZero() ? Distance::Far : Distance::Near;
 
 	// カメラのリセット
 	if (PlayerInput::ResetCamera())
 	{
-		m_theta = 75_deg;
-		m_phi = playerYaw; 
+		m_theta = Pitch::Default;
+		m_phi = normalizePlayerRotation(playerRotation); 
 	}
 
 	// カメラ位置の更新
-	m_camera.setView(playerPosition + m_eyePosition, playerPosition);
-
-	Print << Math::ToDegrees(m_phi);
-	Print << Math::ToDegrees(playerYaw);
+	const Vec3 eyePosition{ playerPosition + m_eyePosition };
+	m_camera.setView(eyePosition, playerPosition);
 }
 
 Vec3 CameraController::getCameraForward() const
@@ -74,13 +58,28 @@ void CameraController::rotateCamera(const double deltaTime)
 	// θ角をクランプ
 	m_theta = Clamp(m_theta, Pitch::Min, Pitch::Max);
 
-	// ダッシュ入力中か判定
-	m_cameraTransition.update(PlayerInput::KeyDash() && !PlayerInput::GetMovementAxis().isZero());
-
-	// カメラ距離にイースをつける
-	const double e = EaseOutExpo(m_cameraTransition.value());
-	const double cameraDistance{ Distance::Near + e * 2 };
-
 	// 球面座標からカメラ座標を計算
-	m_eyePosition = Spherical{ cameraDistance, m_theta, m_phi + 90_deg };
+	const Vec3 targetPosition{ Spherical{ m_cameraDistance, m_theta, m_phi + RotateOffset } };
+	m_eyePosition = m_eyePosition.lerp(targetPosition, Interpolation);
+}
+
+double CameraController::normalizePlayerRotation(const Quaternion playerRotation)
+{
+	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
+	double playerYaw{ playerEuler.y };
+
+	// プレイヤー角度の正規化
+	if (playerEuler.xz().isZero())
+	{
+		playerYaw -= 180_deg;
+	}
+	else
+	{
+		if (playerYaw < 0_deg)
+		{
+			playerYaw += 360_deg;
+		}
+	}
+
+	return Abs(playerYaw);
 }
