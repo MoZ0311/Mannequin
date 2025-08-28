@@ -65,7 +65,10 @@ void CameraController::rotateCamera(const double deltaTime)
 
 double CameraController::normalizePlayerRotation(const Quaternion playerRotation)
 {
+	// プレイヤーの回転をオイラー角に変換
 	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
+
+	// ヨー角
 	double playerYaw{ playerEuler.y };
 
 	// プレイヤー角度の正規化

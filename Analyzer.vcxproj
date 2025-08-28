@@ -120,6 +120,7 @@
     <ClCompile Include="App\src\player\Player.cpp" />
     <ClCompile Include="App\src\scenes\BattleScene.cpp" />
     <ClCompile Include="App\src\scenes\FieldScene.cpp" />
+    <ClCompile Include="App\src\scenes\OverScene.cpp" />
     <ClCompile Include="App\src\scenes\TitleScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -338,6 +339,7 @@
     <ClInclude Include="App\src\player\PlayerInput.hpp" />
     <ClInclude Include="App\src\scenes\BattleScene.hpp" />
     <ClInclude Include="App\src\scenes\FieldScene.hpp" />
+    <ClInclude Include="App\src\scenes\OverScene.hpp" />
     <ClInclude Include="App\src\scenes\TitleScene.hpp" />
     <ClInclude Include="App\src\util\Util.hpp" />
     <ClInclude Include="stdafx.h" />

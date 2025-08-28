@@ -7,8 +7,9 @@ using namespace Config::Scene;
 TitleScene::TitleScene(const InitData& init)
 	: IScene{ init }
 	, m_startButton{
-		Arg::center = Scene::Center().moveBy(Components::ButtonOffset * 2),
-		Components::ButtonSize
+		Arg::center = Components::TitleButtonPoint,
+		Components::ButtonSize,
+		Components::ButtonRoundness
 	}
 	, m_exitButton{ m_startButton.movedBy(Components::ButtonOffset) }
 	, m_startTransition{ Components::ButtonTransition }
@@ -42,11 +43,15 @@ void TitleScene::update()
 
 void TitleScene::draw() const
 {
+	// 背景の描画
+	TextureRegion title{ TextureAsset(Assets::Title).resized(Scene::Size()) };
+	title.drawAt(Scene::CenterF());
+
 	// Startボタンの描画
-	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(2);
-	//FontAsset(FONT_MAKINAS)(U"復興").drawAt(startButton.center(), ColorF{ 0.25 });
+	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(Components::ButtonThickness);
+	FontAsset(Assets::Makinas)(U"START").drawAt(m_startButton.center(), Components::ButtonTextCollor);
 
 	// Exitボタンの描画
-	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(2);
-	//FontAsset(FONT_MAKINAS)(U"バトル").drawAt(battleButton.center(), ColorF{ 0.25 });
+	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(Components::ButtonThickness);
+	FontAsset(Assets::Makinas)(U"EXIT").drawAt(m_exitButton.center(), Components::ButtonTextCollor);
 }

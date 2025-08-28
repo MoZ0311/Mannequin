@@ -10,8 +10,6 @@ struct Util
 		const float z{ q.getZ() };
 		const float w{ q.getW() };
 
-		// const Vec3 eular{ q.() };
-
 		// X軸周りの回転 (ロール)
 		const double roll{ Atan2(2.0 * (w * x + y * z), 1.0 - 2.0 * (x * x + y * y)) };
 
@@ -22,10 +20,6 @@ struct Util
 		// ジンバルロックのチェック
 		if (Abs(pitch_input) >= 1.0)
 		{
-			// 90度または-90度のとき
-			// 特異点のため、ロールは0とし、ヨーを計算する
-			// return Vec3(0.0, Math::TwoPi * pitch_input, 2.0 * Atan2(x, w));
-
 			pitch = copysign(Math::Pi / 2, pitch_input);
 		}
 		else

@@ -40,7 +40,7 @@ struct PlayerInput
 			controller.setRightThumbDeadZone();
 
 			// 右スティックの入力値を使用
-			const Vec2 inputVector{ controller.rightThumbX, -controller.rightThumbY };
+			const Vec2 inputVector{ -controller.rightThumbX, controller.rightThumbY };
 
 			// 値が0でなければ、return
 			if (!inputVector.isZero())

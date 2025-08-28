@@ -28,4 +28,5 @@ void Application::addScenes()
 	m_sceneManager.add<TitleScene>(State::Title);	// タイトルシーン
 	m_sceneManager.add<FieldScene>(State::Field);	// フィールド
 	m_sceneManager.add<BattleScene>(State::Battle);	// 戦闘シーン
+	m_sceneManager.add<OverScene>(State::Over);		// ゲームオーバー
 }

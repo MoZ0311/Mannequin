@@ -41,8 +41,8 @@ void Player::update(const double deltaTime, const Vec3 cameraForward)
 		m_playerRotation = m_playerRotation.slerp(Quaternion::RotateY(angleY), RotateSpeed * deltaTime);
     }
 
-	const double dashSpeed{ PlayerInput::KeyDash() ? 2.5 : 1.0 };
-	m_playerPosition.moveBy(velocity * MoveSpeed * dashSpeed * deltaTime);
+	const double moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
+	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 }
 
 void Player::draw() const

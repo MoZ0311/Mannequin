@@ -20,10 +20,10 @@ public:
 private:
 
 	// START ボタンの設定
-	const Rect m_startButton;
+	const RoundRect m_startButton;
 	Transition m_startTransition;
 
 	// EXIT ボタンの設定
-	const Rect m_exitButton;
+	const RoundRect m_exitButton;
 	Transition m_exitTransition;
 };
