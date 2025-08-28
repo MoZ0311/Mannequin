@@ -7,8 +7,9 @@ using namespace Config::Scene;
 OverScene::OverScene(const InitData& init)
 	: IScene{ init }
 	, m_retryButton{
-		Arg::center = Scene::Center().moveBy(Components::ButtonOffset * 2),
-		Components::ButtonSize
+		Arg::center = Components::OverButtonPoint,
+		Components::ButtonSize,
+		Components::ButtonRoundness
 	}
 	, m_exitButton{ m_retryButton.movedBy(Components::ButtonOffset) }
 	, m_retryTransition{ Components::ButtonTransition }
@@ -50,9 +51,9 @@ void OverScene::draw() const
 
 	// Startボタンの描画
 	m_retryButton.draw(ColorF{ 1.0, m_retryTransition.value() }).drawFrame(Components::ButtonThickness);
-	//FontAsset(FONT_MAKINAS)(U"復興").drawAt(startButton.center(), ColorF{ 0.25 });
+	FontAsset(Assets::Makinas)(U"RETRY").drawAt(m_retryButton.center(), Components::ButtonTextCollor);
 
 	// Exitボタンの描画
 	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(Components::ButtonThickness);
-	//FontAsset(FONT_MAKINAS)(U"バトル").drawAt(battleButton.center(), ColorF{ 0.25 });
+	FontAsset(Assets::Makinas)(U"EXIT").drawAt(m_exitButton.center(), Components::ButtonTextCollor);
 }

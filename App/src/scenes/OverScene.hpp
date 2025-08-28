@@ -20,10 +20,10 @@ public:
 private:
 
 	// RETRY ボタンの設定
-	const Rect m_retryButton;
+	const RoundRect m_retryButton;
 	Transition m_retryTransition;
 
 	// EXIT ボタンの設定
-	const Rect m_exitButton;
+	const RoundRect m_exitButton;
 	Transition m_exitTransition;
 };
