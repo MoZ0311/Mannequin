@@ -9,7 +9,7 @@ namespace Config
 	inline constexpr Size ScreenSize{ 1280, 720 };
 
 	// トリガーの閾値
-	inline constexpr double TriggerThreshold{ 0.3 };
+	inline constexpr float TriggerThreshold{ 0.3f };
 
 	namespace Camera
 	{
@@ -32,18 +32,18 @@ namespace Config
 		// 距離
 		namespace Distance
 		{
-			inline constexpr double Near{ 10.0 };
-			inline constexpr double Far{ 12 };
+			inline constexpr float Near{ 10.0f };
+			inline constexpr float Far{ 12.0f };
 		}
 
 		// 回転速度
-		inline constexpr double RotateSpeed{ 2.0 };
+		inline constexpr float RotateSpeed{ 2.0f };
+
+		// イース係数
+		inline constexpr float Interpolation{ 0.05f };
 
 		// 初期値のずれを修正するためのオフセット
 		inline constexpr double RotateOffset{ 90_deg };
-
-		// イース係数
-		inline constexpr double Interpolation{ 0.05 };
 	}
 
 	namespace Player
@@ -51,12 +51,12 @@ namespace Config
 		// 移動速度
 		namespace MoveSpeed
 		{
-			inline constexpr double DefaultSpeed{ 10.0 };
-			inline constexpr double DashSpeed{ 25.0 };
+			inline constexpr float DefaultSpeed{ 10.0f };
+			inline constexpr float DashSpeed{ 25.0f };
 		}
 		
 		// 回転速度
-		inline constexpr double RotateSpeed{ 10.0 };
+		inline constexpr float RotateSpeed{ 10.0f };
 	}
 
 	namespace Scene
@@ -116,10 +116,10 @@ namespace Components
 	// ボタンのサイズ
 	inline constexpr Size ButtonSize{ 300, 60 };
 
-	inline constexpr double ButtonThickness{ 2.0 };
+	inline constexpr float ButtonThickness{ 2.0f };
 
 	// ボタンの丸み
-	inline constexpr double ButtonRoundness{ ButtonSize.y / 2 };
+	inline constexpr float ButtonRoundness{ ButtonSize.y / 2.0f };
 
 	// ボタンのトランジション
 	inline constexpr Transition ButtonTransition{ 0.4s, 0.2s };

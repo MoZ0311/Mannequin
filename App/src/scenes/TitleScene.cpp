@@ -6,6 +6,7 @@ using namespace Config::Scene;
 
 TitleScene::TitleScene(const InitData& init)
 	: IScene{ init }
+	, m_backgroundImage{ TextureAsset(Assets::Title).resized(Scene::Size()) }
 	, m_startButton{
 		Arg::center = Components::TitleButtonPoint,
 		Components::ButtonSize,
@@ -44,8 +45,7 @@ void TitleScene::update()
 void TitleScene::draw() const
 {
 	// 背景の描画
-	TextureRegion title{ TextureAsset(Assets::Title).resized(Scene::Size()) };
-	title.drawAt(Scene::CenterF());
+	m_backgroundImage.drawAt(Scene::CenterF());
 
 	// Startボタンの描画
 	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(Components::ButtonThickness);

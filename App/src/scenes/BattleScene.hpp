@@ -4,6 +4,7 @@
 
 # include "../core/Config.hpp"
 # include "../player/CameraController.hpp"
+# include "../unit/UnitSword.hpp"
 
 class BattleScene : public Config::Scene::SceneApp::Scene
 {
@@ -23,8 +24,8 @@ private:
 	// レンダーテクスチャ
 	const MSRenderTexture m_renderTexture;
 
-	// プレイヤー
-	// Player m_player;
+	// 自軍ユニット
+	// Array<Player*> u;
 
 	// カメラ
 	BasicCamera3D m_camera;

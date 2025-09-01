@@ -153,7 +153,7 @@
     <ClCompile Include="App\src\scenes\FieldScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\src\player\Player.cpp">
+    <ClCompile Include="App\src\player\PlayerCharacter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\src\player\CameraController.cpp">
@@ -163,6 +163,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\src\scenes\OverScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\unit\UnitSword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -842,7 +845,7 @@
     <ClInclude Include="App\src\scenes\FieldScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\player\Player.hpp">
+    <ClInclude Include="App\src\player\PlayerCharacter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\player\PlayerInput.hpp">
@@ -858,6 +861,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\scenes\OverScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\unit\UnitSword.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

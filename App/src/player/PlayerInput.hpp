@@ -4,11 +4,13 @@
 
 struct PlayerInput
 {
+	static inline constexpr uint8 PlayerIndex{ 0 };
+
 	// プレイヤーの移動方向の算出
 	static Vec2 GetMovementAxis()
 	{
 		// コントローラー入力を取得
-		detail::XInput_impl controller{ XInput(0) };
+		detail::XInput_impl controller{ XInput(PlayerIndex) };
 		if (controller.isConnected())
 		{
 			// デッドゾーン設定
@@ -33,7 +35,7 @@ struct PlayerInput
 	static Vec2 GetCameraAxis()
 	{
 		// コントローラー入力を取得
-		detail::XInput_impl controller{ XInput(0) };
+		detail::XInput_impl controller{ XInput(PlayerIndex) };
 		if (controller.isConnected())
 		{
 			// デッドゾーン設定
@@ -56,19 +58,19 @@ struct PlayerInput
 
 	static bool KeyDash()
 	{
-		const bool pressedDashKey{ KeyShift.pressed() || XInput(0).rightTrigger > Config::TriggerThreshold };
+		const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
 		return pressedDashKey;
 	}
 
 	static bool KeyMenu()
 	{
-		const InputGroup menuKey{ KeyTab | XInput(0).buttonY };
+		const InputGroup menuKey{ KeyTab | XInput(PlayerIndex).buttonY };
 		return menuKey.down();
 	}
 
 	static bool ResetCamera()
 	{
-		const InputGroup resetKey{ KeyR | XInput(0).buttonA | XInput(0).buttonRThumb };
+		const InputGroup resetKey{ KeyR | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
 		return resetKey.down();
 	}
 };

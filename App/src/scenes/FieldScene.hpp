@@ -3,7 +3,7 @@
 # pragma once
 
 # include "../core/Config.hpp"
-# include "../player/Player.hpp"
+# include "../player/PlayerCharacter.hpp"
 # include "../player/CameraController.hpp"
 
 class FieldScene : public Config::Scene::SceneApp::Scene
@@ -28,7 +28,7 @@ private:
 	const MSRenderTexture m_renderTexture;
 
 	// プレイヤー
-	Player m_player;
+	PlayerCharacter m_player;
 
 	// カメラ
 	BasicCamera3D m_camera;

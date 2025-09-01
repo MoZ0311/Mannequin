@@ -19,6 +19,9 @@ public:
 
 private:
 
+	// 背景画像
+	const TextureRegion m_backgroundImage;
+
 	// RETRY ボタンの設定
 	const RoundRect m_retryButton;
 	Transition m_retryTransition;

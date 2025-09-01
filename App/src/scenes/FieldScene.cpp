@@ -33,6 +33,12 @@ void FieldScene::update()
 
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.GetPlayerPosition(), m_player.GetPlayerRotation());
+
+	// debug
+	if (KeyEnter.down())
+	{
+		changeScene(State::Battle, ChangeDuration);
+	}
 }
 
 void FieldScene::draw() const
@@ -43,6 +49,7 @@ void FieldScene::draw() const
 	// 3D描画
 	{
 		const ScopedRenderTarget3D target{ m_renderTexture.clear(Field::BackgroundColor.removeSRGBCurve()) };
+		const ScopedRenderStates3D blend{ BlendState::OpaqueAlphaToCoverage };
 
 		Plane{ 64 }.draw(TextureAsset(Assets::UV));
 

@@ -1,29 +1,28 @@
-﻿// Player class
+﻿// PlayerCharacter class
 
-# include "Player.hpp"
+# include "PlayerCharacter.hpp"
 
 using namespace Config::Player;
 
-Vec3 Player::GetPlayerPosition() const
+Vec3 PlayerCharacter::GetPlayerPosition() const
 {
 	return m_siv3dkun.boundingBox().movedBy(m_playerPosition).center;
 }
 
-Quaternion  Player::GetPlayerRotation() const
+Quaternion  PlayerCharacter::GetPlayerRotation() const
 {
 	return m_playerRotation;
 }
 
-Player::Player()
+PlayerCharacter::PlayerCharacter()
 	: m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0, 0, 0, 0 }
 	, m_siv3dkun{ U"example/obj/siv3d-kun.obj" }
-	, m_attackRing{ m_playerPosition.x, m_playerPosition.z, 2.0 }
 {
 	Model::RegisterDiffuseTextures(m_siv3dkun, TextureDesc::MippedSRGB);
 }
 
-void Player::update(const double deltaTime, const Vec3 cameraForward)
+void PlayerCharacter::update(const double deltaTime, const Vec3 cameraForward)
 {
 	// 平面移動ベクトル(x : 左右, y : 前後)
 	const Vec2 movementVector2D{ PlayerInput::GetMovementAxis() };
@@ -41,11 +40,16 @@ void Player::update(const double deltaTime, const Vec3 cameraForward)
 		m_playerRotation = m_playerRotation.slerp(Quaternion::RotateY(angleY), RotateSpeed * deltaTime);
     }
 
-	const double moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
+	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 }
 
-void Player::draw() const
+void PlayerCharacter::draw() const
 {
 	m_siv3dkun.draw(m_playerPosition, m_playerRotation);
+
+	//Util::DrawDiscFrame(m_playerPosition, 2);
+
+	//Disc ring{ Vec3{ m_playerPosition.x, 0.0001, m_playerPosition.z }, 2 };
+	//ring.draw(ColorF{ 0, 1, 1, 0.3 }.removeSRGBCurve());
 }

@@ -6,6 +6,7 @@ using namespace Config::Scene;
 
 OverScene::OverScene(const InitData& init)
 	: IScene{ init }
+	, m_backgroundImage{ TextureAsset(Assets::Over).resized(Scene::Size()) }
 	, m_retryButton{
 		Arg::center = Components::OverButtonPoint,
 		Components::ButtonSize,
@@ -46,8 +47,7 @@ void OverScene::update()
 void OverScene::draw() const
 {
 	// 背景の描画
-	TextureRegion title{ TextureAsset(Assets::Over).resized(Scene::Size()) };
-	title.drawAt(Scene::CenterF());
+	m_backgroundImage.drawAt(Scene::CenterF());
 
 	// Startボタンの描画
 	m_retryButton.draw(ColorF{ 1.0, m_retryTransition.value() }).drawFrame(Components::ButtonThickness);

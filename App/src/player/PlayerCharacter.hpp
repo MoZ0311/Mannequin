@@ -3,19 +3,20 @@
 # pragma once
 
 # include "PlayerInput.hpp"
+# include "../util/Util.hpp"
 
-class Player
+class PlayerCharacter
 {
 public:
 
 	// コンストラクタ
-	Player();
+	PlayerCharacter();
 
 	// 更新処理
-	void update(const double deltaTime, const Vec3 cameraForward);
+	virtual void update(const double deltaTime, const Vec3 cameraForward);
 
 	// 描画処理
-	void draw() const;
+	virtual void draw() const;
 
 	// プレイヤー座標の取得
 	Vec3 GetPlayerPosition() const;
@@ -30,9 +31,6 @@ protected:
 
 	// プレイヤーの回転
 	Quaternion m_playerRotation;
-
-	// プレイヤーの攻撃範囲
-	Circle m_attackRing;
 
 	// モデル
 	const Model m_siv3dkun;
