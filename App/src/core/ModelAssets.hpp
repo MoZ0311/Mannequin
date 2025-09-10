@@ -30,6 +30,9 @@ public:
 	// 棒立ち状態のモデル
 	const Model mannequinRest;
 
+	// マネキンの当たり判定
+	const Box mannequinCollider;
+
 	// 待機アニメーション配列
 	const Array<Model> idleAnimationArray;
 

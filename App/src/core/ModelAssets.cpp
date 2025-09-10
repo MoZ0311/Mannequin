@@ -1,6 +1,9 @@
 ﻿// ModelAssets class
 
 # include "ModelAssets.hpp"
+# include "../core/Config.hpp"
+
+using namespace Assets;
 
 ModelAssets& ModelAssets::GetInstance()
 {
@@ -23,6 +26,10 @@ ModelAssets::ModelAssets()
 	, mannequinWalk06{ U"assets/models/mannequin/mannequin_walk06.obj" }
 	, mannequinWalk07{ U"assets/models/mannequin/mannequin_walk07.obj" }
 	, mannequinWalk08{ U"assets/models/mannequin/mannequin_walk08.obj" }
+
+	, mannequinCollider{
+		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
+	}
 
 	, idleAnimationArray{
 		mannequinIdle01,

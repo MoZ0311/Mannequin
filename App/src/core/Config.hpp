@@ -36,7 +36,7 @@ namespace Config
 		}
 
 		// 回転速度
-		static inline constexpr float RotateSpeed{ 2.0f };
+		static inline constexpr float RotateSpeed{ 3.5f };
 
 		// イース係数
 		static inline constexpr float Interpolation{ 0.05f };
@@ -110,6 +110,12 @@ namespace Assets
 		// 絵文字の追加
 		static const Font Emoji{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
 		FontAsset(Makinas).addFallback(Emoji);
+	}
+
+	namespace Models
+	{
+		// コライダーの大きさ
+		static inline Vec3 MannequinColliderScale{ 1.0, 1.0, 1.5 };
 	}
 }
 

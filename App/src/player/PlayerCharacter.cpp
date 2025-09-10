@@ -18,8 +18,6 @@ void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
 {
 	move(deltaTime, cameraForward);
 	animationUpdate();
-
-	Print << m_animationTimer;
 }
 
 void PlayerCharacter::draw() const
@@ -80,7 +78,7 @@ void PlayerCharacter::animationUpdate()
 Vec3 PlayerCharacter::getPlayerPosition() const
 {
 	// 基本姿勢の当たり判定を返す
-	return ModelAssets::GetInstance().mannequinRest.boundingBox().movedBy(m_playerPosition).center;
+	return ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
 }
 
 Quaternion PlayerCharacter::getPlayerRotation() const
