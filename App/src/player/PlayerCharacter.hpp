@@ -1,4 +1,4 @@
-﻿// Player class
+﻿// PlayerCharacter class
 
 # pragma once
 
@@ -13,18 +13,24 @@ public:
 	PlayerCharacter();
 
 	// 更新処理
-	virtual void update(const double deltaTime, const Vec3 cameraForward);
+	virtual void update(const double deltaTime, const Vec3& cameraForward);
 
 	// 描画処理
-	virtual void draw() const;
+	void draw() const;
 
 	// プレイヤー座標の取得
-	Vec3 GetPlayerPosition() const;
+	Vec3 getPlayerPosition() const;
 
 	// プレイヤーの向きの取得
-	Quaternion GetPlayerRotation() const;
+	Quaternion getPlayerRotation() const;
 
 protected:
+
+	// 移動処理
+	void move(const double deltaTime, const Vec3& cameraForward);
+
+	// アニメーション更新処理
+	void animationUpdate();
 
 	// プレイヤーの位置
 	Vec3 m_playerPosition;
@@ -32,6 +38,9 @@ protected:
 	// プレイヤーの回転
 	Quaternion m_playerRotation;
 
-	// モデル
-	const Model m_siv3dkun;
+	// アニメーション配列
+	Array<Model> m_animationArray;
+
+	// アニメーション制御用のタイマー
+	double m_animationTimer;
 };

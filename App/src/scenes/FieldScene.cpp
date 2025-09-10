@@ -32,7 +32,7 @@ void FieldScene::update()
 	m_player.update(deltaTime, m_cameraController.getCameraForward());
 
 	// カメラの更新
-	m_cameraController.update(deltaTime, m_player.GetPlayerPosition(), m_player.GetPlayerRotation());
+	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
 	// debug
 	if (KeyEnter.down())

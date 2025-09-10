@@ -4,15 +4,11 @@
 
 UnitSword::UnitSword()
 {
+	m_attackRangeRadius = 2.0f;
+	m_moveRangeRadius = 4.0f;
 
-}
+	m_maxHp = 50;
+	m_currentHp = m_maxHp;
 
-void UnitSword::update(const double deltaTime, const Vec3 cameraForward)
-{
-
-}
-
-void UnitSword::draw()const
-{
-
+	m_unitName = U"剣士";
 }

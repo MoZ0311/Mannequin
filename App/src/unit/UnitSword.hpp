@@ -1,22 +1,19 @@
 ﻿// UnitSword class
 
-#pragma once
+# pragma once
 
-#include "../player/PlayerCharacter.hpp"
+# include "UnitBase.hpp"
 
-class UnitSword : public PlayerCharacter
+class UnitSword : public UnitBase
 {
 public:
 
+	// コンストラクタ
 	UnitSword();
-
-	void update(const double deltaTime, const Vec3 cameraForward) override;
-
-	void draw()const override;
 
 	//void createDiscFrame(const Vec3& centor, const double radius) override;
 
 private:
 
-
+	
 };

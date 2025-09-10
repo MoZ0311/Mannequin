@@ -1,55 +1,89 @@
 ﻿// PlayerCharacter class
 
 # include "PlayerCharacter.hpp"
+#include "../core/ModelAssets.hpp"
 
 using namespace Config::Player;
-
-Vec3 PlayerCharacter::GetPlayerPosition() const
-{
-	return m_siv3dkun.boundingBox().movedBy(m_playerPosition).center;
-}
-
-Quaternion  PlayerCharacter::GetPlayerRotation() const
-{
-	return m_playerRotation;
-}
 
 PlayerCharacter::PlayerCharacter()
 	: m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0, 0, 0, 0 }
-	, m_siv3dkun{ U"example/obj/siv3d-kun.obj" }
+	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
+	, m_animationTimer{ 0.0 }
 {
-	Model::RegisterDiffuseTextures(m_siv3dkun, TextureDesc::MippedSRGB);
+
 }
 
-void PlayerCharacter::update(const double deltaTime, const Vec3 cameraForward)
+void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
 {
-	// 平面移動ベクトル(x : 左右, y : 前後)
-	const Vec2 movementVector2D{ PlayerInput::GetMovementAxis() };
+	move(deltaTime, cameraForward);
+	animationUpdate();
 
-	// カメラの向きを基準にした右向きベクトル
-	const Vec3 rightVector{ -cameraForward.cross(Vec3::Up()).normalized() };
-
-	// 空間移動ベクトル
-	const Vec3 velocity{ movementVector2D.y * cameraForward + movementVector2D.x * rightVector };
-
-    if (!velocity.isZero())
-    {
-		// Y軸回転角度を計算
-		const double angleY{ Atan2(velocity.x, velocity.z) };
-		m_playerRotation = m_playerRotation.slerp(Quaternion::RotateY(angleY), RotateSpeed * deltaTime);
-    }
-
-	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
-	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
+	Print << m_animationTimer;
 }
 
 void PlayerCharacter::draw() const
 {
-	m_siv3dkun.draw(m_playerPosition, m_playerRotation);
+	// double型のタイマーを切り捨てて整数値に
+	uint8 index{ static_cast<uint8>(Floor(m_animationTimer)) };
 
-	//Util::DrawDiscFrame(m_playerPosition, 2);
+	// 対応するアニメーション配列のモデルを描画
+	m_animationArray[index].draw(m_playerPosition, m_playerRotation);
+}
 
-	//Disc ring{ Vec3{ m_playerPosition.x, 0.0001, m_playerPosition.z }, 2 };
-	//ring.draw(ColorF{ 0, 1, 1, 0.3 }.removeSRGBCurve());
+void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
+{
+	// 平面移動ベクトル(x : 左右, y : 前後)
+	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
+
+	// 移動入力がなければそのままreturn
+	if (movementVector2D.isZero())
+	{
+		return;
+	}
+
+	// カメラの向きを基準にした右向きベクトル
+	const Vec3& rightVector{ -cameraForward.cross(Vec3::Up()).normalized() };
+
+	// 空間移動ベクトル
+	const Vec3& velocity{ movementVector2D.y * cameraForward + movementVector2D.x * rightVector };
+
+	if (!velocity.isZero())
+	{
+		// Y軸回転角度を計算
+		const double angleY{ Atan2(velocity.x, velocity.z) };
+		m_playerRotation = m_playerRotation.slerp(Quaternion::RotateY(angleY), RotateSpeed * deltaTime);
+	}
+
+	// ダッシュ中かの判定
+	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
+
+	// モデル描画位置を移動
+	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
+}
+
+void PlayerCharacter::animationUpdate()
+{
+	// アニメーション用のタイマーをカウントアップ
+	m_animationTimer += Scene::DeltaTime() * 8;
+
+	// 移動入力の有無で、アニメーション配列を切替
+	m_animationArray = PlayerInput::GetMovementAxis().isZero() ? ModelAssets::GetInstance().idleAnimationArray : ModelAssets::GetInstance().walkAnimationArray;
+
+	// 配列の要素数を超える時、リセット
+	if (m_animationTimer >= m_animationArray.size())
+	{
+		m_animationTimer = 0;
+	}
+}
+
+Vec3 PlayerCharacter::getPlayerPosition() const
+{
+	// 基本姿勢の当たり判定を返す
+	return ModelAssets::GetInstance().mannequinRest.boundingBox().movedBy(m_playerPosition).center;
+}
+
+Quaternion PlayerCharacter::getPlayerRotation() const
+{
+	return m_playerRotation;
 }

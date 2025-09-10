@@ -1,6 +1,6 @@
 ﻿// OverScene class
 
-#pragma once
+# pragma once
 
 # include "../core/Config.hpp"
 

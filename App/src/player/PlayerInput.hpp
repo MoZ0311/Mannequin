@@ -1,4 +1,4 @@
-﻿#pragma once
+﻿# pragma once
 
 # include "../core/Config.hpp"
 
@@ -53,7 +53,18 @@ struct PlayerInput
 
 		// カーソルの移動量を取得
 		return Cursor::DeltaF();
+	}
 
+	static bool KeyConfirm()
+	{
+		const InputGroup confirmKey{ KeySpace | KeyEnter | MouseL | XInput(PlayerIndex).buttonB };
+		return confirmKey.down();
+	}
+
+	static bool KeyCancel()
+	{
+		const InputGroup cancelKey{ KeyBackspace | KeyC | MouseR | XInput(PlayerIndex).buttonA };
+		return cancelKey.down();
 	}
 
 	static bool KeyDash()
@@ -66,6 +77,12 @@ struct PlayerInput
 	{
 		const InputGroup menuKey{ KeyTab | XInput(PlayerIndex).buttonY };
 		return menuKey.down();
+	}
+
+	static bool StopMove()
+	{
+		const InputGroup stopKey{ KeyF | MouseM | XInput(0).buttonRB };
+		return stopKey.pressed();
 	}
 
 	static bool ResetCamera()

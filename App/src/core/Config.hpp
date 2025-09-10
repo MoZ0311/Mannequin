@@ -1,49 +1,48 @@
 ﻿# pragma once
 
 # include <Siv3D.hpp>
-// # include <memory>
 
 namespace Config
 {
 	// 画面サイズ
-	inline constexpr Size ScreenSize{ 1280, 720 };
+	static inline constexpr Size ScreenSize{ 1280, 720 };
 
 	// トリガーの閾値
-	inline constexpr float TriggerThreshold{ 0.3f };
+	static inline constexpr float TriggerThreshold{ 0.3f };
 
 	namespace Camera
 	{
 		// 視野角
 		namespace FOV
 		{
-			inline constexpr double Narrow{ 30_deg };
-			inline constexpr double Wide{ 60_deg };
+			static inline constexpr double Narrow{ 30_deg };
+			static inline constexpr double Wide{ 60_deg };
 		}
 
 		// ピッチ
 		namespace Pitch
 		{
-			inline constexpr double Min{ 5_deg };
-			inline constexpr double Max{ 90_deg };
+			static inline constexpr double Min{ 5_deg };
+			static inline constexpr double Max{ 90_deg };
 
-			inline constexpr double Default{ 75_deg };
+			static inline constexpr double Default{ 75_deg };
 		}
 
 		// 距離
 		namespace Distance
 		{
-			inline constexpr float Near{ 10.0f };
-			inline constexpr float Far{ 12.0f };
+			static inline constexpr float Near{ 10.0f };
+			static inline constexpr float Far{ 12.0f };
 		}
 
 		// 回転速度
-		inline constexpr float RotateSpeed{ 2.0f };
+		static inline constexpr float RotateSpeed{ 2.0f };
 
 		// イース係数
-		inline constexpr float Interpolation{ 0.05f };
+		static inline constexpr float Interpolation{ 0.05f };
 
 		// 初期値のずれを修正するためのオフセット
-		inline constexpr double RotateOffset{ 90_deg };
+		static inline constexpr double RotateOffset{ 90_deg };
 	}
 
 	namespace Player
@@ -51,12 +50,12 @@ namespace Config
 		// 移動速度
 		namespace MoveSpeed
 		{
-			inline constexpr float DefaultSpeed{ 10.0f };
-			inline constexpr float DashSpeed{ 25.0f };
+			static inline constexpr float DefaultSpeed{ 10.0f };
+			static inline constexpr float DashSpeed{ 25.0f };
 		}
 		
 		// 回転速度
-		inline constexpr float RotateSpeed{ 10.0f };
+		static inline constexpr float RotateSpeed{ 10.0f };
 	}
 
 	namespace Scene
@@ -76,26 +75,26 @@ namespace Config
 		};
 
 		// シーン遷移の間隔
-		inline constexpr SecondsF ChangeDuration{ 0.5s };
+		static inline constexpr SecondsF ChangeDuration{ 0.5s };
 		using SceneApp = SceneManager<State, GameData>;
 
 		namespace Field
 		{
 			// 背景色
-			inline constexpr ColorF BackgroundColor{ 0.4, 0.6, 0.8 };
+			static inline constexpr ColorF BackgroundColor{ 0.4, 0.6, 0.8 };
 		}
 	}
 }
 
 namespace Assets
 {
-	inline const String UV{ U"UV" };
-	inline const String Title{ U"Title" };
-	inline const String Over{ U"Over" };
-	inline const String Makinas{ U"Makinas" };
+	static inline const String UV{ U"UV" };
+	static inline const String Title{ U"Title" };
+	static inline const String Over{ U"Over" };
+	static inline const String Makinas{ U"Makinas" };
 
 	// アセット登録
-	inline void Register()
+	static inline void Register()
 	{
 		// テクスチャのアセット化
 		TextureAsset::Register(UV, U"example/texture/uv.png", TextureDesc::MippedSRGB);
@@ -103,10 +102,10 @@ namespace Assets
 		TextureAsset::Register(Over, U"assets/background/over.png", TextureDesc::MippedSRGB);
 
 		// フォントのアセット化
-		FontAsset::Register(Makinas, FontMethod::MSDF, 48, U"fonts/Makinas-4-Square.otf");
+		FontAsset::Register(Makinas, FontMethod::MSDF, 48, U"assets/fonts/Makinas-4-Square.otf");
 
 		// 絵文字の追加
-		const Font Emoji{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
+		static const Font Emoji{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
 		FontAsset(Makinas).addFallback(Emoji);
 	}
 }
@@ -114,25 +113,33 @@ namespace Assets
 namespace Components
 {
 	// ボタンのサイズ
-	inline constexpr Size ButtonSize{ 300, 60 };
+	static inline constexpr Size ButtonSize{ 300, 60 };
 
-	inline constexpr float ButtonThickness{ 2.0f };
+	// ボタンの枠の太さ
+	static inline constexpr float ButtonThickness{ 2.0f };
 
 	// ボタンの丸み
-	inline constexpr float ButtonRoundness{ ButtonSize.y / 2.0f };
+	static inline constexpr float ButtonRoundness{ ButtonSize.y / 2.0f };
 
 	// ボタンのトランジション
-	inline constexpr Transition ButtonTransition{ 0.4s, 0.2s };
+	static inline constexpr Transition ButtonTransition{ 0.4s, 0.2s };
 
 	// ボタン同士の間隔
-	inline constexpr Point ButtonOffset{ 0, 100 };
+	static inline constexpr Point ButtonOffset{ 0, 100 };
 
 	// ボタンの文字の色
-	inline constexpr ColorF ButtonTextCollor{ 0.3 };
+	static inline constexpr ColorF ButtonTextCollor{ 0.3 };
 
 	// タイトル画面でのボタンの位置
-	inline constexpr Point TitleButtonPoint{ 980, 500 };
+	static inline constexpr Point TitleButtonPoint{ 980, 500 };
 
 	// ゲームオーバー画面でのボタンの位置
-	inline constexpr Point OverButtonPoint{ 640, 520 };
+	static inline constexpr Point OverButtonPoint{ 640, 520 };
+}
+
+namespace UI
+{
+	static inline constexpr Point StatusWindowPoint{ 0, 200 };
+	static inline constexpr Size StatusWindowSize{ 400, StatusWindowPoint.y };
+	static inline constexpr float WindowRoundness{ StatusWindowSize.y / 1.5f };
 }

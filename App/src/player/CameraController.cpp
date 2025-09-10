@@ -6,7 +6,7 @@ using namespace Config::Camera;
 
 CameraController::CameraController(BasicCamera3D& camera)
 	: m_camera{ camera }
-	, m_eyePosition{ camera.getEyePosition() }
+	, m_eyeOffset{ camera.getEyePosition() }
 	, m_cameraDistance{ Distance::Near }
 	, m_theta{ Pitch::Default }
 	, m_phi{ 180_deg }
@@ -14,7 +14,7 @@ CameraController::CameraController(BasicCamera3D& camera)
 
 }
 
-void CameraController::update(const double deltaTime, const Vec3 playerPosition, const Quaternion playerRotation)
+void CameraController::update(const double deltaTime, const Vec3& playerPosition, const Quaternion& playerRotation)
 {
 	// カメラの回転
 	rotateCamera(deltaTime);
@@ -30,7 +30,7 @@ void CameraController::update(const double deltaTime, const Vec3 playerPosition,
 	}
 
 	// カメラ位置の更新
-	const Vec3 eyePosition{ playerPosition + m_eyePosition };
+	const Vec3 eyePosition{ m_camera.getEyePosition().lerp(playerPosition + m_eyeOffset, Interpolation) };
 	m_camera.setView(eyePosition, playerPosition);
 }
 
@@ -59,11 +59,10 @@ void CameraController::rotateCamera(const double deltaTime)
 	m_theta = Clamp(m_theta, Pitch::Min, Pitch::Max);
 
 	// 球面座標からカメラ座標を計算
-	const Vec3 targetPosition{ Spherical{ m_cameraDistance, m_theta, m_phi + RotateOffset } };
-	m_eyePosition = m_eyePosition.lerp(targetPosition, Interpolation);
+	m_eyeOffset = Spherical{ m_cameraDistance, m_theta, m_phi + RotateOffset };
 }
 
-double CameraController::normalizePlayerRotation(const Quaternion playerRotation)
+double CameraController::normalizePlayerRotation(const Quaternion& playerRotation) const
 {
 	// プレイヤーの回転をオイラー角に変換
 	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
