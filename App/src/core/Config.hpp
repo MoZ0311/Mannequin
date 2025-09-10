@@ -56,6 +56,9 @@ namespace Config
 		
 		// 回転速度
 		static inline constexpr float RotateSpeed{ 10.0f };
+
+		// アニメーション再生速度
+		static inline constexpr float AnimationSpeed{ 8.0f };
 	}
 
 	namespace Scene

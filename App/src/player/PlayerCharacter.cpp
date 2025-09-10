@@ -65,7 +65,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 void PlayerCharacter::animationUpdate()
 {
 	// アニメーション用のタイマーをカウントアップ
-	m_animationTimer += Scene::DeltaTime() * 8;
+	m_animationTimer += Scene::DeltaTime() * AnimationSpeed;
 
 	// 移動入力の有無で、アニメーション配列を切替
 	m_animationArray = PlayerInput::GetMovementAxis().isZero() ? ModelAssets::GetInstance().idleAnimationArray : ModelAssets::GetInstance().walkAnimationArray;

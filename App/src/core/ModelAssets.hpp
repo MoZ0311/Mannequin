@@ -4,13 +4,10 @@
 
 class ModelAssets
 {
-public:
+private:
 
-	// インスタンスの取得
-	static ModelAssets& GetInstance();
-
-	// 棒立ち状態のモデル
-	const Model mannequinRest;
+	// コンストラクタ
+	ModelAssets();
 
 	const Model mannequinIdle01;
 	const Model mannequinIdle02;
@@ -25,14 +22,17 @@ public:
 	const Model mannequinWalk07;
 	const Model mannequinWalk08;
 
+public:
+
+	// インスタンスの取得
+	static ModelAssets& GetInstance();
+
+	// 棒立ち状態のモデル
+	const Model mannequinRest;
+
 	// 待機アニメーション配列
 	const Array<Model> idleAnimationArray;
 
 	// 歩行アニメ―ション配列
 	const Array<Model> walkAnimationArray;
-
-private:
-
-	// コンストラクタ
-	ModelAssets();
 };
