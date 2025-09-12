@@ -87,7 +87,13 @@ struct PlayerInput
 
 	static bool ResetCamera()
 	{
-		const InputGroup resetKey{ KeyR | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
+		const InputGroup resetKey{ MouseM | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
 		return resetKey.down();
+	}
+
+	static bool KeyGuard()
+	{
+		const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };
+		return guardKey;
 	}
 };

@@ -8,6 +8,7 @@ using namespace Config::Camera;
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
+	, m_effect{}
 	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
 	, m_player{}
@@ -63,6 +64,14 @@ void FieldScene::draw() const
 		m_renderTexture.resolve();
 		Shader::LinearToScreen(m_renderTexture);
 	}
+
+	if (MouseL.down())
+	{
+		Vec2 effectPostion{ Util::WorldToScreenPosition(m_player.getPlayerPosition(), m_camera) };
+		m_effect.add<BubbleEffect>(effectPostion);
+	}
+
+	m_effect.update();
 }
 
 void FieldScene::initLighting() const

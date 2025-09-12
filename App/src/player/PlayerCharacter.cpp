@@ -35,7 +35,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
 
 	// 移動入力がなければそのままreturn
-	if (movementVector2D.isZero())
+	if (movementVector2D.isZero() || PlayerInput::KeyGuard())
 	{
 		return;
 	}
@@ -65,8 +65,19 @@ void PlayerCharacter::animationUpdate()
 	// アニメーション用のタイマーをカウントアップ
 	m_animationTimer += Scene::DeltaTime() * AnimationSpeed;
 
-	// 移動入力の有無で、アニメーション配列を切替
-	m_animationArray = PlayerInput::GetMovementAxis().isZero() ? ModelAssets::GetInstance().idleAnimationArray : ModelAssets::GetInstance().walkAnimationArray;
+	// アニメーション配列を切替
+	if (PlayerInput::KeyGuard())
+	{
+		m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
+	}
+	else if (PlayerInput::GetMovementAxis().isZero())
+	{
+		m_animationArray = ModelAssets::GetInstance().idleAnimationArray;
+	}
+	else
+	{
+		m_animationArray = ModelAssets::GetInstance().walkAnimationArray;
+	}
 
 	// 配列の要素数を超える時、リセット
 	if (m_animationTimer >= m_animationArray.size())

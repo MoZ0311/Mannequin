@@ -22,6 +22,8 @@ private:
 	const Model mannequinWalk07;
 	const Model mannequinWalk08;
 
+	const Model mannequinGuard;
+
 public:
 
 	// インスタンスの取得
@@ -38,4 +40,7 @@ public:
 
 	// 歩行アニメ―ション配列
 	const Array<Model> walkAnimationArray;
+
+	// ガードアニメーション配列
+	const Array<Model> guardAnimationArray;
 };

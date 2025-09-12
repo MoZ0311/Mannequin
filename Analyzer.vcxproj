@@ -353,6 +353,7 @@
     <ClInclude Include="App\src\unit\UnitBase.hpp" />
     <ClInclude Include="App\src\unit\UnitManager.hpp" />
     <ClInclude Include="App\src\unit\UnitSword.hpp" />
+    <ClInclude Include="App\src\util\EEfectDrawer.hpp" />
     <ClInclude Include="App\src\util\Util.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

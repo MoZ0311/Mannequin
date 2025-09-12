@@ -4,6 +4,12 @@ class Util
 {
 public:
 
+	// 3Dワールド座標から2Dスクリーン座標への変換
+	static inline Vec2 WorldToScreenPosition(const Vec3& screenPosition, const BasicCamera3D& camera)
+	{
+		return camera.worldToScreenPoint(screenPosition).xy();
+	}
+
 	// クオータニオンからオイラー角への変換
 	static inline Vec3 QuaternionToEuler(const Quaternion& q)
 	{

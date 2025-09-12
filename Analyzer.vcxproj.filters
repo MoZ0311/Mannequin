@@ -896,5 +896,8 @@
     <ClInclude Include="App\src\core\ModelAssets.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\src\util\EEfectDrawer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

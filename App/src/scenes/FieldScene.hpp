@@ -5,6 +5,7 @@
 # include "../core/Config.hpp"
 # include "../player/PlayerCharacter.hpp"
 # include "../player/CameraController.hpp"
+# include "../util/EEfectDrawer.hpp"
 
 class FieldScene : public Config::Scene::SceneApp::Scene
 {
@@ -26,6 +27,9 @@ private:
 
 	// レンダーテクスチャ
 	const MSRenderTexture m_renderTexture;
+
+	// エフェクト
+	Effect m_effect;
 
 	// プレイヤー
 	PlayerCharacter m_player;
