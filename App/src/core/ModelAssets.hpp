@@ -22,6 +22,8 @@ private:
 	const Model mannequinWalk07;
 	const Model mannequinWalk08;
 
+	const Model mannequinAttack;
+
 	const Model mannequinGuard;
 
 public:
@@ -40,6 +42,9 @@ public:
 
 	// 歩行アニメ―ション配列
 	const Array<Model> walkAnimationArray;
+
+	// 攻撃アニメーション配列
+	const Array<Model> attackAnimationArray;
 
 	// ガードアニメーション配列
 	const Array<Model> guardAnimationArray;

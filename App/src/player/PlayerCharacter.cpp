@@ -35,7 +35,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
 
 	// 移動入力がなければそのままreturn
-	if (movementVector2D.isZero() || PlayerInput::KeyGuard())
+	if (movementVector2D.isZero() || PlayerInput::KeyLiteAttack() || PlayerInput::KeyGuard())
 	{
 		return;
 	}
@@ -69,6 +69,10 @@ void PlayerCharacter::animationUpdate()
 	if (PlayerInput::KeyGuard())
 	{
 		m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
+	}
+	else if (PlayerInput::KeyLiteAttack())
+	{
+		m_animationArray = ModelAssets::GetInstance().attackAnimationArray;
 	}
 	else if (PlayerInput::GetMovementAxis().isZero())
 	{

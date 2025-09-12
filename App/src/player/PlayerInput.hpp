@@ -7,7 +7,7 @@ struct PlayerInput
 	static inline constexpr uint8 PlayerIndex{ 0 };
 
 	// プレイヤーの移動方向の算出
-	static Vec2 GetMovementAxis()
+	static inline Vec2 GetMovementAxis()
 	{
 		// コントローラー入力を取得
 		detail::XInput_impl controller{ XInput(PlayerIndex) };
@@ -32,7 +32,7 @@ struct PlayerInput
 	}
 
 	// カメラの操作
-	static Vec2 GetCameraAxis()
+	static inline Vec2 GetCameraAxis()
 	{
 		// コントローラー入力を取得
 		detail::XInput_impl controller{ XInput(PlayerIndex) };
@@ -55,45 +55,51 @@ struct PlayerInput
 		return Cursor::DeltaF();
 	}
 
-	static bool KeyConfirm()
+	static inline bool KeyConfirm()
 	{
-		const InputGroup confirmKey{ KeySpace | KeyEnter | MouseL | XInput(PlayerIndex).buttonB };
+		static const InputGroup confirmKey{ KeySpace | KeyEnter | MouseL | XInput(PlayerIndex).buttonB };
 		return confirmKey.down();
 	}
 
-	static bool KeyCancel()
+	static inline bool KeyCancel()
 	{
-		const InputGroup cancelKey{ KeyBackspace | KeyC | MouseR | XInput(PlayerIndex).buttonA };
+		static const InputGroup cancelKey{ KeyBackspace | KeyC | MouseR | XInput(PlayerIndex).buttonA };
 		return cancelKey.down();
 	}
 
-	static bool KeyDash()
+	static inline bool KeyDash()
 	{
-		const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
+		static const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
 		return pressedDashKey;
 	}
 
-	static bool KeyMenu()
+	static inline bool KeyMenu()
 	{
-		const InputGroup menuKey{ KeyTab | XInput(PlayerIndex).buttonY };
+		static const InputGroup menuKey{ KeyTab | XInput(PlayerIndex).buttonY };
 		return menuKey.down();
 	}
 
-	static bool StopMove()
+	static inline bool StopMove()
 	{
-		const InputGroup stopKey{ KeyF | MouseM | XInput(0).buttonRB };
+		static const InputGroup stopKey{ KeyF | MouseM | XInput(0).buttonRB };
 		return stopKey.pressed();
 	}
 
-	static bool ResetCamera()
+	static inline bool ResetCamera()
 	{
-		const InputGroup resetKey{ MouseM | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
+		static const InputGroup resetKey{ MouseM | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
 		return resetKey.down();
 	}
 
-	static bool KeyGuard()
+	static inline bool KeyLiteAttack()
 	{
-		const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };
+		static const InputGroup liteAttackKey{ MouseL | XInput(PlayerIndex).buttonX };
+		return liteAttackKey.down();
+	}
+
+	static inline bool KeyGuard()
+	{
+		static const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };
 		return guardKey;
 	}
 };

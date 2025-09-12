@@ -27,6 +27,8 @@ ModelAssets::ModelAssets()
 	, mannequinWalk07{ U"assets/models/mannequin/mannequin_walk07.obj" }
 	, mannequinWalk08{ U"assets/models/mannequin/mannequin_walk08.obj" }
 
+	, mannequinAttack{ U"assets/models/mannequin/mannequin_attack.obj" }
+
 	, mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
 	, mannequinCollider{
@@ -48,6 +50,10 @@ ModelAssets::ModelAssets()
 		mannequinWalk06,
 		mannequinWalk07,
 		mannequinWalk08
+	}
+
+	, attackAnimationArray{
+		mannequinAttack
 	}
 
 	, guardAnimationArray{
