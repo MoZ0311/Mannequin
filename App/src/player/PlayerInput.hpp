@@ -69,7 +69,7 @@ struct PlayerInput
 
 	static inline bool KeyDash()
 	{
-		static const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
+		const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
 		return pressedDashKey;
 	}
 
@@ -99,7 +99,7 @@ struct PlayerInput
 
 	static inline bool KeyGuard()
 	{
-		static const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };
+		const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };
 		return guardKey;
 	}
 };

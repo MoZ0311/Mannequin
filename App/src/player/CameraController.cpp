@@ -30,7 +30,7 @@ void CameraController::update(const double deltaTime, const Vec3& playerPosition
 	}
 
 	// カメラ位置の更新
-	const Vec3 eyePosition{ m_camera.getEyePosition().lerp(playerPosition + m_eyeOffset, Interpolation) };
+	const Vec3& eyePosition{ m_camera.getEyePosition().lerp(playerPosition + m_eyeOffset, Interpolation) };
 	m_camera.setView(eyePosition, playerPosition);
 }
 
@@ -49,7 +49,7 @@ Vec3 CameraController::getCameraForward() const
 void CameraController::rotateCamera(const double deltaTime)
 {
 	// カーソルの移動量を取得
-	const Vec2 mouseDelta{ PlayerInput::GetCameraAxis() * deltaTime };
+	const Vec2& mouseDelta{ PlayerInput::GetCameraAxis() * deltaTime };
 
 	// θ角とφ角を更新
 	m_theta += mouseDelta.y;
@@ -65,7 +65,7 @@ void CameraController::rotateCamera(const double deltaTime)
 double CameraController::normalizePlayerRotation(const Quaternion& playerRotation) const
 {
 	// プレイヤーの回転をオイラー角に変換
-	const Vec3 playerEuler{ Util::QuaternionToEuler(playerRotation) };
+	const Vec3& playerEuler{ Util::QuaternionToEuler(playerRotation) };
 
 	// ヨー角
 	double playerYaw{ playerEuler.y };

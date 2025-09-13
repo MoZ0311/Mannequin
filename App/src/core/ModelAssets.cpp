@@ -29,6 +29,11 @@ ModelAssets::ModelAssets()
 
 	, mannequinAttack{ U"assets/models/mannequin/mannequin_attack.obj" }
 
+	, mannequinLiteAttack01{ U"assets/models/mannequin/mannequin_liteAttack01.obj" }
+	, mannequinLiteAttack02{ U"assets/models/mannequin/mannequin_liteAttack02.obj" }
+	, mannequinLiteAttack03{ U"assets/models/mannequin/mannequin_liteAttack03.obj" }
+	, mannequinLiteAttack04{ U"assets/models/mannequin/mannequin_liteAttack04.obj" }
+
 	, mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
 	, mannequinCollider{
@@ -53,7 +58,10 @@ ModelAssets::ModelAssets()
 	}
 
 	, attackAnimationArray{
-		mannequinAttack
+		mannequinLiteAttack01,
+		mannequinLiteAttack02,
+		mannequinLiteAttack03,
+		mannequinLiteAttack04
 	}
 
 	, guardAnimationArray{

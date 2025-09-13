@@ -9,13 +9,21 @@ PlayerCharacter::PlayerCharacter()
 	: m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0, 0, 0, 0 }
 	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
+	, m_attackInputBuffer{}
 	, m_animationTimer{ 0.0 }
+	, m_isAttacking{ false }
 {
 
 }
 
 void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
 {
+	// コマンドに対応したアニメーションを蓄積
+	if (PlayerInput::KeyLiteAttack() && m_attackInputBuffer.size() < MaxBufferSize)
+	{
+		m_attackInputBuffer.push(ModelAssets::GetInstance().attackAnimationArray);
+	}
+
 	move(deltaTime, cameraForward);
 	animationUpdate();
 }
@@ -35,7 +43,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
 
 	// 移動入力がなければそのままreturn
-	if (movementVector2D.isZero() || PlayerInput::KeyLiteAttack() || PlayerInput::KeyGuard())
+	if (movementVector2D.isZero() || PlayerInput::KeyGuard())
 	{
 		return;
 	}
@@ -46,10 +54,24 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	// 空間移動ベクトル
 	const Vec3& velocity{ movementVector2D.y * cameraForward + movementVector2D.x * rightVector };
 
+	// 念の為0ベクトルでないかのチェックう
 	if (!velocity.isZero())
 	{
 		// Y軸回転角度を計算
 		const double angleY{ Atan2(velocity.x, velocity.z) };
+
+		if (m_isAttacking)
+		{
+			if (m_animationTimer < Scene::DeltaTime())
+			{
+				// 攻撃の出始めに自由な方向へ即時方向転換可能
+				m_playerRotation = Quaternion::RotateY(angleY);
+			}
+			// 出始め以降は回転も移動も不可
+			return;
+		}
+
+		// 線形補正をかけながらプレイヤーを回転
 		m_playerRotation = m_playerRotation.slerp(Quaternion::RotateY(angleY), RotateSpeed * deltaTime);
 	}
 
@@ -66,27 +88,40 @@ void PlayerCharacter::animationUpdate()
 	m_animationTimer += Scene::DeltaTime() * AnimationSpeed;
 
 	// アニメーション配列を切替
-	if (PlayerInput::KeyGuard())
+	
+	// 攻撃中でない
+	if (!m_isAttacking)
 	{
-		m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
-	}
-	else if (PlayerInput::KeyLiteAttack())
-	{
-		m_animationArray = ModelAssets::GetInstance().attackAnimationArray;
-	}
-	else if (PlayerInput::GetMovementAxis().isZero())
-	{
-		m_animationArray = ModelAssets::GetInstance().idleAnimationArray;
-	}
-	else
-	{
-		m_animationArray = ModelAssets::GetInstance().walkAnimationArray;
+		// バッファが空でない
+		if (!m_attackInputBuffer.empty())
+		{
+			m_animationArray = m_attackInputBuffer.front();
+			m_attackInputBuffer.pop();
+
+			m_animationTimer = 0;
+			m_isAttacking = true;
+		}
+		else if (PlayerInput::KeyGuard())
+		{
+			m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
+		}
+		else if (PlayerInput::GetMovementAxis().isZero())
+		{
+			m_animationArray = ModelAssets::GetInstance().idleAnimationArray;
+		}
+		else
+		{
+			m_animationArray = ModelAssets::GetInstance().walkAnimationArray;
+		}
 	}
 
 	// 配列の要素数を超える時、リセット
 	if (m_animationTimer >= m_animationArray.size())
 	{
 		m_animationTimer = 0;
+
+		// 攻撃モーションも終了
+		m_isAttacking = false;
 	}
 }
 

@@ -31,7 +31,7 @@ namespace Config
 		// 距離
 		namespace Distance
 		{
-			static inline constexpr float Near{ 10.0f };
+			static inline constexpr float Near{ 6.0f };
 			static inline constexpr float Far{ 12.0f };
 		}
 
@@ -58,7 +58,10 @@ namespace Config
 		static inline constexpr float RotateSpeed{ 10.0f };
 
 		// アニメーション再生速度
-		static inline constexpr float AnimationSpeed{ 8.0f };
+		static inline constexpr float AnimationSpeed{ 10.0f };
+
+		// 入力バッファの制限
+		static inline constexpr uint8 MaxBufferSize{ 2 };
 	}
 
 	namespace Scene

@@ -24,6 +24,11 @@ private:
 
 	const Model mannequinAttack;
 
+	const Model mannequinLiteAttack01;
+	const Model mannequinLiteAttack02;
+	const Model mannequinLiteAttack03;
+	const Model mannequinLiteAttack04;
+
 	const Model mannequinGuard;
 
 public:

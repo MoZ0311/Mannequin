@@ -41,6 +41,12 @@ protected:
 	// アニメーション配列
 	Array<Model> m_animationArray;
 
+	// 攻撃アニメーションのバッファ
+	std::queue<Array<Model>> m_attackInputBuffer;
+
 	// アニメーション制御用のタイマー
 	double m_animationTimer;
+
+	// 攻撃中であるか
+	bool m_isAttacking;
 };

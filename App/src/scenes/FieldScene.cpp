@@ -67,7 +67,7 @@ void FieldScene::draw() const
 
 	if (MouseL.down())
 	{
-		Vec2 effectPostion{ Util::WorldToScreenPosition(m_player.getPlayerPosition(), m_camera) };
+		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getPlayerPosition(), m_camera) };
 		m_effect.add<BubbleEffect>(effectPostion);
 	}
 
