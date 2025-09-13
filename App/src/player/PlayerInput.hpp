@@ -4,6 +4,7 @@
 
 struct PlayerInput
 {
+	// コントローラーのインデックス
 	static inline constexpr uint8 PlayerIndex{ 0 };
 
 	// プレイヤーの移動方向の算出
@@ -55,24 +56,28 @@ struct PlayerInput
 		return Cursor::DeltaF();
 	}
 
+	// 決定ボタンが押されたか
 	static inline bool KeyConfirm()
 	{
 		static const InputGroup confirmKey{ KeySpace | KeyEnter | MouseL | XInput(PlayerIndex).buttonB };
 		return confirmKey.down();
 	}
 
+	// キャンセルボタンが押されたか
 	static inline bool KeyCancel()
 	{
 		static const InputGroup cancelKey{ KeyBackspace | KeyC | MouseR | XInput(PlayerIndex).buttonA };
 		return cancelKey.down();
 	}
 
+	// ダッシュボタンが押されているか
 	static inline bool KeyDash()
 	{
 		const bool pressedDashKey{ KeyShift.pressed() || XInput(PlayerIndex).rightTrigger > Config::TriggerThreshold };
 		return pressedDashKey;
 	}
 
+	// メニューボタンが押されたか
 	static inline bool KeyMenu()
 	{
 		static const InputGroup menuKey{ KeyTab | XInput(PlayerIndex).buttonY };
@@ -85,18 +90,28 @@ struct PlayerInput
 		return stopKey.pressed();
 	}
 
+	// カメラリセットボタンが押されたか
 	static inline bool ResetCamera()
 	{
 		static const InputGroup resetKey{ MouseM | XInput(PlayerIndex).buttonA | XInput(PlayerIndex).buttonRThumb };
 		return resetKey.down();
 	}
 
+	// 弱攻撃ボタンが押されたか
 	static inline bool KeyLiteAttack()
 	{
 		static const InputGroup liteAttackKey{ MouseL | XInput(PlayerIndex).buttonX };
 		return liteAttackKey.down();
 	}
 
+	// 強攻撃ボタンが押されたか
+	static bool KeyHeavyAttack()
+	{
+		static InputGroup heavyAttackKey{ MouseR | XInput(PlayerIndex).buttonY };
+		return heavyAttackKey.down();
+	}
+
+	// ガードボタンが押されているか
 	static inline bool KeyGuard()
 	{
 		const bool guardKey{ KeyR.pressed() || XInput(PlayerIndex).leftTrigger > Config::TriggerThreshold };

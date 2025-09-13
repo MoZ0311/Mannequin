@@ -39,7 +39,11 @@ ModelAssets::ModelAssets()
 	, mannequinLiteAttack08{ U"assets/models/mannequin/mannequin_liteAttack08.obj" }
 	, mannequinLiteAttack09{ U"assets/models/mannequin/mannequin_liteAttack09.obj" }
 	, mannequinLiteAttack10{ U"assets/models/mannequin/mannequin_liteAttack10.obj" }
-	, mannequinLiteAttack11{ U"assets/models/mannequin/mannequin_liteAttack11.obj" }
+
+	, mannequinHeavyAttack01{ U"assets/models/mannequin/mannequin_heavyAttack01.obj" }
+	, mannequinHeavyAttack02{ U"assets/models/mannequin/mannequin_heavyAttack02.obj" }
+	, mannequinHeavyAttack03{ U"assets/models/mannequin/mannequin_heavyAttack03.obj" }
+	, mannequinHeavyAttack04{ U"assets/models/mannequin/mannequin_heavyAttack04.obj" }
 
 	, mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
@@ -81,7 +85,17 @@ ModelAssets::ModelAssets()
 		mannequinLiteAttack08,
 		mannequinLiteAttack09,
 		mannequinLiteAttack10,
-		mannequinLiteAttack11,
+		mannequinLiteAttack10,
+		mannequinLiteAttack10,
+	}
+
+	, heavyAttackAnimationArray01{
+		mannequinHeavyAttack01,
+		mannequinHeavyAttack02,
+		mannequinHeavyAttack03,
+		mannequinHeavyAttack04,
+		mannequinHeavyAttack04,
+		mannequinHeavyAttack04
 	}
 
 	, guardAnimationArray{

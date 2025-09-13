@@ -84,12 +84,36 @@ void PlayerCharacter::handleAttackInput()
 	// コマンドに対応したアニメーションを蓄積
 	if (m_attackInputBuffer.size() < MaxBufferSize)
 	{
-		if (PlayerInput::KeyLiteAttack())
+		if (PlayerInput::KeyHeavyAttack())
+		{
+			// 強攻撃をキューに追加
+			switch (m_currentActionState)
+			{
+			case ActionState::None:		// 非攻撃状態 -> 強派生
+				m_currentActionState = ActionState::None;
+				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
+				break;
+
+			case ActionState::Lite01:	// 弱一段 -> 強派生
+				m_currentActionState = ActionState::Heavy01;
+				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray01);
+				break;
+
+			case ActionState::Lite02:	// 弱二段 -> 強派生
+				m_currentActionState = ActionState::Heavy02;
+				// m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray01);
+				break;
+
+			default:
+				break;
+			}
+		}
+		else if (PlayerInput::KeyLiteAttack())
 		{
 			// 弱攻撃をキューに追加
 			switch (m_currentActionState)
 			{
-			case ActionState::None:	// 非攻撃状態 -> 弱一段
+			case ActionState::None:		// 非攻撃状態 -> 弱一段
 				m_currentActionState = ActionState::Lite01;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray01);
 				break;
