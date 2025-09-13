@@ -22,12 +22,14 @@ private:
 	const Model mannequinWalk07;
 	const Model mannequinWalk08;
 
-	const Model mannequinAttack;
-
 	const Model mannequinLiteAttack01;
 	const Model mannequinLiteAttack02;
 	const Model mannequinLiteAttack03;
 	const Model mannequinLiteAttack04;
+
+	const Model mannequinLiteAttack05;
+	const Model mannequinLiteAttack06;
+	const Model mannequinLiteAttack07;
 
 	const Model mannequinGuard;
 
@@ -48,8 +50,11 @@ public:
 	// 歩行アニメ―ション配列
 	const Array<Model> walkAnimationArray;
 
-	// 攻撃アニメーション配列
-	const Array<Model> attackAnimationArray;
+	// 弱1アニメーション配列
+	const Array<Model> liteAttackAnimationArray01;
+
+	// 弱2アニメーション配列
+	const Array<Model> liteAttackAnimationArray02;
 
 	// ガードアニメーション配列
 	const Array<Model> guardAnimationArray;

@@ -50,18 +50,22 @@ namespace Config
 		// 移動速度
 		namespace MoveSpeed
 		{
-			static inline constexpr float DefaultSpeed{ 10.0f };
-			static inline constexpr float DashSpeed{ 25.0f };
+			static inline constexpr float Default{ 10.0f };
+			static inline constexpr float Sprint{ 25.0f };
 		}
 		
 		// 回転速度
 		static inline constexpr float RotateSpeed{ 10.0f };
 
 		// アニメーション再生速度
-		static inline constexpr float AnimationSpeed{ 10.0f };
+		namespace AnimationSpeed
+		{
+			static inline constexpr float Default{ 8.0f };
+			static inline constexpr float Attack{ 11.0f };
+		}
 
 		// 入力バッファの制限
-		static inline constexpr uint8 MaxBufferSize{ 2 };
+		static inline constexpr uint8 MaxBufferSize{ 1 };
 	}
 
 	namespace Scene

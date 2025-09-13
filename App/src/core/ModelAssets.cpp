@@ -27,12 +27,14 @@ ModelAssets::ModelAssets()
 	, mannequinWalk07{ U"assets/models/mannequin/mannequin_walk07.obj" }
 	, mannequinWalk08{ U"assets/models/mannequin/mannequin_walk08.obj" }
 
-	, mannequinAttack{ U"assets/models/mannequin/mannequin_attack.obj" }
-
 	, mannequinLiteAttack01{ U"assets/models/mannequin/mannequin_liteAttack01.obj" }
 	, mannequinLiteAttack02{ U"assets/models/mannequin/mannequin_liteAttack02.obj" }
 	, mannequinLiteAttack03{ U"assets/models/mannequin/mannequin_liteAttack03.obj" }
 	, mannequinLiteAttack04{ U"assets/models/mannequin/mannequin_liteAttack04.obj" }
+
+	, mannequinLiteAttack05{ U"assets/models/mannequin/mannequin_liteAttack05.obj" }
+	, mannequinLiteAttack06{ U"assets/models/mannequin/mannequin_liteAttack06.obj" }
+	, mannequinLiteAttack07{ U"assets/models/mannequin/mannequin_liteAttack07.obj" }
 
 	, mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
@@ -57,11 +59,17 @@ ModelAssets::ModelAssets()
 		mannequinWalk08
 	}
 
-	, attackAnimationArray{
+	, liteAttackAnimationArray01{
 		mannequinLiteAttack01,
 		mannequinLiteAttack02,
 		mannequinLiteAttack03,
 		mannequinLiteAttack04
+	}
+
+	, liteAttackAnimationArray02{
+		mannequinLiteAttack05,
+		mannequinLiteAttack06,
+		mannequinLiteAttack07
 	}
 
 	, guardAnimationArray{

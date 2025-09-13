@@ -11,21 +11,18 @@ PlayerCharacter::PlayerCharacter()
 	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
 	, m_attackInputBuffer{}
 	, m_animationTimer{ 0.0 }
-	, m_isAttacking{ false }
+	, m_currentActionState{ ActionState::None }
+	, m_hasAttacked{ true }
 {
 
 }
 
 void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
 {
-	// コマンドに対応したアニメーションを蓄積
-	if (PlayerInput::KeyLiteAttack() && m_attackInputBuffer.size() < MaxBufferSize)
-	{
-		m_attackInputBuffer.push(ModelAssets::GetInstance().attackAnimationArray);
-	}
-
 	move(deltaTime, cameraForward);
-	animationUpdate();
+	handleAttackInput();
+	updateActionState();
+	updateAnimation();
 }
 
 void PlayerCharacter::draw() const
@@ -54,13 +51,13 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	// 空間移動ベクトル
 	const Vec3& velocity{ movementVector2D.y * cameraForward + movementVector2D.x * rightVector };
 
-	// 念の為0ベクトルでないかのチェックう
+	// 念の為0ベクトルでないかのチェック
 	if (!velocity.isZero())
 	{
 		// Y軸回転角度を計算
 		const double angleY{ Atan2(velocity.x, velocity.z) };
 
-		if (m_isAttacking)
+		if (m_currentActionState != ActionState::None)
 		{
 			if (m_animationTimer < Scene::DeltaTime())
 			{
@@ -76,21 +73,48 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	}
 
 	// ダッシュ中かの判定
-	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
+	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::Sprint : MoveSpeed::Default };
 
 	// モデル描画位置を移動
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 }
 
-void PlayerCharacter::animationUpdate()
+void PlayerCharacter::handleAttackInput()
 {
-	// アニメーション用のタイマーをカウントアップ
-	m_animationTimer += Scene::DeltaTime() * AnimationSpeed;
+	// コマンドに対応したアニメーションを蓄積
+	if (m_attackInputBuffer.size() < MaxBufferSize)
+	{
+		if (PlayerInput::KeyLiteAttack())
+		{
+			// 弱攻撃をキューに追加
+			switch (m_currentActionState)
+			{
+			case ActionState::None:	// 非攻撃状態 -> 弱一段
+				m_currentActionState = ActionState::Lite01;
+				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray01);
+				break;
 
-	// アニメーション配列を切替
-	
-	// 攻撃中でない
-	if (!m_isAttacking)
+			case ActionState::Lite01:	// 弱一段 -> 弱二段
+				m_currentActionState = ActionState::Lite02;
+				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray02);
+				break;
+
+			case ActionState::Lite02:	// 弱二段 -> 弱三段
+				m_currentActionState = ActionState::Lite03;
+				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray02);
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+}
+
+void PlayerCharacter::updateActionState()
+{
+	// 攻撃モーションが終わっている
+	if (m_hasAttacked)
 	{
 		// バッファが空でない
 		if (!m_attackInputBuffer.empty())
@@ -99,35 +123,49 @@ void PlayerCharacter::animationUpdate()
 			m_attackInputBuffer.pop();
 
 			m_animationTimer = 0;
-			m_isAttacking = true;
+			m_hasAttacked = false;
 		}
 		else if (PlayerInput::KeyGuard())
 		{
+			// ガード中である
 			m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
 		}
 		else if (PlayerInput::GetMovementAxis().isZero())
 		{
+			// 停止中である
 			m_animationArray = ModelAssets::GetInstance().idleAnimationArray;
 		}
 		else
 		{
+			// 攻撃中でもガード中でも停止中でもない -> 移動中である
 			m_animationArray = ModelAssets::GetInstance().walkAnimationArray;
 		}
 	}
+}
+
+void PlayerCharacter::updateAnimation()
+{
+	// アニメーション用のタイマーをカウントアップ
+	const float animationSpeed{ m_currentActionState == ActionState::None ? AnimationSpeed::Default : AnimationSpeed::Attack };
+	m_animationTimer += Scene::DeltaTime() * animationSpeed;
 
 	// 配列の要素数を超える時、リセット
 	if (m_animationTimer >= m_animationArray.size())
 	{
 		m_animationTimer = 0;
+		m_hasAttacked = true;
 
-		// 攻撃モーションも終了
-		m_isAttacking = false;
+		if (m_attackInputBuffer.empty())
+		{
+			// バッファが空であれば、コンボ終了でリセット
+			m_currentActionState = ActionState::None;
+		}
 	}
 }
 
 Vec3 PlayerCharacter::getPlayerPosition() const
 {
-	// 基本姿勢の当たり判定を返す
+	// 基本姿勢の中心点を返す
 	return ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
 }
 

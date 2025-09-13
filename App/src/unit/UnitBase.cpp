@@ -73,7 +73,7 @@ void UnitBase::move(const double deltaTime, const Vec3& cameraForward)
 	}
 
 	// ダッシュ中かの判定
-	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::DashSpeed : MoveSpeed::DefaultSpeed };
+	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::Sprint : MoveSpeed::Default };
 
 	// モデル描画位置を移動
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);

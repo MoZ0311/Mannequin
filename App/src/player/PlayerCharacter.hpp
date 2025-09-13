@@ -5,6 +5,16 @@
 # include "PlayerInput.hpp"
 # include "../util/Util.hpp"
 
+enum class ActionState
+{
+	None,
+	Lite01,
+	Lite02,
+	Lite03,
+	Heavy01,
+	Heavy02,
+};
+
 class PlayerCharacter
 {
 public:
@@ -29,8 +39,14 @@ protected:
 	// 移動処理
 	void move(const double deltaTime, const Vec3& cameraForward);
 
+	// 攻撃コマンドの蓄積処理
+	void handleAttackInput();
+
+	// プレイヤーの状態の更新
+	void updateActionState();
+
 	// アニメーション更新処理
-	void animationUpdate();
+	void updateAnimation();
 
 	// プレイヤーの位置
 	Vec3 m_playerPosition;
@@ -47,6 +63,9 @@ protected:
 	// アニメーション制御用のタイマー
 	double m_animationTimer;
 
-	// 攻撃中であるか
-	bool m_isAttacking;
+	// プレイヤーの状態
+	ActionState m_currentActionState;
+
+	// 攻撃後であるか
+	bool m_hasAttacked;
 };
