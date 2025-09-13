@@ -101,7 +101,7 @@ void PlayerCharacter::handleAttackInput()
 
 			case ActionState::Lite02:	// 弱二段 -> 弱三段
 				m_currentActionState = ActionState::Lite03;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray02);
+				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
 				break;
 
 			default:
