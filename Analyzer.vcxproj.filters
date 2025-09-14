@@ -159,22 +159,10 @@
     <ClCompile Include="App\src\player\CameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\src\scenes\BattleScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="App\src\scenes\OverScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\src\unit\UnitSword.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="App\src\unit\UnitManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="App\src\unit\UnitBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="App\src\unit\UnitArcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\src\ui\UIDrawer.cpp">
@@ -869,25 +857,13 @@
     <ClInclude Include="App\src\player\CameraController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\scenes\BattleScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="App\src\util\Util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\scenes\OverScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\unit\UnitSword.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App\src\unit\UnitManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="App\src\unit\UnitBase.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App\src\unit\UnitArcher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\ui\UIDrawer.hpp">

@@ -38,7 +38,7 @@ void FieldScene::update()
 	// debug
 	if (KeyEnter.down())
 	{
-		changeScene(State::Battle, ChangeDuration);
+		changeScene(State::Over, ChangeDuration);
 	}
 }
 
@@ -52,10 +52,17 @@ void FieldScene::draw() const
 		const ScopedRenderTarget3D target{ m_renderTexture.clear(Field::BackgroundColor.removeSRGBCurve()) };
 		const ScopedRenderStates3D blend{ BlendState::OpaqueAlphaToCoverage };
 
-		Plane{ 64 }.draw(TextureAsset(Assets::UV));
+		Plane{ Vec3{ 0.0, -16.0, 0.0 }, 64 }.draw(TextureAsset(Assets::Floor));	// ゆか
+		Plane{ Vec3{ 0.0, 16.0, -32.0 }, 64 }.draw(Quaternion::RotateX(90_deg), TextureAsset(Assets::Floor));	// 手前の壁
+		Plane{ Vec3{ 0.0, 16.0, 32.0 }, 64 }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::Floor));	// 奥の壁
+		Plane{ Vec3{ -32.0, 16.0, 0.0 }, 64 }.draw(Quaternion::RotateZ(90_deg), TextureAsset(Assets::Floor));	// 左の壁
+		Plane{ Vec3{ 32.0, 16.0, 0.0 }, 64 }.draw(Quaternion::RotateZ(-90_deg), TextureAsset(Assets::Floor));	// 右の壁
+
 
 		// プレイヤーの描画
 		m_player.draw();
+
+		Box::FromPoints(Vec3{ -16, 0, -16 }, Vec3{ 16, -2, 16 }).draw(TextureAsset(Assets::Wood));	// 机
 	}
 
 	// 2Dに転送
@@ -76,7 +83,7 @@ void FieldScene::draw() const
 
 void FieldScene::initLighting() const
 {
-	Graphics3D::SetGlobalAmbientColor(ColorF{ 0.1 });	// 環境光
+	//Graphics3D::SetGlobalAmbientColor(ColorF{ 0.3 });	// 環境光
 	Graphics3D::SetSunColor(ColorF{ 1.0 });				// 平行光
-	Graphics3D::SetSunDirection(Vec3{ 0.3, 1.0, 0.2 }.normalized());
+	Graphics3D::SetSunDirection(Vec3{ 0.25, 0.75, -0.6 }.normalized());
 }

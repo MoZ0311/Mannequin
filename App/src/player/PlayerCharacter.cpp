@@ -7,7 +7,7 @@ using namespace Config::Player;
 
 PlayerCharacter::PlayerCharacter()
 	: m_playerPosition{ 0.0, 0.0, 0.0 }
-	, m_playerRotation{ 0, 0, 0, 0 }
+	, m_playerRotation{ 0.0, 0.0, 0.0, 1.0 }
 	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
 	, m_attackInputBuffer{}
 	, m_animationTimer{ 0.0 }
@@ -32,6 +32,14 @@ void PlayerCharacter::draw() const
 
 	// 対応するアニメーション配列のモデルを描画
 	m_animationArray[index].draw(m_playerPosition, m_playerRotation);
+
+	// 影の描画
+	const Disc shadow{ Vec3{m_playerPosition.x, 0.0001, m_playerPosition.z}, ModelAssets::GetInstance().mannequinRest.boundingSphere().r / 2 };
+	shadow.draw(ColorF{0, 0, 0, 0.5});
+
+	// debug
+	const Vec3& offset{ Vec3::Forward(0.5f) * m_playerRotation };
+	ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation);
 }
 
 void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
@@ -204,5 +212,5 @@ Vec3 PlayerCharacter::getPlayerPosition() const
 
 Quaternion PlayerCharacter::getPlayerRotation() const
 {
-	return m_playerRotation;
+	return m_playerRotation.normalized();
 }

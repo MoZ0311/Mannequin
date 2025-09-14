@@ -119,15 +119,11 @@
     <ClCompile Include="App\src\core\ModelAssets.cpp" />
     <ClCompile Include="App\src\player\CameraController.cpp" />
     <ClCompile Include="App\src\player\PlayerCharacter.cpp" />
-    <ClCompile Include="App\src\scenes\BattleScene.cpp" />
     <ClCompile Include="App\src\scenes\FieldScene.cpp" />
     <ClCompile Include="App\src\scenes\OverScene.cpp" />
     <ClCompile Include="App\src\scenes\TitleScene.cpp" />
     <ClCompile Include="App\src\ui\UIDrawer.cpp" />
-    <ClCompile Include="App\src\unit\UnitArcher.cpp" />
     <ClCompile Include="App\src\unit\UnitBase.cpp" />
-    <ClCompile Include="App\src\unit\UnitManager.cpp" />
-    <ClCompile Include="App\src\unit\UnitSword.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -344,15 +340,11 @@
     <ClInclude Include="App\src\player\CameraController.hpp" />
     <ClInclude Include="App\src\player\PlayerCharacter.hpp" />
     <ClInclude Include="App\src\player\PlayerInput.hpp" />
-    <ClInclude Include="App\src\scenes\BattleScene.hpp" />
     <ClInclude Include="App\src\scenes\FieldScene.hpp" />
     <ClInclude Include="App\src\scenes\OverScene.hpp" />
     <ClInclude Include="App\src\scenes\TitleScene.hpp" />
     <ClInclude Include="App\src\ui\UIDrawer.hpp" />
-    <ClInclude Include="App\src\unit\UnitArcher.hpp" />
     <ClInclude Include="App\src\unit\UnitBase.hpp" />
-    <ClInclude Include="App\src\unit\UnitManager.hpp" />
-    <ClInclude Include="App\src\unit\UnitSword.hpp" />
     <ClInclude Include="App\src\util\EEfectDrawer.hpp" />
     <ClInclude Include="App\src\util\Util.hpp" />
     <ClInclude Include="stdafx.h" />

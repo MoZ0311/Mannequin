@@ -4,7 +4,6 @@
 
 # include "../scenes/TitleScene.hpp"
 # include "../scenes/FieldScene.hpp"
-# include "../scenes/BattleScene.hpp"
 # include "../scenes/OverScene.hpp"
 
 class Application

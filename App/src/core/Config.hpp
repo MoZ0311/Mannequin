@@ -31,7 +31,7 @@ namespace Config
 		// 距離
 		namespace Distance
 		{
-			static inline constexpr float Near{ 6.0f };
+			static inline constexpr float Near{ 7.5f };
 			static inline constexpr float Far{ 12.0f };
 		}
 
@@ -74,19 +74,12 @@ namespace Config
 		{
 			Title,
 			Field,
-			Battle,
 			Over,
-		};
-
-		struct GameData
-		{
-			// 直前のワールド座標
-			Vec3 prevWorldPosition;
 		};
 
 		// シーン遷移の間隔
 		static inline constexpr SecondsF ChangeDuration{ 0.5s };
-		using SceneApp = SceneManager<State, GameData>;
+		using SceneApp = SceneManager<State>;
 
 		namespace Field
 		{
@@ -98,9 +91,10 @@ namespace Config
 
 namespace Assets
 {
-	static inline const String UV{ U"UV" };
 	static inline const String Title{ U"Title" };
 	static inline const String Over{ U"Over" };
+	static inline const String Wood{ U"Wood" };
+	static inline const String Floor{ U"Floor" };
 
 	static inline const String BGM{ U"BGM" };
 	static inline const String Blocking{ U"Blocking" };
@@ -115,9 +109,10 @@ namespace Assets
 	static inline void Register()
 	{
 		// テクスチャのアセット化
-		TextureAsset::Register(UV, U"example/texture/uv.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Title, U"assets/background/title.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Over, U"assets/background/over.png", TextureDesc::MippedSRGB);
+		TextureAsset::Register(Wood, U"assets/background/wood.jpg", TextureDesc::MippedSRGB);
+		TextureAsset::Register(Floor, U"assets/background/floor.jpg", TextureDesc::MippedSRGB);
 
 		// オーディオのアセット化
 		AudioAsset::Register(BGM, Audio::Stream, U"assets/audios/bgm.mp3", Loop::Yes);

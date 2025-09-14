@@ -38,5 +38,5 @@ private:
 	BasicCamera3D m_camera;
 
 	// カメラ操作クラス
-	CameraController m_cameraController;	
+	CameraController m_cameraController;
 };
