@@ -40,6 +40,12 @@ private:
 	const Model mannequinHeavyAttack03;
 	const Model mannequinHeavyAttack04;
 
+	const Model mannequinHeavyAttack05;
+	const Model mannequinHeavyAttack06;
+	const Model mannequinHeavyAttack07;
+	const Model mannequinHeavyAttack08;
+	const Model mannequinHeavyAttack09;
+
 	const Model mannequinGuard;
 
 public:
@@ -70,6 +76,9 @@ public:
 
 	// 弱1強派生アニメーション配列
 	const Array<Model> heavyAttackAnimationArray01;
+
+	// 弱2強派生アニメーション配列
+	const Array<Model> heavyAttackAnimationArray02;
 
 	// ガードアニメーション配列
 	const Array<Model> guardAnimationArray;

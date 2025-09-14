@@ -101,7 +101,7 @@ void PlayerCharacter::handleAttackInput()
 
 			case ActionState::Lite02:	// 弱二段 -> 強派生
 				m_currentActionState = ActionState::Heavy02;
-				// m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray01);
+				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray02);
 				break;
 
 			default:
