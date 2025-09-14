@@ -1,8 +1,10 @@
 ﻿# include "App/src/core/Application.hpp"
+# include "App/src/core/ModelAssets.hpp"
 
 void Main()
 {
 	Assets::Register();
+	ModelAssets::GetInstance();
 	Application app{};
 
 	while (System::Update())
