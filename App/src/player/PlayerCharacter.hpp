@@ -64,7 +64,7 @@ protected:
 	double m_animationTimer;
 
 	// プレイヤーの状態
-	ActionState m_currentActionState;
+	ActionState m_actionState;
 
 	// 攻撃後であるか
 	bool m_hasAttacked;

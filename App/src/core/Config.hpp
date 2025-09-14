@@ -101,6 +101,14 @@ namespace Assets
 	static inline const String UV{ U"UV" };
 	static inline const String Title{ U"Title" };
 	static inline const String Over{ U"Over" };
+
+	static inline const String BGM{ U"BGM" };
+	static inline const String Blocking{ U"Blocking" };
+	static inline const String BlowLite{ U"BlowLite" };
+	static inline const String BlowHeavy{ U"BlowHeavy" };
+	static inline const String Damage{ U"Damage" };
+	static inline const String Guard{ U"Guard" };
+
 	static inline const String Makinas{ U"Makinas" };
 
 	// アセット登録
@@ -110,6 +118,14 @@ namespace Assets
 		TextureAsset::Register(UV, U"example/texture/uv.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Title, U"assets/background/title.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Over, U"assets/background/over.png", TextureDesc::MippedSRGB);
+
+		// オーディオのアセット化
+		AudioAsset::Register(BGM, Audio::Stream, U"assets/audios/bgm.mp3", Loop::Yes);
+		AudioAsset::Register(Blocking, U"assets/audios/blocking.mp3");
+		AudioAsset::Register(BlowLite, U"assets/audios/blow_lite.mp3");
+		AudioAsset::Register(BlowHeavy, U"assets/audios/blow_heavy.mp3");
+		AudioAsset::Register(Damage, U"assets/audios/damage.mp3");
+		AudioAsset::Register(Guard, U"assets/audios/guard.mp3");
 
 		// フォントのアセット化
 		FontAsset::Register(Makinas, FontMethod::MSDF, 48, U"assets/fonts/Makinas-4-Square.otf");

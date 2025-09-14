@@ -7,6 +7,9 @@ void Main()
 	ModelAssets::GetInstance();
 	Application app{};
 
+	// BGMを再生する
+	AudioAsset(Assets::BGM).setVolume(0.25).play();
+
 	while (System::Update())
 	{
 		ClearPrint();

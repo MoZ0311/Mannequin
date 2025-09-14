@@ -11,7 +11,7 @@ PlayerCharacter::PlayerCharacter()
 	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
 	, m_attackInputBuffer{}
 	, m_animationTimer{ 0.0 }
-	, m_currentActionState{ ActionState::None }
+	, m_actionState{ ActionState::None }
 	, m_hasAttacked{ true }
 {
 
@@ -57,7 +57,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 		// Y軸回転角度を計算
 		const double angleY{ Atan2(velocity.x, velocity.z) };
 
-		if (m_currentActionState != ActionState::None)
+		if (m_actionState != ActionState::None)
 		{
 			if (m_animationTimer < Scene::DeltaTime())
 			{
@@ -87,20 +87,20 @@ void PlayerCharacter::handleAttackInput()
 		if (PlayerInput::KeyHeavyAttack())
 		{
 			// 強攻撃をキューに追加
-			switch (m_currentActionState)
+			switch (m_actionState)
 			{
 			case ActionState::None:		// 非攻撃状態 -> 強派生
-				m_currentActionState = ActionState::None;
+				m_actionState = ActionState::None;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
 				break;
 
 			case ActionState::Lite01:	// 弱一段 -> 強派生
-				m_currentActionState = ActionState::Heavy01;
+				m_actionState = ActionState::Heavy01;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray01);
 				break;
 
 			case ActionState::Lite02:	// 弱二段 -> 強派生
-				m_currentActionState = ActionState::Heavy02;
+				m_actionState = ActionState::Heavy02;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray02);
 				break;
 
@@ -111,20 +111,20 @@ void PlayerCharacter::handleAttackInput()
 		else if (PlayerInput::KeyLiteAttack())
 		{
 			// 弱攻撃をキューに追加
-			switch (m_currentActionState)
+			switch (m_actionState)
 			{
 			case ActionState::None:		// 非攻撃状態 -> 弱一段
-				m_currentActionState = ActionState::Lite01;
+				m_actionState = ActionState::Lite01;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray01);
 				break;
 
 			case ActionState::Lite01:	// 弱一段 -> 弱二段
-				m_currentActionState = ActionState::Lite02;
+				m_actionState = ActionState::Lite02;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray02);
 				break;
 
 			case ActionState::Lite02:	// 弱二段 -> 弱三段
-				m_currentActionState = ActionState::Lite03;
+				m_actionState = ActionState::Lite03;
 				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
 				break;
 
@@ -148,6 +148,15 @@ void PlayerCharacter::updateActionState()
 
 			m_animationTimer = 0;
 			m_hasAttacked = false;
+
+			if (m_animationArray == ModelAssets::GetInstance().heavyAttackAnimationArray02)
+			{
+				AudioAsset(Assets::BlowHeavy).playOneShot();
+			}
+			else
+			{
+				AudioAsset(Assets::BlowLite).playOneShot();
+			}
 		}
 		else if (PlayerInput::KeyGuard())
 		{
@@ -170,7 +179,7 @@ void PlayerCharacter::updateActionState()
 void PlayerCharacter::updateAnimation()
 {
 	// アニメーション用のタイマーをカウントアップ
-	const float animationSpeed{ m_currentActionState == ActionState::None ? AnimationSpeed::Default : AnimationSpeed::Attack };
+	const float animationSpeed{ m_actionState == ActionState::None ? AnimationSpeed::Default : AnimationSpeed::Attack };
 	m_animationTimer += Scene::DeltaTime() * animationSpeed;
 
 	// 配列の要素数を超える時、リセット
@@ -182,7 +191,7 @@ void PlayerCharacter::updateAnimation()
 		if (m_attackInputBuffer.empty())
 		{
 			// バッファが空であれば、コンボ終了でリセット
-			m_currentActionState = ActionState::None;
+			m_actionState = ActionState::None;
 		}
 	}
 }
