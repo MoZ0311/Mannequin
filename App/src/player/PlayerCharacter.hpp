@@ -23,7 +23,7 @@ public:
 	PlayerCharacter();
 
 	// 更新処理
-	virtual void update(const double deltaTime, const Vec3& cameraForward);
+	virtual void update(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea);
 
 	// 描画処理
 	void draw() const;
@@ -37,7 +37,7 @@ public:
 protected:
 
 	// 移動処理
-	void move(const double deltaTime, const Vec3& cameraForward);
+	void move(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea);
 
 	// 攻撃コマンドの蓄積処理
 	void handleAttackInput();

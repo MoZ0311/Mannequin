@@ -95,6 +95,10 @@ namespace Assets
 	static inline const String Over{ U"Over" };
 	static inline const String Wood{ U"Wood" };
 	static inline const String Floor{ U"Floor" };
+	static inline const String WallFront{ U"WallFront" };
+	static inline const String WallRear{ U"WallRear" };
+	static inline const String WallLeft{ U"WallLeft" };
+	static inline const String WallRight{ U"WallRight" };
 
 	static inline const String BGM{ U"BGM" };
 	static inline const String Blocking{ U"Blocking" };
@@ -113,6 +117,10 @@ namespace Assets
 		TextureAsset::Register(Over, U"assets/background/over.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Wood, U"assets/background/wood.jpg", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Floor, U"assets/background/floor.jpg", TextureDesc::MippedSRGB);
+		TextureAsset::Register(WallFront, U"assets/background/wall_front.jpg", TextureDesc::MippedSRGB);
+		TextureAsset::Register(WallRear, U"assets/background/wall_rear.jpg", TextureDesc::MippedSRGB);
+		TextureAsset::Register(WallLeft, U"assets/background/wall_left.jpg", TextureDesc::MippedSRGB);
+		TextureAsset::Register(WallRight, U"assets/background/wall_right.jpg", TextureDesc::MippedSRGB);
 
 		// オーディオのアセット化
 		AudioAsset::Register(BGM, Audio::Stream, U"assets/audios/bgm.mp3", Loop::Yes);
@@ -133,7 +141,8 @@ namespace Assets
 	namespace Models
 	{
 		// コライダーの大きさ
-		static inline Vec3 MannequinColliderScale{ 1.0, 1.0, 1.5 };
+		static inline Vec3 MannequinColliderScale{ 0.7, 0.9, 1.5 };
+		static inline Vec3 MannequinBoundingBoxScale{ 1.0, 1.0, 3.5 };
 	}
 }
 

@@ -13,7 +13,7 @@ UnitBase::UnitBase()
 
 }
 
-void UnitBase::update(const double deltaTime, const Vec3& cameraForward)
+void UnitBase::update(const double deltaTime, const Vec3& cameraForward, const Box& fieldBox)
 {
 	if (!m_hasMoved)
 	{

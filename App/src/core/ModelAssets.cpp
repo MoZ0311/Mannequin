@@ -14,108 +14,112 @@ ModelAssets& ModelAssets::GetInstance()
 ModelAssets::ModelAssets()
 	: mannequinRest{ U"assets/models/mannequin/mannequin_rest.obj" }
 
-	, mannequinIdle01{ U"assets/models/mannequin/mannequin_idle01.obj" }
-	, mannequinIdle02{ U"assets/models/mannequin/mannequin_idle02.obj" }
-	, mannequinIdle03{ U"assets/models/mannequin/mannequin_idle03.obj" }
+	, m_mannequinIdle01{ U"assets/models/mannequin/mannequin_idle01.obj" }
+	, m_mannequinIdle02{ U"assets/models/mannequin/mannequin_idle02.obj" }
+	, m_mannequinIdle03{ U"assets/models/mannequin/mannequin_idle03.obj" }
 
-	, mannequinWalk01{ U"assets/models/mannequin/mannequin_walk01.obj" }
-	, mannequinWalk02{ U"assets/models/mannequin/mannequin_walk02.obj" }
-	, mannequinWalk03{ U"assets/models/mannequin/mannequin_walk03.obj" }
-	, mannequinWalk04{ U"assets/models/mannequin/mannequin_walk04.obj" }
-	, mannequinWalk05{ U"assets/models/mannequin/mannequin_walk05.obj" }
-	, mannequinWalk06{ U"assets/models/mannequin/mannequin_walk06.obj" }
-	, mannequinWalk07{ U"assets/models/mannequin/mannequin_walk07.obj" }
-	, mannequinWalk08{ U"assets/models/mannequin/mannequin_walk08.obj" }
+	, m_mannequinWalk01{ U"assets/models/mannequin/mannequin_walk01.obj" }
+	, m_mannequinWalk02{ U"assets/models/mannequin/mannequin_walk02.obj" }
+	, m_mannequinWalk03{ U"assets/models/mannequin/mannequin_walk03.obj" }
+	, m_mannequinWalk04{ U"assets/models/mannequin/mannequin_walk04.obj" }
+	, m_mannequinWalk05{ U"assets/models/mannequin/mannequin_walk05.obj" }
+	, m_mannequinWalk06{ U"assets/models/mannequin/mannequin_walk06.obj" }
+	, m_mannequinWalk07{ U"assets/models/mannequin/mannequin_walk07.obj" }
+	, m_mannequinWalk08{ U"assets/models/mannequin/mannequin_walk08.obj" }
 
-	, mannequinLiteAttack01{ U"assets/models/mannequin/mannequin_liteAttack01.obj" }
-	, mannequinLiteAttack02{ U"assets/models/mannequin/mannequin_liteAttack02.obj" }
-	, mannequinLiteAttack03{ U"assets/models/mannequin/mannequin_liteAttack03.obj" }
-	, mannequinLiteAttack04{ U"assets/models/mannequin/mannequin_liteAttack04.obj" }
+	, m_mannequinLiteAttack01{ U"assets/models/mannequin/mannequin_liteAttack01.obj" }
+	, m_mannequinLiteAttack02{ U"assets/models/mannequin/mannequin_liteAttack02.obj" }
+	, m_mannequinLiteAttack03{ U"assets/models/mannequin/mannequin_liteAttack03.obj" }
+	, m_mannequinLiteAttack04{ U"assets/models/mannequin/mannequin_liteAttack04.obj" }
 
-	, mannequinLiteAttack05{ U"assets/models/mannequin/mannequin_liteAttack05.obj" }
-	, mannequinLiteAttack06{ U"assets/models/mannequin/mannequin_liteAttack06.obj" }
-	, mannequinLiteAttack07{ U"assets/models/mannequin/mannequin_liteAttack07.obj" }
+	, m_mannequinLiteAttack05{ U"assets/models/mannequin/mannequin_liteAttack05.obj" }
+	, m_mannequinLiteAttack06{ U"assets/models/mannequin/mannequin_liteAttack06.obj" }
+	, m_mannequinLiteAttack07{ U"assets/models/mannequin/mannequin_liteAttack07.obj" }
 
-	, mannequinLiteAttack08{ U"assets/models/mannequin/mannequin_liteAttack08.obj" }
-	, mannequinLiteAttack09{ U"assets/models/mannequin/mannequin_liteAttack09.obj" }
-	, mannequinLiteAttack10{ U"assets/models/mannequin/mannequin_liteAttack10.obj" }
+	, m_mannequinLiteAttack08{ U"assets/models/mannequin/mannequin_liteAttack08.obj" }
+	, m_mannequinLiteAttack09{ U"assets/models/mannequin/mannequin_liteAttack09.obj" }
+	, m_mannequinLiteAttack10{ U"assets/models/mannequin/mannequin_liteAttack10.obj" }
 
-	, mannequinHeavyAttack01{ U"assets/models/mannequin/mannequin_heavyAttack01.obj" }
-	, mannequinHeavyAttack02{ U"assets/models/mannequin/mannequin_heavyAttack02.obj" }
-	, mannequinHeavyAttack03{ U"assets/models/mannequin/mannequin_heavyAttack03.obj" }
-	, mannequinHeavyAttack04{ U"assets/models/mannequin/mannequin_heavyAttack04.obj" }
+	, m_mannequinHeavyAttack01{ U"assets/models/mannequin/mannequin_heavyAttack01.obj" }
+	, m_mannequinHeavyAttack02{ U"assets/models/mannequin/mannequin_heavyAttack02.obj" }
+	, m_mannequinHeavyAttack03{ U"assets/models/mannequin/mannequin_heavyAttack03.obj" }
+	, m_mannequinHeavyAttack04{ U"assets/models/mannequin/mannequin_heavyAttack04.obj" }
 
-	, mannequinHeavyAttack05{ U"assets/models/mannequin/mannequin_heavyAttack05.obj" }
-	, mannequinHeavyAttack06{ U"assets/models/mannequin/mannequin_heavyAttack06.obj" }
-	, mannequinHeavyAttack07{ U"assets/models/mannequin/mannequin_heavyAttack07.obj" }
-	, mannequinHeavyAttack08{ U"assets/models/mannequin/mannequin_heavyAttack08.obj" }
-	, mannequinHeavyAttack09{ U"assets/models/mannequin/mannequin_heavyAttack09.obj" }
+	, m_mannequinHeavyAttack05{ U"assets/models/mannequin/mannequin_heavyAttack05.obj" }
+	, m_mannequinHeavyAttack06{ U"assets/models/mannequin/mannequin_heavyAttack06.obj" }
+	, m_mannequinHeavyAttack07{ U"assets/models/mannequin/mannequin_heavyAttack07.obj" }
+	, m_mannequinHeavyAttack08{ U"assets/models/mannequin/mannequin_heavyAttack08.obj" }
+	, m_mannequinHeavyAttack09{ U"assets/models/mannequin/mannequin_heavyAttack09.obj" }
 
-	, mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
+	, m_mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
 	, mannequinCollider{
 		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
 	}
 
+	, mannequinBoundingBox{
+		mannequinRest.boundingBox().scaled(Models::MannequinBoundingBoxScale)
+	}
+
 	, idleAnimationArray{
-		mannequinIdle01,
-		mannequinIdle02,
-		mannequinIdle01,
-		mannequinIdle03,
+		m_mannequinIdle01,
+		m_mannequinIdle02,
+		m_mannequinIdle01,
+		m_mannequinIdle03,
 	}
 	, walkAnimationArray{
-		mannequinWalk01,
-		mannequinWalk02,
-		mannequinWalk03,
-		mannequinWalk04,
-		mannequinWalk05,
-		mannequinWalk06,
-		mannequinWalk07,
-		mannequinWalk08
+		m_mannequinWalk01,
+		m_mannequinWalk02,
+		m_mannequinWalk03,
+		m_mannequinWalk04,
+		m_mannequinWalk05,
+		m_mannequinWalk06,
+		m_mannequinWalk07,
+		m_mannequinWalk08
 	}
 
 	, liteAttackAnimationArray01{
-		mannequinLiteAttack01,
-		mannequinLiteAttack02,
-		mannequinLiteAttack03,
-		mannequinLiteAttack04
+		m_mannequinLiteAttack01,
+		m_mannequinLiteAttack02,
+		m_mannequinLiteAttack03,
+		m_mannequinLiteAttack04
 	}
 
 	, liteAttackAnimationArray02{
-		mannequinLiteAttack05,
-		mannequinLiteAttack06,
-		mannequinLiteAttack07
+		m_mannequinLiteAttack05,
+		m_mannequinLiteAttack06,
+		m_mannequinLiteAttack07
 	}
 
 	, liteAttackAnimationArray03{
-		mannequinLiteAttack08,
-		mannequinLiteAttack09,
-		mannequinLiteAttack10,
-		mannequinLiteAttack10,
-		mannequinLiteAttack10,
+		m_mannequinLiteAttack08,
+		m_mannequinLiteAttack09,
+		m_mannequinLiteAttack10,
+		m_mannequinLiteAttack10,
+		m_mannequinLiteAttack10,
 	}
 
 	, heavyAttackAnimationArray01{
-		mannequinHeavyAttack01,
-		mannequinHeavyAttack02,
-		mannequinHeavyAttack03,
-		mannequinHeavyAttack04,
-		mannequinHeavyAttack04,
-		mannequinHeavyAttack04
+		m_mannequinHeavyAttack01,
+		m_mannequinHeavyAttack02,
+		m_mannequinHeavyAttack03,
+		m_mannequinHeavyAttack04,
+		m_mannequinHeavyAttack04,
+		m_mannequinHeavyAttack04
 	}
 
 	, heavyAttackAnimationArray02{
-		mannequinHeavyAttack05,
-		mannequinHeavyAttack06,
-		mannequinHeavyAttack07,
-		mannequinHeavyAttack08,
-		mannequinHeavyAttack09,
-		mannequinHeavyAttack09,
-		mannequinHeavyAttack09
+		m_mannequinHeavyAttack05,
+		m_mannequinHeavyAttack06,
+		m_mannequinHeavyAttack07,
+		m_mannequinHeavyAttack08,
+		m_mannequinHeavyAttack09,
+		m_mannequinHeavyAttack09,
+		m_mannequinHeavyAttack09
 	}
 
 	, guardAnimationArray{
-		mannequinGuard
+		m_mannequinGuard
 	}
 {
 

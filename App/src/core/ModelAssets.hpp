@@ -9,44 +9,44 @@ private:
 	// コンストラクタ
 	ModelAssets();
 
-	const Model mannequinIdle01;
-	const Model mannequinIdle02;
-	const Model mannequinIdle03;
+	const Model m_mannequinIdle01;
+	const Model m_mannequinIdle02;
+	const Model m_mannequinIdle03;
 
-	const Model mannequinWalk01;
-	const Model mannequinWalk02;
-	const Model mannequinWalk03;
-	const Model mannequinWalk04;
-	const Model mannequinWalk05;
-	const Model mannequinWalk06;
-	const Model mannequinWalk07;
-	const Model mannequinWalk08;
+	const Model m_mannequinWalk01;
+	const Model m_mannequinWalk02;
+	const Model m_mannequinWalk03;
+	const Model m_mannequinWalk04;
+	const Model m_mannequinWalk05;
+	const Model m_mannequinWalk06;
+	const Model m_mannequinWalk07;
+	const Model m_mannequinWalk08;
 
-	const Model mannequinLiteAttack01;
-	const Model mannequinLiteAttack02;
-	const Model mannequinLiteAttack03;
-	const Model mannequinLiteAttack04;
+	const Model m_mannequinLiteAttack01;
+	const Model m_mannequinLiteAttack02;
+	const Model m_mannequinLiteAttack03;
+	const Model m_mannequinLiteAttack04;
 
-	const Model mannequinLiteAttack05;
-	const Model mannequinLiteAttack06;
-	const Model mannequinLiteAttack07;
+	const Model m_mannequinLiteAttack05;
+	const Model m_mannequinLiteAttack06;
+	const Model m_mannequinLiteAttack07;
 
-	const Model mannequinLiteAttack08;
-	const Model mannequinLiteAttack09;
-	const Model mannequinLiteAttack10;
+	const Model m_mannequinLiteAttack08;
+	const Model m_mannequinLiteAttack09;
+	const Model m_mannequinLiteAttack10;
 
-	const Model mannequinHeavyAttack01;
-	const Model mannequinHeavyAttack02;
-	const Model mannequinHeavyAttack03;
-	const Model mannequinHeavyAttack04;
+	const Model m_mannequinHeavyAttack01;
+	const Model m_mannequinHeavyAttack02;
+	const Model m_mannequinHeavyAttack03;
+	const Model m_mannequinHeavyAttack04;
 
-	const Model mannequinHeavyAttack05;
-	const Model mannequinHeavyAttack06;
-	const Model mannequinHeavyAttack07;
-	const Model mannequinHeavyAttack08;
-	const Model mannequinHeavyAttack09;
+	const Model m_mannequinHeavyAttack05;
+	const Model m_mannequinHeavyAttack06;
+	const Model m_mannequinHeavyAttack07;
+	const Model m_mannequinHeavyAttack08;
+	const Model m_mannequinHeavyAttack09;
 
-	const Model mannequinGuard;
+	const Model m_mannequinGuard;
 
 public:
 
@@ -58,6 +58,9 @@ public:
 
 	// マネキンの当たり判定
 	const Box mannequinCollider;
+
+	// マネキンの外側判定
+	const Box mannequinBoundingBox;
 
 	// 待機アニメーション配列
 	const Array<Model> idleAnimationArray;

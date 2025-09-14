@@ -20,7 +20,13 @@ public:
   	// 描画処理
 	void draw() const override;
 
+	// フィールドの見えない壁
+	const Box fieldArea;
+
 private:
+
+	// 部屋の描画
+	void drawRoom() const;
 
 	// 光の設定
 	void initLighting() const;

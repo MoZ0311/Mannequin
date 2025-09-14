@@ -12,7 +12,7 @@ public:
 	UnitBase();
 
 	// 更新処理
-	void update(const double deltaTime, const Vec3& cameraForward) override;
+	void update(const double deltaTime, const Vec3& cameraForward, const Box& fieldBox) override;
 
 	// 描画処理
 	void drawUI() const;
