@@ -35,11 +35,14 @@ public:
 	// プレイヤーの向きの取得
 	const Quaternion getPlayerRotation() const;
 
-	// プレイヤーの外側コライダー取得
+	// プレイヤーの内側コライダー取得
 	const OrientedBox getInsideCollider() const;
 
 	// プレイヤーの外側コライダー取得
 	const OrientedBox getOutsideCollider() const;
+
+	// プレイヤーの攻撃用コライダー取得
+	const OrientedBox getAttackCollider() const;
 
 private:
 

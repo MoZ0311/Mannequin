@@ -2,8 +2,9 @@
 
 # include "TrashManager.hpp"
 
-TrashManager::TrashManager(const Box& fieldArea)
+TrashManager::TrashManager(const Box& fieldArea, const PlayerCharacter& instance)
 	: m_fieldArea{ fieldArea }
+	, m_playerInstance{ instance }
 	, m_generateTimer{ 0.0 }
 	, m_trashObjectArray{}
 	, m_isCollided{ false }
@@ -11,13 +12,13 @@ TrashManager::TrashManager(const Box& fieldArea)
 
 }
 
-void TrashManager::update(const double deltaTime, const OrientedBox& collider)
+void TrashManager::update(const double deltaTime)
 {
 	m_generateTimer -= deltaTime;
 	if (m_trashObjectArray.size() < 5 && m_generateTimer <= 0)
 	{
-		m_generateTimer = 3.0;
-		generateTrash(collider);
+		m_generateTimer = 0.20;
+		generateTrash();
 	}
 
 	// 配列を走査して全要素を更新
@@ -45,14 +46,14 @@ void TrashManager::draw() const
 	}
 }
 
-void TrashManager::generateTrash(const OrientedBox& collider)
+void TrashManager::generateTrash()
 {
 	// ランダムな平面座標を生成
 	Vec3 randomPosition{ RandomVec3(m_fieldArea) };
 	randomPosition.y = 8;
 
 	// unique_ptrとして配列に追加
-	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa, collider));
+	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa, m_playerInstance));
 }
 
 const bool TrashManager::isCollidedPlayer() const

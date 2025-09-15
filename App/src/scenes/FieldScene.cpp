@@ -13,7 +13,7 @@ FieldScene::FieldScene(const InitData& init)
 	, m_player{ m_fieldArea }
 	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
-	, m_trashManager{ m_fieldArea }
+	, m_trashManager{ m_fieldArea, m_player }
 {
 	initLighting();
 
@@ -38,7 +38,7 @@ void FieldScene::update()
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
 	// 生成クラスの更新
-	m_trashManager.update(deltaTime, m_player.getOutsideCollider());
+	m_trashManager.update(deltaTime);
 
 	// debug
 	if (KeyEnter.down())

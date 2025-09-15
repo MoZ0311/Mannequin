@@ -9,7 +9,7 @@ class TrashObject
 public:
 
 	// コンストラクタ
-	TrashObject(const Vec3& position, const Model& model, const OrientedBox& collider);
+	TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance);
 
 	// 更新処理
 	void update(const double deltaTime);
@@ -20,10 +20,13 @@ public:
 	// プレイヤーに接触したか
 	const bool isCollidedPlayer() const;
 
+	// 攻撃を受けたか
+	const bool isDamaged() const;
+
 private:
 
-	// プレイヤーの外側コライダーのインスタンス
-	const OrientedBox& m_playerOutsidecollider;
+	// プレイヤーのインスタンス
+	const PlayerCharacter& m_playerInstance;
 
 	// 現在位置
 	Vec3 m_position;

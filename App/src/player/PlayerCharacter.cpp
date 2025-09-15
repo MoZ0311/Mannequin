@@ -39,12 +39,7 @@ void PlayerCharacter::draw() const
 	shadow.draw(ColorF{0, 0, 0, 0.5});
 
 	// debug
-	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
-	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
-	m_modelAssets.mannequinInsideCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation, ColorF{ 1.0, 0.0, 0.0, 0.5 });	// 攻撃判定
-
-	// getInsideCollider().draw(ColorF{0.0, 1.0, 0.0, 0.5});	// 本人のアタリ判定
-	getOutsideCollider().draw(ColorF{1.0, 0.5});
+	getAttackCollider().draw(ColorF{ 1.0, 0.0, 0.0, 0.5 });
 }
 
 void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, const bool isCollided)
@@ -237,4 +232,11 @@ const OrientedBox PlayerCharacter::getInsideCollider() const
 const OrientedBox PlayerCharacter::getOutsideCollider() const
 {
 	return m_modelAssets.mannequinOutsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition);
+}
+
+const OrientedBox PlayerCharacter::getAttackCollider() const
+{
+	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
+	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
+	return m_modelAssets.mannequinInsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition + offset);
 }

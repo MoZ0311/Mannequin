@@ -11,10 +11,10 @@ class TrashManager
 public:
 
 	// コンストラクタ
-	TrashManager(const Box& fieldArea);
+	TrashManager(const Box& fieldArea, const PlayerCharacter& instance);
 
 	// 更新処理
-	void update(const double deltaTime, const OrientedBox& collider);
+	void update(const double deltaTime);
 
 	// 描画処理
 	void draw() const;
@@ -25,10 +25,13 @@ public:
 private:
 
 	// ゴミの生成処理
-	void generateTrash(const OrientedBox& collider);
+	void generateTrash();
 
 	// 生成範囲
 	const Box& m_fieldArea;
+
+	// プレイヤーのインスタンス
+	const PlayerCharacter& m_playerInstance;
 
 	// プレイヤーとゴミの接触
 	bool m_isCollided;
