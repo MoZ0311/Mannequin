@@ -59,10 +59,10 @@ public:
 	const Model mannequinRest;
 
 	// マネキンの当たり判定
-	const Box mannequinCollider;
+	const Box mannequinInsideCollider;
 
 	// マネキンの外側判定
-	const Box mannequinBoundingBox;
+	const Box mannequinOutsideCollider;
 
 	// 待機アニメーション配列
 	const Array<Model> idleAnimationArray;

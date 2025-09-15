@@ -2,15 +2,15 @@
 
 # include "TrashObject.hpp"
 
-TrashObject::TrashObject(const Vec3& position, const Model& model)
-	: m_position{ position }
+TrashObject::TrashObject(const Vec3& position, const Model& model, const OrientedBox& collider)
+	: m_playerOutsidecollider{ collider }
+	, m_position{ position }
 	, m_rotation{ Random(360_deg) }
 	, m_model{ model }
 {
 
 }
 
-// 更新処理
 void TrashObject::update(const double dettaTime)
 {
 	if (m_position.y > 0)
@@ -23,8 +23,12 @@ void TrashObject::update(const double dettaTime)
 	}
 }
 
-// 描画処理
 void TrashObject::draw() const
 {
 	m_model.draw(m_position, Quaternion::RotateY(m_rotation));
+}
+
+const bool TrashObject::isCollidedPlayer() const
+{
+	return m_model.boundingBox().movedBy(m_position).intersects(m_playerOutsidecollider);
 }

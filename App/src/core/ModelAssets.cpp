@@ -54,11 +54,11 @@ ModelAssets::ModelAssets()
 
 	, qpKowa{ U"assets/models/kowa.obj" }
 
-	, mannequinCollider{
+	, mannequinInsideCollider{
 		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
 	}
 
-	, mannequinBoundingBox{
+	, mannequinOutsideCollider{
 		mannequinRest.boundingBox().scaled(Models::MannequinBoundingBoxScale)
 	}
 

@@ -18,9 +18,9 @@ PlayerCharacter::PlayerCharacter(const Box& fieldArea)
 
 }
 
-void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
+void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward, const bool isCollided)
 {	
-	move(deltaTime, cameraForward);	
+	move(deltaTime, cameraForward, isCollided);	
 	handleAttackInput();
 	updateActionState();
 	updateAnimation();
@@ -41,12 +41,13 @@ void PlayerCharacter::draw() const
 	// debug
 	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
 	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
-	m_modelAssets.mannequinCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation, ColorF{ 1.0, 0.0, 0.0, 0.5 });	// 攻撃判定
+	m_modelAssets.mannequinInsideCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation, ColorF{ 1.0, 0.0, 0.0, 0.5 });	// 攻撃判定
 
-	m_modelAssets.mannequinCollider.movedBy(m_playerPosition).draw(m_playerRotation, ColorF{ 0.0, 1.0, 0.0, 0.5 });	// 本人のアタリ判定
+	// getInsideCollider().draw(ColorF{0.0, 1.0, 0.0, 0.5});	// 本人のアタリ判定
+	getOutsideCollider().draw(ColorF{1.0, 0.5});
 }
 
-void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
+void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, const bool isCollided)
 {
 	// 平面移動ベクトル(x : 左右, y : 前後)
 	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
@@ -93,8 +94,8 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 	// モデル描画位置を移動
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 
-	// エリアからはみ出したとき、直前座標に戻す
-	if (!m_fieldArea.contains(m_modelAssets.mannequinBoundingBox.oriented(m_playerRotation).movedBy(m_playerPosition)))
+	// エリアからはみ出したとき、またはゴミに触れた時、直前座標に戻す
+	if (!m_fieldArea.contains(getOutsideCollider()) || isCollided)
 	{
 		m_playerPosition = prevPosition;
 	}
@@ -217,13 +218,23 @@ void PlayerCharacter::updateAnimation()
 	}
 }
 
-Vec3 PlayerCharacter::getPlayerPosition() const
+const Vec3 PlayerCharacter::getPlayerPosition() const
 {
 	// 基本姿勢の中心点を返す
-	return m_modelAssets.mannequinCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
+	return m_modelAssets.mannequinInsideCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
 }
 
-Quaternion PlayerCharacter::getPlayerRotation() const
+const Quaternion PlayerCharacter::getPlayerRotation() const
 {
 	return m_playerRotation.normalized();
+}
+
+const OrientedBox PlayerCharacter::getInsideCollider() const
+{
+	return m_modelAssets.mannequinInsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition);
+}
+
+const OrientedBox PlayerCharacter::getOutsideCollider() const
+{
+	return m_modelAssets.mannequinOutsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition);
 }

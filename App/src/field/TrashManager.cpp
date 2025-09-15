@@ -6,24 +6,34 @@ TrashManager::TrashManager(const Box& fieldArea)
 	: m_fieldArea{ fieldArea }
 	, m_generateTimer{ 0.0 }
 	, m_trashObjectArray{}
+	, m_isCollided{ false }
 {
 
 }
 
-void TrashManager::update(const double deltaTime)
+void TrashManager::update(const double deltaTime, const OrientedBox& collider)
 {
 	m_generateTimer -= deltaTime;
 	if (m_trashObjectArray.size() < 5 && m_generateTimer <= 0)
 	{
 		m_generateTimer = 3.0;
-		generateTrash();
+		generateTrash(collider);
 	}
 
 	// 配列を走査して全要素を更新
 	for (const auto& trash : m_trashObjectArray)
 	{
 		trash->update(deltaTime);
+
+		// プレイヤーとの接触時
+		if (trash->isCollidedPlayer())
+		{
+			m_isCollided = true;
+			return;
+		}
 	}
+
+	m_isCollided = false;
 }
 
 void TrashManager::draw() const
@@ -35,11 +45,17 @@ void TrashManager::draw() const
 	}
 }
 
-void TrashManager::generateTrash()
+void TrashManager::generateTrash(const OrientedBox& collider)
 {
 	// ランダムな平面座標を生成
 	Vec3 randomPosition{ RandomVec3(m_fieldArea) };
 	randomPosition.y = 8;
 
-	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa));
+	// unique_ptrとして配列に追加
+	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa, collider));
+}
+
+const bool TrashManager::isCollidedPlayer() const
+{
+	return m_isCollided;
 }

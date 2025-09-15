@@ -32,16 +32,13 @@ void FieldScene::update()
 	Cursor::SetPos(Scene::Center());
 
 	// プレイヤーの更新
-	m_player.update(deltaTime, m_cameraController.getCameraForward());
+	m_player.update(deltaTime, m_cameraController.getCameraForward(), m_trashManager.isCollidedPlayer());
 
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
 	// 生成クラスの更新
-	m_trashManager.update(deltaTime);
-
-
-	// ModelAssets::GetInstance().mannequinBoundingBox.oriented(m_player.getPlayerRotation()).movedBy(m_player.getPlayerPosition()).intersects()
+	m_trashManager.update(deltaTime, m_player.getOutsideCollider());
 
 	// debug
 	if (KeyEnter.down())

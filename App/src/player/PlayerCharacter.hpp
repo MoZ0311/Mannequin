@@ -4,7 +4,7 @@
 
 # include "PlayerInput.hpp"
 # include "../util/Util.hpp"
-#include "../core/ModelAssets.hpp"
+# include "../core/ModelAssets.hpp"
 
 enum class ActionState
 {
@@ -24,21 +24,27 @@ public:
 	PlayerCharacter(const Box& fieldArea);
 
 	// 更新処理
-	virtual void update(const double deltaTime, const Vec3& cameraForward);
+	virtual void update(const double deltaTime, const Vec3& cameraForward, const bool isCollided);
 
 	// 描画処理
 	void draw() const;
 
 	// プレイヤー座標の取得
-	Vec3 getPlayerPosition() const;
+	const Vec3 getPlayerPosition() const;
 
 	// プレイヤーの向きの取得
-	Quaternion getPlayerRotation() const;
+	const Quaternion getPlayerRotation() const;
 
-protected:
+	// プレイヤーの外側コライダー取得
+	const OrientedBox getInsideCollider() const;
+
+	// プレイヤーの外側コライダー取得
+	const OrientedBox getOutsideCollider() const;
+
+private:
 
 	// 移動処理
-	void move(const double deltaTime, const Vec3& cameraForward);
+	void move(const double deltaTime, const Vec3& cameraForward, const bool isCollided);
 
 	// 攻撃コマンドの蓄積処理
 	void handleAttackInput();
