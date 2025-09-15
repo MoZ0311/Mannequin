@@ -3,7 +3,6 @@
 # pragma once
 
 # include "../core/Config.hpp"
-# include "../unit/UnitBase.hpp"
 
 class UIDrawer
 {
@@ -16,7 +15,7 @@ public:
 	~UIDrawer();
 
 	// 更新処理
-	void update(const UnitBase* unitBase);
+	void update(const double deltaTime);
 
 	// 描画処理
 	void draw() const;

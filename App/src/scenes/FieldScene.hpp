@@ -33,7 +33,7 @@ private:
 	const MSRenderTexture m_renderTexture;
 
 	// フィールドの見えない壁
-	const Box fieldArea;
+	const Box m_fieldArea;
 
 	// エフェクト
 	Effect m_effect;
@@ -47,6 +47,6 @@ private:
 	// カメラ操作クラス
 	CameraController m_cameraController;
 
-	// ゴミ生成クラス
-	TrashManager& m_trashGenerator;
+	// オブジェクト管理クラス
+	TrashManager m_trashManager;
 };

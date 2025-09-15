@@ -4,11 +4,12 @@
 
 using namespace Config::Player;
 
-PlayerCharacter::PlayerCharacter()
+PlayerCharacter::PlayerCharacter(const Box& fieldArea)
 	: m_modelAssets{ ModelAssets::GetInstance() }
+	, m_fieldArea{ fieldArea }
 	, m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0.0, 0.0, 0.0, 1.0 }
-	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
+	, m_animationArray{ m_modelAssets.idleAnimationArray }
 	, m_attackInputBuffer{}
 	, m_animationTimer{ 0.0 }
 	, m_actionState{ ActionState::None }
@@ -17,9 +18,9 @@ PlayerCharacter::PlayerCharacter()
 
 }
 
-void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea)
+void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward)
 {	
-	move(deltaTime, cameraForward, fieldArea);	
+	move(deltaTime, cameraForward);	
 	handleAttackInput();
 	updateActionState();
 	updateAnimation();
@@ -45,7 +46,7 @@ void PlayerCharacter::draw() const
 	m_modelAssets.mannequinCollider.movedBy(m_playerPosition).draw(m_playerRotation, ColorF{ 0.0, 1.0, 0.0, 0.5 });	// 本人のアタリ判定
 }
 
-void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea)
+void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward)
 {
 	// 平面移動ベクトル(x : 左右, y : 前後)
 	const Vec2& movementVector2D{ PlayerInput::GetMovementAxis() };
@@ -93,7 +94,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, co
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 
 	// エリアからはみ出したとき、直前座標に戻す
-	if (!fieldArea.contains(m_modelAssets.mannequinBoundingBox.oriented(m_playerRotation).movedBy(m_playerPosition)))
+	if (!m_fieldArea.contains(m_modelAssets.mannequinBoundingBox.oriented(m_playerRotation).movedBy(m_playerPosition)))
 	{
 		m_playerPosition = prevPosition;
 	}

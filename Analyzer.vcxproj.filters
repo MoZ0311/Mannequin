@@ -162,9 +162,6 @@
     <ClCompile Include="App\src\scenes\OverScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\src\unit\UnitBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="App\src\ui\UIDrawer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -867,9 +864,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\scenes\OverScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App\src\unit\UnitBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\ui\UIDrawer.hpp">

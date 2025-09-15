@@ -7,13 +7,13 @@ using namespace Config::Camera;
 
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
-	, fieldArea{ 32 }
+	, m_fieldArea{ 32 }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_effect{}
-	, m_player{}
+	, m_player{ m_fieldArea }
 	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
-	, m_trashGenerator{ TrashManager::GetInstance()}
+	, m_trashManager{ m_fieldArea }
 {
 	initLighting();
 
@@ -32,13 +32,16 @@ void FieldScene::update()
 	Cursor::SetPos(Scene::Center());
 
 	// プレイヤーの更新
-	m_player.update(deltaTime, m_cameraController.getCameraForward(), fieldArea);
+	m_player.update(deltaTime, m_cameraController.getCameraForward());
 
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
 	// 生成クラスの更新
-	m_trashGenerator.update(deltaTime, fieldArea);
+	m_trashManager.update(deltaTime);
+
+
+	// ModelAssets::GetInstance().mannequinBoundingBox.oriented(m_player.getPlayerRotation()).movedBy(m_player.getPlayerPosition()).intersects()
 
 	// debug
 	if (KeyEnter.down())
@@ -63,7 +66,7 @@ void FieldScene::draw() const
 		m_player.draw();
 
 		// その他3Dオブジェクトの描画
-		m_trashGenerator.draw();
+		m_trashManager.draw();
 	}
 
 	// 2Dに転送

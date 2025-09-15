@@ -10,22 +10,22 @@ class TrashManager
 {
 public:
 
-	// インスタンスの取得
-	static TrashManager& GetInstance();
+	// コンストラクタ
+	TrashManager(const Box& fieldArea);
 
 	// 更新処理
-	void update(const double deltaTime, const Box& fieldArea);
+	void update(const double deltaTime);
 
 	// 描画処理
 	void draw() const;
 
 private:
 
-	// コンストラクタ
-	TrashManager();
-
 	// ゴミの生成処理
-	void generateTrash(const Box& fieldArea);
+	void generateTrash();
+
+	// 生成範囲
+	const Box& m_fieldArea;
 
 	// 生成タイマー
 	double m_generateTimer;

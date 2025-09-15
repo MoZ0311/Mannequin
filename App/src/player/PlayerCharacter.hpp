@@ -21,10 +21,10 @@ class PlayerCharacter
 public:
 
 	// コンストラクタ
-	PlayerCharacter();
+	PlayerCharacter(const Box& fieldArea);
 
 	// 更新処理
-	virtual void update(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea);
+	virtual void update(const double deltaTime, const Vec3& cameraForward);
 
 	// 描画処理
 	void draw() const;
@@ -38,7 +38,7 @@ public:
 protected:
 
 	// 移動処理
-	void move(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea);
+	void move(const double deltaTime, const Vec3& cameraForward);
 
 	// 攻撃コマンドの蓄積処理
 	void handleAttackInput();
@@ -51,6 +51,9 @@ protected:
 
 	// モデルアセットクラスのインスタンス
 	const ModelAssets& m_modelAssets;
+
+	// 行動範囲
+	const Box& m_fieldArea;
 
 	// プレイヤーの位置
 	Vec3 m_playerPosition;

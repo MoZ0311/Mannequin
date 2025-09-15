@@ -18,10 +18,10 @@ UIDrawer::~UIDrawer()
 
 }
 
-void UIDrawer::update(const UnitBase* unitBase)
+void UIDrawer::update(const double deltaTime)
 {
-	m_maxUnitHp = unitBase->getMaxHp();
-	m_currentUnitHp = unitBase->getCurrentHp();
+	m_maxUnitHp = (uint8)deltaTime;
+	// m_currentUnitHp = unitBase->getCurrentHp();
 }
 
 void UIDrawer::draw() const
