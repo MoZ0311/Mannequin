@@ -1,6 +1,6 @@
 ﻿// Unitbase class
 
-#pragma once
+# pragma once
 
 # include "../player/PlayerCharacter.hpp"
 

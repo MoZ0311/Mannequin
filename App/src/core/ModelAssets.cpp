@@ -53,6 +53,8 @@ ModelAssets::ModelAssets()
 
 	, m_mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
+	, qpKowa{ U"assets/models/kowa.obj" }
+
 	, mannequinCollider{
 		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
 	}

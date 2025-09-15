@@ -117,6 +117,8 @@
   <ItemGroup>
     <ClCompile Include="App\src\core\Application.cpp" />
     <ClCompile Include="App\src\core\ModelAssets.cpp" />
+    <ClCompile Include="App\src\field\TrashGenerator.cpp" />
+    <ClCompile Include="App\src\field\TrashObject.cpp" />
     <ClCompile Include="App\src\player\CameraController.cpp" />
     <ClCompile Include="App\src\player\PlayerCharacter.cpp" />
     <ClCompile Include="App\src\scenes\FieldScene.cpp" />
@@ -337,6 +339,8 @@
     <ClInclude Include="App\src\core\Application.hpp" />
     <ClInclude Include="App\src\core\Config.hpp" />
     <ClInclude Include="App\src\core\ModelAssets.hpp" />
+    <ClInclude Include="App\src\field\TrashGenerator.hpp" />
+    <ClInclude Include="App\src\field\TrashObject.hpp" />
     <ClInclude Include="App\src\player\CameraController.hpp" />
     <ClInclude Include="App\src\player\PlayerCharacter.hpp" />
     <ClInclude Include="App\src\player\PlayerInput.hpp" />

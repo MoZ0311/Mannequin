@@ -1,6 +1,6 @@
 ﻿// UIDrawer class
 
-#pragma once
+# pragma once
 
 # include "../core/Config.hpp"
 # include "../unit/UnitBase.hpp"

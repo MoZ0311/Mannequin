@@ -1,6 +1,6 @@
 ﻿// ModelAssets class
 
-#pragma once
+# pragma once
 
 class ModelAssets
 {
@@ -85,4 +85,8 @@ public:
 
 	// ガードアニメーション配列
 	const Array<Model> guardAnimationArray;
+
+
+	// 9Pコーワのモデル
+	const Model qpKowa;
 };

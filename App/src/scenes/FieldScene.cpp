@@ -10,9 +10,10 @@ FieldScene::FieldScene(const InitData& init)
 	, fieldArea{ 32 }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_effect{}
+	, m_player{}
 	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
-	, m_player{}
+	, m_trashGenerator{}
 {
 	initLighting();
 
@@ -36,6 +37,9 @@ void FieldScene::update()
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
+	// 生成クラスの更新
+	m_trashGenerator.update(deltaTime, fieldArea);
+
 	// debug
 	if (KeyEnter.down())
 	{
@@ -57,6 +61,9 @@ void FieldScene::draw() const
 
 		// プレイヤーの描画
 		m_player.draw();
+
+		// その他3Dオブジェクトの描画
+		m_trashGenerator.draw();
 	}
 
 	// 2Dに転送

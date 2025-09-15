@@ -171,6 +171,12 @@
     <ClCompile Include="App\src\core\ModelAssets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="App\src\field\TrashObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\field\TrashGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -873,6 +879,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\util\EEfectDrawer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\field\TrashGenerator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\field\TrashObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

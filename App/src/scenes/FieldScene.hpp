@@ -5,6 +5,7 @@
 # include "../core/Config.hpp"
 # include "../player/PlayerCharacter.hpp"
 # include "../player/CameraController.hpp"
+# include "../field/TrashGenerator.hpp"
 # include "../util/EEfectDrawer.hpp"
 
 class FieldScene : public Config::Scene::SceneApp::Scene
@@ -20,9 +21,6 @@ public:
   	// 描画処理
 	void draw() const override;
 
-	// フィールドの見えない壁
-	const Box fieldArea;
-
 private:
 
 	// 部屋の描画
@@ -33,6 +31,9 @@ private:
 
 	// レンダーテクスチャ
 	const MSRenderTexture m_renderTexture;
+
+	// フィールドの見えない壁
+	const Box fieldArea;
 
 	// エフェクト
 	Effect m_effect;
@@ -45,4 +46,7 @@ private:
 
 	// カメラ操作クラス
 	CameraController m_cameraController;
+
+	// ゴミ生成クラス
+	TrashGenerator m_trashGenerator;
 };
