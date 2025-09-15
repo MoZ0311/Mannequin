@@ -55,6 +55,9 @@ public:
 	// インスタンスの取得
 	static ModelAssets& GetInstance();
 
+	// 9Pコーワのモデル
+	const Model qpKowa;
+
 	// 棒立ち状態のモデル
 	const Model mannequinRest;
 
@@ -88,7 +91,6 @@ public:
 	// ガードアニメーション配列
 	const Array<Model> guardAnimationArray;
 
-
-	// 9Pコーワのモデル
-	const Model qpKowa;
+	// 攻撃判定を持つモデルの配列
+	const Array<Model> attackingModelArray;
 };

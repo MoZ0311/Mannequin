@@ -44,6 +44,9 @@ public:
 	// プレイヤーの攻撃用コライダー取得
 	const OrientedBox getAttackCollider() const;
 
+	// プレイヤーの現在のモデル取得
+	const Model& getCurrentModel() const;
+
 private:
 
 	// 移動処理
@@ -75,6 +78,9 @@ private:
 
 	// 攻撃アニメーションのバッファ
 	std::queue<Array<Model>> m_attackInputBuffer;
+
+	// アニメーション配列のインデックス
+	uint8 m_animationIndex;
 
 	// アニメーション制御用のタイマー
 	double m_animationTimer;

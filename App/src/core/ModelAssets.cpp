@@ -11,7 +11,9 @@ ModelAssets& ModelAssets::GetInstance()
 }
 
 ModelAssets::ModelAssets()
-	: mannequinRest{ U"assets/models/mannequin/mannequin_rest.obj" }
+	: qpKowa{ U"assets/models/kowa.obj" }
+
+	, mannequinRest{ U"assets/models/mannequin/mannequin_rest.obj" }
 
 	, m_mannequinIdle01{ U"assets/models/mannequin/mannequin_idle01.obj" }
 	, m_mannequinIdle02{ U"assets/models/mannequin/mannequin_idle02.obj" }
@@ -51,8 +53,6 @@ ModelAssets::ModelAssets()
 	, m_mannequinHeavyAttack09{ U"assets/models/mannequin/mannequin_heavyAttack09.obj" }
 
 	, m_mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
-
-	, qpKowa{ U"assets/models/kowa.obj" }
 
 	, mannequinInsideCollider{
 		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
@@ -121,6 +121,16 @@ ModelAssets::ModelAssets()
 
 	, guardAnimationArray{
 		m_mannequinGuard
+	}
+
+	, attackingModelArray{
+		m_mannequinLiteAttack03,
+		m_mannequinLiteAttack06,
+		m_mannequinLiteAttack10,
+		m_mannequinHeavyAttack03,
+		m_mannequinHeavyAttack04,
+		m_mannequinHeavyAttack08,
+		m_mannequinHeavyAttack09
 	}
 {
 

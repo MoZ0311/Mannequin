@@ -7,10 +7,11 @@ using namespace Config::Player;
 PlayerCharacter::PlayerCharacter(const Box& fieldArea)
 	: m_modelAssets{ ModelAssets::GetInstance() }
 	, m_fieldArea{ fieldArea }
-	, m_playerPosition{ 0.0, 0.0, 0.0 }
-	, m_playerRotation{ 0.0, 0.0, 0.0, 1.0 }
+	, m_playerPosition{ Vec3::Zero()}
+	, m_playerRotation{ Quaternion::Identity() }
 	, m_animationArray{ m_modelAssets.idleAnimationArray }
 	, m_attackInputBuffer{}
+	, m_animationIndex{ 0 }
 	, m_animationTimer{ 0.0 }
 	, m_actionState{ ActionState::None }
 	, m_hasAttacked{ true }
@@ -28,11 +29,8 @@ void PlayerCharacter::update(const double deltaTime, const Vec3& cameraForward, 
 
 void PlayerCharacter::draw() const
 {
-	// double型のタイマーを切り捨てて整数値に
-	uint8 index{ static_cast<uint8>(Floor(m_animationTimer)) };
-
 	// 対応するアニメーション配列のモデルを描画
-	m_animationArray[index].draw(m_playerPosition, m_playerRotation);
+	m_animationArray[m_animationIndex].draw(m_playerPosition, m_playerRotation);
 
 	// 影の描画
 	const Disc shadow{ Vec3{m_playerPosition.x, 0.0001, m_playerPosition.z}, m_modelAssets.mannequinRest.boundingSphere().r / 2 };
@@ -83,17 +81,14 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, co
 	// ダッシュ中かの判定
 	const float moveSpeed{ PlayerInput::KeyDash() ? MoveSpeed::Sprint : MoveSpeed::Default };
 
-	// 直前の自身の座標をキャッシュ
-	const Vec3 prevPosition{ m_playerPosition };
+	// エリアからはみ出したとき、またはゴミに触れた時、移動せずreturn
+	if (!m_fieldArea.contains(getOutsideCollider()) || isCollided)
+	{
+		return;
+	}
 
 	// モデル描画位置を移動
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
-
-	// エリアからはみ出したとき、またはゴミに触れた時、直前座標に戻す
-	if (!m_fieldArea.contains(getOutsideCollider()) || isCollided)
-	{
-		m_playerPosition = prevPosition;
-	}
 }
 
 void PlayerCharacter::handleAttackInput()
@@ -199,10 +194,14 @@ void PlayerCharacter::updateAnimation()
 	const float animationSpeed{ m_actionState == ActionState::None ? AnimationSpeed::Default : AnimationSpeed::Attack };
 	m_animationTimer += Scene::DeltaTime() * animationSpeed;
 
+	// double型のタイマーを切り捨てて整数値に
+	m_animationIndex = static_cast<uint8>(Floor(m_animationTimer));
+
 	// 配列の要素数を超える時、リセット
-	if (m_animationTimer >= m_animationArray.size())
+	if (m_animationIndex >= m_animationArray.size())
 	{
 		m_animationTimer = 0;
+		m_animationIndex = 0;
 		m_hasAttacked = true;
 
 		if (m_attackInputBuffer.empty())
@@ -239,4 +238,9 @@ const OrientedBox PlayerCharacter::getAttackCollider() const
 	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
 	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
 	return m_modelAssets.mannequinInsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition + offset);
+}
+
+const Model& PlayerCharacter::getCurrentModel() const
+{
+	return m_animationArray[m_animationIndex];
 }

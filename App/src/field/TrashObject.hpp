@@ -3,6 +3,7 @@
 # pragma once
 
 # include "../player/PlayerCharacter.hpp"
+# include "../core/ModelAssets.hpp"
 
 class TrashObject
 {
@@ -21,12 +22,18 @@ public:
 	const bool isCollidedPlayer() const;
 
 	// 攻撃を受けたか
-	const bool isDamaged() const;
+	const bool isDamaged(const Model& model) const;
+
+	// 地面についたか
+	const bool isGrounded() const;
 
 private:
 
 	// プレイヤーのインスタンス
 	const PlayerCharacter& m_playerInstance;
+
+	// 現在速度
+	Vec3 m_velocity;
 
 	// 現在位置
 	Vec3 m_position;

@@ -15,26 +15,35 @@ TrashManager::TrashManager(const Box& fieldArea, const PlayerCharacter& instance
 void TrashManager::update(const double deltaTime)
 {
 	m_generateTimer -= deltaTime;
-	if (m_trashObjectArray.size() < 5 && m_generateTimer <= 0)
+	if (m_trashObjectArray.size() < 3 && m_generateTimer <= 0)
 	{
 		m_generateTimer = 0.20;
 		generateTrash();
+	}
+
+	// イテレーターを回して落ちたオブジェクトを破棄
+	for (auto it{ m_trashObjectArray.begin() }; it != m_trashObjectArray.end();)
+	{
+		if (it->get()->isGrounded())
+		{
+			it = m_trashObjectArray.erase(it);
+		}
+		else
+		{
+			++it;
+		}
 	}
 
 	// 配列を走査して全要素を更新
 	for (const auto& trash : m_trashObjectArray)
 	{
 		trash->update(deltaTime);
-
-		// プレイヤーとの接触時
-		if (trash->isCollidedPlayer())
-		{
-			m_isCollided = true;
-			return;
-		}
 	}
 
-	m_isCollided = false;
+	// プレイヤーに触れたオブジェクトがあったか
+	m_isCollided = m_trashObjectArray.any([](const auto& trash) {
+		return trash.get()->isCollidedPlayer();
+	});
 }
 
 void TrashManager::draw() const
