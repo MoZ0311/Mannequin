@@ -4,6 +4,7 @@
 
 # include "../player/PlayerCharacter.hpp"
 # include "../core/ModelAssets.hpp"
+# include "../util/EEfectDrawer.hpp"
 
 class TrashObject
 {
@@ -32,6 +33,12 @@ private:
 	// プレイヤーのインスタンス
 	const PlayerCharacter& m_playerInstance;
 
+	// モデル
+	const Model& m_model;
+
+	// エフェクト
+	Effect m_effect;
+
 	// 現在速度
 	Vec3 m_velocity;
 
@@ -40,7 +47,4 @@ private:
 
 	// 現在の回転
 	const double m_rotation;
-
-	// モデル
-	const Model m_model;
 };

@@ -67,6 +67,9 @@ public:
 	// マネキンの外側判定
 	const Box mannequinOutsideCollider;
 
+	// マネキンの攻撃判定
+	const Box mannequinAttackCollider;
+
 	// 待機アニメーション配列
 	const Array<Model> idleAnimationArray;
 

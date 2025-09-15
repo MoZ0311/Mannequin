@@ -35,9 +35,6 @@ void PlayerCharacter::draw() const
 	// 影の描画
 	const Disc shadow{ Vec3{m_playerPosition.x, 0.0001, m_playerPosition.z}, m_modelAssets.mannequinRest.boundingSphere().r / 2 };
 	shadow.draw(ColorF{0, 0, 0, 0.5});
-
-	// debug
-	getAttackCollider().draw(ColorF{ 1.0, 0.0, 0.0, 0.5 });
 }
 
 void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, const bool isCollided)
@@ -235,9 +232,9 @@ const OrientedBox PlayerCharacter::getOutsideCollider() const
 
 const OrientedBox PlayerCharacter::getAttackCollider() const
 {
-	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
+	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.65f : 0.5f };
 	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
-	return m_modelAssets.mannequinInsideCollider.oriented(m_playerRotation).movedBy(m_playerPosition + offset);
+	return m_modelAssets.mannequinAttackCollider.oriented(m_playerRotation).movedBy(m_playerPosition + offset);
 }
 
 const Model& PlayerCharacter::getCurrentModel() const

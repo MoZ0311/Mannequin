@@ -4,10 +4,11 @@
 
 TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance)
 	: m_playerInstance{ instance }
+	, m_model{ model }
+	, m_effect{}
 	, m_position{ position }
 	, m_velocity{ Vec3::Zero() }
 	, m_rotation{ Random(360_deg) }
-	, m_model{ model }
 {
 
 }

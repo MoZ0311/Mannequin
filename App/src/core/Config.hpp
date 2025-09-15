@@ -85,6 +85,18 @@ namespace Config
 		{
 			// 背景色
 			static inline constexpr ColorF BackgroundColor{ 0.4, 0.6, 0.8 };
+
+			// 光の向き
+			static inline constexpr Vec3 LightDirection{ 0.25, 0.75, -0.6 };
+
+			// フィールドの広さ
+			static inline constexpr uint8 FieldSize{ 32 };
+
+			// 部屋全体の広さ
+			static inline constexpr uint8 RoomSize{ 64 };
+
+			// 部屋のオフセット
+			static inline constexpr float RoomOffset{ 16.0f };
 		}
 	}
 }
@@ -141,8 +153,9 @@ namespace Assets
 	namespace Models
 	{
 		// コライダーの大きさ
-		static inline Vec3 MannequinColliderScale{ 0.7, 0.9, 1.5 };
-		static inline Vec3 MannequinBoundingBoxScale{ 1.0, 1.0, 3.5 };
+		static inline constexpr Vec3 MannequinInsideColliderScale{ 0.7, 0.9, 1.5 };
+		static inline constexpr Vec3 MannequinOutsideColliderScale{ 1.0, 1.0, 3.5 };
+		static inline constexpr Vec3 MannequinAttackColliderScale{ 2.0, 0.5, 4.0 };
 	}
 }
 

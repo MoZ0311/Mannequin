@@ -3,11 +3,12 @@
 # include "FieldScene.hpp"
 
 using namespace Config::Scene;
+using namespace Config::Scene::Field;
 using namespace Config::Camera;
 
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
-	, m_fieldArea{ 32 }
+	, m_fieldArea{ FieldSize }
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_effect{}
 	, m_player{ m_fieldArea }
@@ -75,7 +76,7 @@ void FieldScene::draw() const
 
 	if (MouseL.down())
 	{
-		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getPlayerPosition(), m_camera) };
+		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getAttackCollider().center, m_camera)};
 		m_effect.add<BubbleEffect>(effectPostion);
 	}
 
@@ -84,14 +85,11 @@ void FieldScene::draw() const
 
 void FieldScene::drawRoom() const
 {
-	const float offset{ 13.0 };
-	const float size{ 64.0 };
-
-	Plane{ Vec3{ 0.0, offset - size / 2.0f, 0.0 }, size }.draw(TextureAsset(Assets::Floor));	// ゆか
-	Plane{ Vec3{ 0.0, offset, size / 2.0f }, size }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallFront));	// 奥の壁
-	Plane{ Vec3{ 0.0, offset, -size / 2.0f }, size }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallRear));	// 手前の壁
-	Plane{ Vec3{ -size / 2.0f, offset, 0.0 }, size }.draw(Quaternion::RollPitchYaw(-90_deg, 90_deg, 0_deg), TextureAsset(Assets::WallLeft));	// 左の壁
-	Plane{ Vec3{ size / 2.0f, offset, 0.0 }, size }.draw(Quaternion::RollPitchYaw(-90_deg, 90_deg, 0_deg), TextureAsset(Assets::WallRight));	// 右の壁
+	Plane{ Vec3{ 0.0, RoomSize - RoomSize / 2.0f, 0.0 }, RoomSize }.draw(TextureAsset(Assets::Floor));	// ゆか
+	Plane{ Vec3{ 0.0, RoomOffset, RoomSize / 2.0f }, RoomSize }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallFront));	// 奥の壁
+	Plane{ Vec3{ 0.0, RoomOffset, -RoomSize / 2.0f }, RoomSize }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallRear));	// 手前の壁
+	Plane{ Vec3{ -RoomSize / 2.0f, RoomOffset, 0.0 }, RoomSize }.draw(Quaternion::RollPitchYaw(-90_deg, 90_deg, 0_deg), TextureAsset(Assets::WallLeft));	// 左の壁
+	Plane{ Vec3{ RoomSize / 2.0f, RoomOffset, 0.0 }, RoomSize }.draw(Quaternion::RollPitchYaw(-90_deg, 90_deg, 0_deg), TextureAsset(Assets::WallRight));	// 右の壁
 
 	Box::FromPoints(Vec3{ -16, 0, -16 }, Vec3{ 16, -2, 16 }).draw(TextureAsset(Assets::Wood));	// 机
 }
@@ -99,5 +97,5 @@ void FieldScene::drawRoom() const
 void FieldScene::initLighting() const
 {
 	Graphics3D::SetSunColor(ColorF{ 1.0 });				// 平行光
-	Graphics3D::SetSunDirection(Vec3{ 0.25, 0.75, -0.6 }.normalized());
+	Graphics3D::SetSunDirection(LightDirection.normalized());
 }

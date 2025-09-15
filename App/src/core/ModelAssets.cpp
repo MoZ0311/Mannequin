@@ -55,11 +55,15 @@ ModelAssets::ModelAssets()
 	, m_mannequinGuard{ U"assets/models/mannequin/mannequin_guard.obj" }
 
 	, mannequinInsideCollider{
-		mannequinRest.boundingBox().scaled(Models::MannequinColliderScale)
+		mannequinRest.boundingBox().scaled(Models::MannequinInsideColliderScale)
 	}
 
 	, mannequinOutsideCollider{
-		mannequinRest.boundingBox().scaled(Models::MannequinBoundingBoxScale)
+		mannequinRest.boundingBox().scaled(Models::MannequinOutsideColliderScale)
+	}
+
+	, mannequinAttackCollider{
+		mannequinRest.boundingBox().scaled(Models::MannequinAttackColliderScale).movedBy(Vec3::Up(0.1))
 	}
 
 	, idleAnimationArray{
