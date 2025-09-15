@@ -174,7 +174,7 @@
     <ClCompile Include="App\src\field\TrashObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\src\field\TrashGenerator.cpp">
+    <ClCompile Include="App\src\field\TrashManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -881,7 +881,7 @@
     <ClInclude Include="App\src\util\EEfectDrawer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\field\TrashGenerator.hpp">
+    <ClInclude Include="App\src\field\TrashManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\field\TrashObject.hpp">

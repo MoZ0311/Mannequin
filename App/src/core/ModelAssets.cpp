@@ -1,7 +1,6 @@
 ﻿// ModelAssets class
 
 # include "ModelAssets.hpp"
-# include "../core/Config.hpp"
 
 using namespace Assets;
 

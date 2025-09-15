@@ -1,12 +1,12 @@
 ﻿// PlayerCharacter class
 
 # include "PlayerCharacter.hpp"
-#include "../core/ModelAssets.hpp"
 
 using namespace Config::Player;
 
 PlayerCharacter::PlayerCharacter()
-	: m_playerPosition{ 0.0, 0.0, 0.0 }
+	: m_modelAssets{ ModelAssets::GetInstance() }
+	, m_playerPosition{ 0.0, 0.0, 0.0 }
 	, m_playerRotation{ 0.0, 0.0, 0.0, 1.0 }
 	, m_animationArray{ ModelAssets::GetInstance().idleAnimationArray }
 	, m_attackInputBuffer{}
@@ -34,15 +34,15 @@ void PlayerCharacter::draw() const
 	m_animationArray[index].draw(m_playerPosition, m_playerRotation);
 
 	// 影の描画
-	const Disc shadow{ Vec3{m_playerPosition.x, 0.0001, m_playerPosition.z}, ModelAssets::GetInstance().mannequinRest.boundingSphere().r / 2 };
+	const Disc shadow{ Vec3{m_playerPosition.x, 0.0001, m_playerPosition.z}, m_modelAssets.mannequinRest.boundingSphere().r / 2 };
 	shadow.draw(ColorF{0, 0, 0, 0.5});
 
 	// debug
-	const float length{ m_animationArray == ModelAssets::GetInstance().heavyAttackAnimationArray02 ? 0.75f : 0.5f };
+	const float length{ m_animationArray == m_modelAssets.heavyAttackAnimationArray02 ? 0.75f : 0.5f };
 	const Vec3& offset{ Vec3::Forward(length) * m_playerRotation };
-	ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation, ColorF{ 1.0, 0.0, 0.0, 0.5 });	// 攻撃判定
+	m_modelAssets.mannequinCollider.movedBy(m_playerPosition + offset).draw(m_playerRotation, ColorF{ 1.0, 0.0, 0.0, 0.5 });	// 攻撃判定
 
-	ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition).draw(m_playerRotation, ColorF{ 0.0, 1.0, 0.0, 0.5 });	// 本人のアタリ判定
+	m_modelAssets.mannequinCollider.movedBy(m_playerPosition).draw(m_playerRotation, ColorF{ 0.0, 1.0, 0.0, 0.5 });	// 本人のアタリ判定
 }
 
 void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, const Box& fieldArea)
@@ -93,7 +93,7 @@ void PlayerCharacter::move(const double deltaTime, const Vec3& cameraForward, co
 	m_playerPosition.moveBy(velocity * moveSpeed * deltaTime);
 
 	// エリアからはみ出したとき、直前座標に戻す
-	if (!fieldArea.contains(ModelAssets::GetInstance().mannequinBoundingBox.oriented(m_playerRotation).movedBy(m_playerPosition)))
+	if (!fieldArea.contains(m_modelAssets.mannequinBoundingBox.oriented(m_playerRotation).movedBy(m_playerPosition)))
 	{
 		m_playerPosition = prevPosition;
 	}
@@ -111,17 +111,17 @@ void PlayerCharacter::handleAttackInput()
 			{
 			case ActionState::None:		// 非攻撃状態 -> 強派生
 				m_actionState = ActionState::None;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
+				m_attackInputBuffer.push(m_modelAssets.liteAttackAnimationArray03);
 				break;
 
 			case ActionState::Lite01:	// 弱一段 -> 強派生
 				m_actionState = ActionState::Heavy01;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray01);
+				m_attackInputBuffer.push(m_modelAssets.heavyAttackAnimationArray01);
 				break;
 
 			case ActionState::Lite02:	// 弱二段 -> 強派生
 				m_actionState = ActionState::Heavy02;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().heavyAttackAnimationArray02);
+				m_attackInputBuffer.push(m_modelAssets.heavyAttackAnimationArray02);
 				break;
 
 			default:
@@ -135,17 +135,17 @@ void PlayerCharacter::handleAttackInput()
 			{
 			case ActionState::None:		// 非攻撃状態 -> 弱一段
 				m_actionState = ActionState::Lite01;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray01);
+				m_attackInputBuffer.push(m_modelAssets.liteAttackAnimationArray01);
 				break;
 
 			case ActionState::Lite01:	// 弱一段 -> 弱二段
 				m_actionState = ActionState::Lite02;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray02);
+				m_attackInputBuffer.push(m_modelAssets.liteAttackAnimationArray02);
 				break;
 
 			case ActionState::Lite02:	// 弱二段 -> 弱三段
 				m_actionState = ActionState::Lite03;
-				m_attackInputBuffer.push(ModelAssets::GetInstance().liteAttackAnimationArray03);
+				m_attackInputBuffer.push(m_modelAssets.liteAttackAnimationArray03);
 				break;
 
 			default:
@@ -169,7 +169,7 @@ void PlayerCharacter::updateActionState()
 			m_animationTimer = 0;
 			m_hasAttacked = false;
 
-			if (m_animationArray == ModelAssets::GetInstance().heavyAttackAnimationArray02)
+			if (m_animationArray == m_modelAssets.heavyAttackAnimationArray02)
 			{
 				AudioAsset(Assets::BlowHeavy).playOneShot();
 			}
@@ -181,17 +181,17 @@ void PlayerCharacter::updateActionState()
 		else if (PlayerInput::KeyGuard())
 		{
 			// ガード中である
-			m_animationArray = ModelAssets::GetInstance().guardAnimationArray;
+			m_animationArray = m_modelAssets.guardAnimationArray;
 		}
 		else if (PlayerInput::GetMovementAxis().isZero())
 		{
 			// 停止中である
-			m_animationArray = ModelAssets::GetInstance().idleAnimationArray;
+			m_animationArray = m_modelAssets.idleAnimationArray;
 		}
 		else
 		{
 			// 攻撃中でもガード中でも停止中でもない -> 移動中である
-			m_animationArray = ModelAssets::GetInstance().walkAnimationArray;
+			m_animationArray = m_modelAssets.walkAnimationArray;
 		}
 	}
 }
@@ -219,7 +219,7 @@ void PlayerCharacter::updateAnimation()
 Vec3 PlayerCharacter::getPlayerPosition() const
 {
 	// 基本姿勢の中心点を返す
-	return ModelAssets::GetInstance().mannequinCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
+	return m_modelAssets.mannequinCollider.movedBy(m_playerPosition).oriented(m_playerRotation).center;
 }
 
 Quaternion PlayerCharacter::getPlayerRotation() const

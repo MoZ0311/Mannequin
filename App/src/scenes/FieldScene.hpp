@@ -5,7 +5,7 @@
 # include "../core/Config.hpp"
 # include "../player/PlayerCharacter.hpp"
 # include "../player/CameraController.hpp"
-# include "../field/TrashGenerator.hpp"
+# include "../field/TrashManager.hpp"
 # include "../util/EEfectDrawer.hpp"
 
 class FieldScene : public Config::Scene::SceneApp::Scene
@@ -48,5 +48,5 @@ private:
 	CameraController m_cameraController;
 
 	// ゴミ生成クラス
-	TrashGenerator m_trashGenerator;
+	TrashManager& m_trashGenerator;
 };

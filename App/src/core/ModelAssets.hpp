@@ -2,6 +2,8 @@
 
 # pragma once
 
+# include "../core/Config.hpp"
+
 class ModelAssets
 {
 private:

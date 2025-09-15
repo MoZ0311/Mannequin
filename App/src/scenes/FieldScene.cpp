@@ -13,7 +13,7 @@ FieldScene::FieldScene(const InitData& init)
 	, m_player{}
 	, m_camera{ m_renderTexture.size(), FOV::Narrow }
 	, m_cameraController{ m_camera }
-	, m_trashGenerator{}
+	, m_trashGenerator{ TrashManager::GetInstance()}
 {
 	initLighting();
 

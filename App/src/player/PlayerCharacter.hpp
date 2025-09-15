@@ -4,6 +4,7 @@
 
 # include "PlayerInput.hpp"
 # include "../util/Util.hpp"
+#include "../core/ModelAssets.hpp"
 
 enum class ActionState
 {
@@ -47,6 +48,9 @@ protected:
 
 	// アニメーション更新処理
 	void updateAnimation();
+
+	// モデルアセットクラスのインスタンス
+	const ModelAssets& m_modelAssets;
 
 	// プレイヤーの位置
 	Vec3 m_playerPosition;

@@ -4,13 +4,14 @@
 
 # include <memory>
 # include "TrashObject.hpp"
+# include "../core/ModelAssets.hpp"
 
-class TrashGenerator
+class TrashManager
 {
 public:
 
-	// コンストラクタ
-	TrashGenerator();
+	// インスタンスの取得
+	static TrashManager& GetInstance();
 
 	// 更新処理
 	void update(const double deltaTime, const Box& fieldArea);
@@ -19,6 +20,9 @@ public:
 	void draw() const;
 
 private:
+
+	// コンストラクタ
+	TrashManager();
 
 	// ゴミの生成処理
 	void generateTrash(const Box& fieldArea);

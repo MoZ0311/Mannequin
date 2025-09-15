@@ -20,6 +20,9 @@ protected:
 	// 現在位置
 	Vec3 m_position;
 
+	// 現在の回転
+	const double m_rotation;
+
 	// モデル
 	const Model m_model;
 };

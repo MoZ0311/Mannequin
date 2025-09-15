@@ -1,39 +1,46 @@
-﻿// TrashGenerator class
+﻿// TrashManager class
 
-# include "TrashGenerator.hpp"
-# include "../core/ModelAssets.hpp"
+# include "TrashManager.hpp"
 
-TrashGenerator::TrashGenerator()
+TrashManager& TrashManager::GetInstance()
+{
+	static TrashManager instance;
+	return instance;
+}
+
+TrashManager::TrashManager()
 	: m_generateTimer{ 0.0 }
 	, m_trashObjectArray{}
 {
 
 }
 
-void TrashGenerator::update(const double deltaTime, const Box& fieldArea)
+void TrashManager::update(const double deltaTime, const Box& fieldArea)
 {
 	m_generateTimer -= deltaTime;
-	if (m_generateTimer <= 0)
+	if (m_trashObjectArray.size() < 5 && m_generateTimer <= 0)
 	{
-		m_generateTimer = 0.2;
+		m_generateTimer = 3.0;
 		generateTrash(fieldArea);
 	}
 
+	// 配列を走査して全要素を更新
 	for (const auto& trash : m_trashObjectArray)
 	{
 		trash->update(deltaTime);
 	}
 }
 
-void TrashGenerator::draw() const
+void TrashManager::draw() const
 {
+	// 配列を走査して全要素を描画
 	for (const auto& trash : m_trashObjectArray)
 	{
 		trash->draw();
 	}
 }
 
-void TrashGenerator::generateTrash(const Box& fieldArea)
+void TrashManager::generateTrash(const Box& fieldArea)
 {
 	// ランダムな平面座標を生成
 	Vec3 randomPosition{ RandomVec3(fieldArea) };

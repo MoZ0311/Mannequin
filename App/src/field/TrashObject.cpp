@@ -4,6 +4,7 @@
 
 TrashObject::TrashObject(const Vec3& position, const Model& model)
 	: m_position{ position }
+	, m_rotation{ Random(360_deg) }
 	, m_model{ model }
 {
 
@@ -25,5 +26,5 @@ void TrashObject::update(const double dettaTime)
 // 描画処理
 void TrashObject::draw() const
 {
-	m_model.draw(m_position);
+	m_model.draw(m_position, Quaternion::RotateY(m_rotation));
 }
