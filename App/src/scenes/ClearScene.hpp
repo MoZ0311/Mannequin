@@ -1,16 +1,16 @@
-﻿// TitleScene class
+﻿// ClearScene class
 
 # pragma once
 
 # include "../core/Config.hpp"
 # include "../player/PlayerInput.hpp"
 
-class TitleScene : public Config::Scene::SceneApp::Scene
+class ClearScene : public Config::Scene::SceneApp::Scene
 {
 public:
 
 	// コンストラクタ
-	TitleScene(const InitData& init);
+	ClearScene(const InitData& init);
 
 	// 更新処理
 	void update() override;
@@ -23,16 +23,16 @@ private:
 	enum class SelectingButton
 	{
 		None,
-		Start,
+		Retry,
 		Exit,
 	};
 
 	// 背景画像
 	const TextureRegion m_backgroundImage;
 
-	// START ボタンの設定
-	const RoundRect m_startButton;
-	Transition m_startTransition;
+	// RETRY ボタンの設定
+	const RoundRect m_retryButton;
+	Transition m_retryTransition;
 
 	// EXIT ボタンの設定
 	const RoundRect m_exitButton;

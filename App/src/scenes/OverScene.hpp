@@ -3,6 +3,7 @@
 # pragma once
 
 # include "../core/Config.hpp"
+# include "../player/PlayerInput.hpp"
 
 class OverScene : public Config::Scene::SceneApp::Scene
 {
@@ -19,6 +20,13 @@ public:
 
 private:
 
+	enum class SelectingButton
+	{
+		None,
+		Retry,
+		Exit,
+	};
+
 	// 背景画像
 	const TextureRegion m_backgroundImage;
 
@@ -29,4 +37,10 @@ private:
 	// EXIT ボタンの設定
 	const RoundRect m_exitButton;
 	Transition m_exitTransition;
+
+	// 選択中のボタン
+	SelectingButton m_currentSelectingButton;
+
+	// ゲームパッドを使うか
+	bool m_usingGamePad;
 };

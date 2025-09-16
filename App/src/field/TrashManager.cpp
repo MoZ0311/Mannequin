@@ -3,7 +3,9 @@
 # include "TrashManager.hpp"
 
 TrashManager::TrashManager(const Box& fieldArea, const PlayerCharacter& instance)
-	: m_fieldArea{ fieldArea }
+	: maxGenerateCount{ 20 }
+	, m_generateInterval{ 0.5 }
+	, m_fieldArea{ fieldArea }
 	, m_playerInstance{ instance }
 	, m_isCollided{ false }
 	, m_generateTimer{ 0.0 }
@@ -16,9 +18,9 @@ TrashManager::TrashManager(const Box& fieldArea, const PlayerCharacter& instance
 void TrashManager::update(const double deltaTime)
 {
 	m_generateTimer -= deltaTime;
-	if (m_trashObjectArray.size() < 3 && m_generateTimer <= 0)
+	if (m_trashObjectArray.size() < maxGenerateCount && m_generateTimer <= 0)
 	{
-		m_generateTimer = 0.20;
+		m_generateTimer = m_generateInterval;
 		generateTrash();
 	}
 
@@ -54,8 +56,6 @@ void TrashManager::update(const double deltaTime)
 	m_isDamaged = m_trashObjectArray.any([](const auto& trash) {
 		return trash.get()->getIsDamaged();
 	});
-
-	Print << m_deletedTrashCount;
 }
 
 void TrashManager::draw() const
@@ -85,4 +85,9 @@ const bool TrashManager::isCollidedPlayer() const
 const bool TrashManager::isDamaged() const
 {
 	return m_isDamaged;
+}
+
+const uint8 TrashManager::getDeletedTrashCount() const
+{
+	return m_deletedTrashCount;
 }

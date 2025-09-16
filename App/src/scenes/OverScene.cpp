@@ -15,6 +15,8 @@ OverScene::OverScene(const InitData& init)
 	, m_exitButton{ m_retryButton.movedBy(Components::ButtonOffset) }
 	, m_retryTransition{ Components::ButtonTransition }
 	, m_exitTransition{ Components::ButtonTransition }
+	, m_currentSelectingButton{ SelectingButton::None }
+	, m_usingGamePad{ false }
 {
 
 }
@@ -22,24 +24,67 @@ OverScene::OverScene(const InitData& init)
 // 更新処理
 void OverScene::update()
 {
-	const bool onStart{ m_retryButton.mouseOver() };
-	const bool onExit{ m_exitButton.mouseOver() };
-
-	m_retryTransition.update(onStart);
-	m_exitTransition.update(onExit);
-
-	if (onStart || onExit)
+	if (PlayerInput::KeyUpper())
 	{
-		Cursor::RequestStyle(CursorStyle::Hand);
+		m_currentSelectingButton = SelectingButton::Retry;
+		m_usingGamePad = true;
+	}
+	else if (PlayerInput::KeyLower())
+	{
+		m_currentSelectingButton = SelectingButton::Exit;
+		m_usingGamePad = true;
 	}
 
-	if (m_retryButton.leftClicked())
+	if (m_usingGamePad)
 	{
-		changeScene(State::Field, ChangeDuration);
+		Cursor::RequestStyle(CursorStyle::Hidden);
+
+		if (!Cursor::DeltaRaw().isZero())
+		{
+			m_usingGamePad = false;
+		}
 	}
-	else if (m_exitButton.leftClicked())
+	else
 	{
-		System::Exit();
+		const bool onStart{ m_retryButton.mouseOver() };
+		const bool onExit{ m_exitButton.mouseOver() };
+
+		if (onStart || onExit)
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+			if (onStart)
+			{
+				m_currentSelectingButton = SelectingButton::Retry;
+			}
+			else if (onExit)
+			{
+				m_currentSelectingButton = SelectingButton::Exit;
+			}
+		}
+		else
+		{
+			m_currentSelectingButton = SelectingButton::None;
+		}
+	}
+
+	m_retryTransition.update(m_currentSelectingButton == SelectingButton::Retry);
+	m_exitTransition.update(m_currentSelectingButton == SelectingButton::Exit);
+
+	if (PlayerInput::KeyConfirm())
+	{
+		switch (m_currentSelectingButton)
+		{
+		case SelectingButton::Retry:
+			changeScene(State::Field, ChangeDuration);
+			break;
+
+		case SelectingButton::Exit:
+			System::Exit();
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 

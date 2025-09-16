@@ -53,7 +53,7 @@ struct PlayerInput
 		}
 
 		// カーソルの移動量を取得
-		return Cursor::DeltaF();
+		return -Cursor::DeltaF();
 	}
 
 	// 決定ボタンが押されたか
@@ -68,6 +68,20 @@ struct PlayerInput
 	{
 		static const InputGroup cancelKey{ KeyBackspace | KeyC | MouseR | XInput(PlayerIndex).buttonA };
 		return cancelKey.down();
+	}
+
+	// 上側キーが押されたか
+	static inline bool KeyUpper()
+	{
+		static const InputGroup upperKey{ KeyW | KeyUp | XInput(PlayerIndex).buttonUp };
+		return upperKey.down();
+	}
+
+	// 下側キーが押されたか
+	static inline bool KeyLower()
+	{
+		static const InputGroup lowerKey{ KeyS | KeyDown | XInput(PlayerIndex).buttonDown };
+		return lowerKey.down();
 	}
 
 	// ダッシュボタンが押されているか

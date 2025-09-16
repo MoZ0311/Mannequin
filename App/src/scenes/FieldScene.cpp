@@ -18,20 +18,12 @@ FieldScene::FieldScene(const InitData& init)
 	, m_trashManager{ m_fieldArea, m_player }
 {
 	initLighting();
-
-	// マウスカーソル設定
-	Cursor::RequestStyle(CursorStyle::Hidden);
-	Cursor::SetPos(Scene::Center());
 }
 
 void FieldScene::update()
 {
 	// シーンにおける前フレームからの経過時間
 	const double deltaTime{ Scene::DeltaTime() };
-
-	// マウスカーソル設定
-	Cursor::RequestStyle(CursorStyle::Hidden);
-	Cursor::SetPos(Scene::Center());
 
 	// プレイヤーの更新
 	m_player.update(deltaTime, m_cameraController.getCameraForward(), m_trashManager.isCollidedPlayer());
@@ -45,23 +37,27 @@ void FieldScene::update()
 	// 生成クラスの更新
 	m_trashManager.update(deltaTime);
 
+	// ゴミの個数で、クリア
+	if (m_trashManager.getDeletedTrashCount() >= 10)
+	{
+		changeScene(State::Clear, ChangeDuration);
+	}
+
 	if (!prevDamaged && m_trashManager.isDamaged())
 	{
 		// ゴミが攻撃されていれば、攻撃判定の場所にエフェクト発生
 		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getAttackCollider().center, m_camera) };
-		m_effect.add<BubbleEffect>(effectPostion);
+		m_effect.add<StarEffect>(effectPostion);
 	}
 
 	// UIの更新
-	m_uiDrawer.update(deltaTime);
+	m_uiDrawer.update(m_trashManager.getDeletedTrashCount());
 
 	// debug
-	if (KeyEnter.down())
-	{
-		changeScene(State::Over, ChangeDuration);
-	}
 	if (KeyQ.down())
 	{
+		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getInsideCollider().center, m_camera) };
+		m_effect.add<HexEffect>(effectPostion);
 		changeScene(State::Field, ChangeDuration);
 	}
 }
@@ -70,6 +66,10 @@ void FieldScene::draw() const
 {
 	// 3Dシーンにカメラを設定
 	Graphics3D::SetCameraTransform(m_camera);
+
+	// マウスカーソル表示設定
+	Cursor::RequestStyle(CursorStyle::Hidden);
+	Cursor::SetPos(Scene::Center());
 
 	// 3D描画
 	{

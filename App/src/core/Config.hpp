@@ -75,6 +75,7 @@ namespace Config
 			Title,
 			Field,
 			Over,
+			Clear
 		};
 
 		// シーン遷移の間隔
@@ -105,6 +106,7 @@ namespace Assets
 {
 	static inline const String Title{ U"Title" };
 	static inline const String Over{ U"Over" };
+	static inline const String Clear{ U"Clear" };
 	static inline const String Wood{ U"Wood" };
 	static inline const String Floor{ U"Floor" };
 	static inline const String WallFront{ U"WallFront" };
@@ -128,6 +130,7 @@ namespace Assets
 		// テクスチャのアセット化
 		TextureAsset::Register(Title, U"assets/background/title.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Over, U"assets/background/over.png", TextureDesc::MippedSRGB);
+		TextureAsset::Register(Clear, U"assets/background/clear.png", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Wood, U"assets/background/wood.jpg", TextureDesc::MippedSRGB);
 		TextureAsset::Register(Floor, U"assets/background/floor.jpg", TextureDesc::MippedSRGB);
 		TextureAsset::Register(WallFront, U"assets/background/wall_front.jpg", TextureDesc::MippedSRGB);
@@ -193,4 +196,5 @@ namespace UI
 	static inline constexpr Point StatusWindowPoint{ 0, 100 };
 	static inline constexpr Size StatusWindowSize{ 400, StatusWindowPoint.y };
 	static inline constexpr float WindowRoundness{ StatusWindowSize.y / 1.5f };
+	static inline constexpr float FontSize{ 40 };
 }

@@ -5,6 +5,7 @@
 # include "../scenes/TitleScene.hpp"
 # include "../scenes/FieldScene.hpp"
 # include "../scenes/OverScene.hpp"
+# include "../scenes/ClearScene.hpp"
 
 class Application
 {

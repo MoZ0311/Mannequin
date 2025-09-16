@@ -121,6 +121,7 @@
     <ClCompile Include="App\src\field\TrashObject.cpp" />
     <ClCompile Include="App\src\player\CameraController.cpp" />
     <ClCompile Include="App\src\player\PlayerCharacter.cpp" />
+    <ClCompile Include="App\src\scenes\ClearScene.cpp" />
     <ClCompile Include="App\src\scenes\FieldScene.cpp" />
     <ClCompile Include="App\src\scenes\OverScene.cpp" />
     <ClCompile Include="App\src\scenes\TitleScene.cpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="App\src\player\CameraController.hpp" />
     <ClInclude Include="App\src\player\PlayerCharacter.hpp" />
     <ClInclude Include="App\src\player\PlayerInput.hpp" />
+    <ClInclude Include="App\src\scenes\ClearScene.hpp" />
     <ClInclude Include="App\src\scenes\FieldScene.hpp" />
     <ClInclude Include="App\src\scenes\OverScene.hpp" />
     <ClInclude Include="App\src\scenes\TitleScene.hpp" />

@@ -25,10 +25,19 @@ public:
 	// 攻撃を受けたか
 	const bool isDamaged() const;
 
+	// 何個ゴミを消したか
+	const uint8 getDeletedTrashCount() const;
+
+	// 生成の最大値
+	const uint8 maxGenerateCount;
+
 private:
 
 	// ゴミの生成処理
 	void generateTrash();
+
+	// 生成の間隔
+	const double m_generateInterval;
 
 	// 生成範囲
 	const Box& m_fieldArea;
