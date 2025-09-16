@@ -50,6 +50,11 @@ void TrashManager::update(const double deltaTime)
 		return trash.get()->isCollidedPlayer();
 	});
 
+	// プレイヤーに攻撃されたオブジェクトがあったか
+	m_isDamaged = m_trashObjectArray.any([](const auto& trash) {
+		return trash.get()->getIsDamaged();
+	});
+
 	Print << m_deletedTrashCount;
 }
 
@@ -75,4 +80,9 @@ void TrashManager::generateTrash()
 const bool TrashManager::isCollidedPlayer() const
 {
 	return m_isCollided;
+}
+
+const bool TrashManager::isDamaged() const
+{
+	return m_isDamaged;
 }

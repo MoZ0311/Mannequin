@@ -22,6 +22,9 @@ public:
 	// 接触したか
 	const bool isCollidedPlayer() const;
 
+	// 攻撃を受けたか
+	const bool isDamaged() const;
+
 private:
 
 	// ゴミの生成処理
@@ -35,6 +38,9 @@ private:
 
 	// プレイヤーとゴミの接触
 	bool m_isCollided;
+
+	// ゴミが攻撃された
+	bool m_isDamaged;
 
 	// 生成タイマー
 	double m_generateTimer;

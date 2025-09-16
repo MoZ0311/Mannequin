@@ -11,6 +11,8 @@ TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerC
 	, m_velocity{ Vec3::Zero() }
 	, m_rotation{ Random(360_deg) }
 	, m_prevDamaged{ false }
+	, m_isDamaged{ false }
+	, m_prevOutside{ false }
 {
 
 }
@@ -19,8 +21,8 @@ void TrashObject::update(const double deltaTime)
 {
 	// 現在のモデルデータをキャッシュ
 	const Model& currentPlayerModel{ m_playerInstance.getCurrentModel() };
-
-	if (isDamaged(currentPlayerModel))
+	m_isDamaged = isDamaged(currentPlayerModel);
+	if (m_isDamaged)
 	{
 		Vec3 addForce{ Vec3::Zero()};
 
@@ -102,11 +104,6 @@ void TrashObject::draw() const
 	m_model.draw(m_position, Quaternion::RotateY(m_rotation));
 }
 
-const bool TrashObject::isCollidedPlayer() const
-{
-	return m_model.boundingBox().movedBy(m_position).intersects(m_playerInstance.getOutsideCollider());
-}
-
 const bool TrashObject::isDamaged(const Model& model) const
 {
 	// 現在のアニメーションのコマが、攻撃判定を持っているか判定
@@ -117,6 +114,16 @@ const bool TrashObject::isDamaged(const Model& model) const
 
 	// 両方揃ったら被弾
 	return isAttacking && canHit;
+}
+
+const bool TrashObject::isCollidedPlayer() const
+{
+	return m_model.boundingBox().movedBy(m_position).intersects(m_playerInstance.getOutsideCollider());
+}
+
+const bool TrashObject::getIsDamaged() const
+{
+	return m_isDamaged;
 }
 
 const bool TrashObject::isOutside() const

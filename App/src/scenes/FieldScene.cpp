@@ -33,23 +33,21 @@ void FieldScene::update()
 	Cursor::RequestStyle(CursorStyle::Hidden);
 	Cursor::SetPos(Scene::Center());
 
-	// 直前のプレイヤーの攻撃状態をキャッシュ
-	const bool isAttacking{ ModelAssets::GetInstance().attackingModelArray.contains(m_player.getCurrentModel()) };
-
 	// プレイヤーの更新
 	m_player.update(deltaTime, m_cameraController.getCameraForward(), m_trashManager.isCollidedPlayer());
-
-	// プレイヤー更新後の攻撃状態もキャッシュ
-	const bool startAttacking{ ModelAssets::GetInstance().attackingModelArray.contains(m_player.getCurrentModel()) };
 
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
 
+	// 直前の攻撃状態をキャッシュ
+	const bool prevDamaged{ m_trashManager.isDamaged() };
+
 	// 生成クラスの更新
 	m_trashManager.update(deltaTime);
 
-	if (!isAttacking && startAttacking)
+	if (!prevDamaged && m_trashManager.isDamaged())
 	{
+		// ゴミが攻撃されていれば、攻撃判定の場所にエフェクト発生
 		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getAttackCollider().center, m_camera) };
 		m_effect.add<BubbleEffect>(effectPostion);
 	}
@@ -98,7 +96,10 @@ void FieldScene::draw() const
 	m_uiDrawer.draw();
 
 	// エフェクト描画
-	m_effect.update();
+	{
+		const ScopedRenderStates2D blend{ BlendState::Additive };
+		m_effect.update();
+	}
 }
 
 void FieldScene::drawRoom() const

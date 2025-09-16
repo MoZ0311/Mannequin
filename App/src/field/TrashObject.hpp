@@ -22,7 +22,7 @@ public:
 	const bool isCollidedPlayer() const;
 
 	// 攻撃を受けたか
-	const bool isDamaged(const Model& model) const;
+	const bool getIsDamaged() const;
 
 	// 場外に出たか
 	const bool isOutside() const;
@@ -31,6 +31,9 @@ public:
 	const bool isGrounded() const;
 
 private:
+
+	// 攻撃を受けたか
+	const bool isDamaged(const Model& model) const;
 
 	// モデル
 	const Model& m_model;
@@ -55,6 +58,9 @@ private:
 
 	// 直前に被弾したか
 	bool m_prevDamaged;
+
+	// 現在被弾しているか
+	bool m_isDamaged;
 
 	// 直前に場外になったか
 	bool m_prevOutside;
