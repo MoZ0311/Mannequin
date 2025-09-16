@@ -9,6 +9,7 @@ using namespace Config::Camera;
 FieldScene::FieldScene(const InitData& init)
 	: IScene{ init }
 	, m_fieldArea{ FieldSize }
+	, m_uiDrawer{}
 	, m_renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes }
 	, m_effect{}
 	, m_player{ m_fieldArea }
@@ -32,8 +33,14 @@ void FieldScene::update()
 	Cursor::RequestStyle(CursorStyle::Hidden);
 	Cursor::SetPos(Scene::Center());
 
+	// 直前のプレイヤーの攻撃状態をキャッシュ
+	const bool isAttacking{ ModelAssets::GetInstance().attackingModelArray.contains(m_player.getCurrentModel()) };
+
 	// プレイヤーの更新
 	m_player.update(deltaTime, m_cameraController.getCameraForward(), m_trashManager.isCollidedPlayer());
+
+	// プレイヤー更新後の攻撃状態もキャッシュ
+	const bool startAttacking{ ModelAssets::GetInstance().attackingModelArray.contains(m_player.getCurrentModel()) };
 
 	// カメラの更新
 	m_cameraController.update(deltaTime, m_player.getPlayerPosition(), m_player.getPlayerRotation());
@@ -41,10 +48,23 @@ void FieldScene::update()
 	// 生成クラスの更新
 	m_trashManager.update(deltaTime);
 
+	if (!isAttacking && startAttacking)
+	{
+		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getAttackCollider().center, m_camera) };
+		m_effect.add<BubbleEffect>(effectPostion);
+	}
+
+	// UIの更新
+	m_uiDrawer.update(deltaTime);
+
 	// debug
 	if (KeyEnter.down())
 	{
 		changeScene(State::Over, ChangeDuration);
+	}
+	if (KeyQ.down())
+	{
+		changeScene(State::Field, ChangeDuration);
 	}
 }
 
@@ -74,18 +94,16 @@ void FieldScene::draw() const
 		Shader::LinearToScreen(m_renderTexture);
 	}
 
-	if (MouseL.down())
-	{
-		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getAttackCollider().center, m_camera)};
-		m_effect.add<BubbleEffect>(effectPostion);
-	}
+	// UI描画
+	m_uiDrawer.draw();
 
+	// エフェクト描画
 	m_effect.update();
 }
 
 void FieldScene::drawRoom() const
 {
-	Plane{ Vec3{ 0.0, RoomSize - RoomSize / 2.0f, 0.0 }, RoomSize }.draw(TextureAsset(Assets::Floor));	// ゆか
+	Plane{ Vec3{ 0.0, RoomOffset - RoomSize / 2.0f, 0.0 }, RoomSize }.draw(TextureAsset(Assets::Floor));	// ゆか
 	Plane{ Vec3{ 0.0, RoomOffset, RoomSize / 2.0f }, RoomSize }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallFront));	// 奥の壁
 	Plane{ Vec3{ 0.0, RoomOffset, -RoomSize / 2.0f }, RoomSize }.draw(Quaternion::RotateX(-90_deg), TextureAsset(Assets::WallRear));	// 手前の壁
 	Plane{ Vec3{ -RoomSize / 2.0f, RoomOffset, 0.0 }, RoomSize }.draw(Quaternion::RollPitchYaw(-90_deg, 90_deg, 0_deg), TextureAsset(Assets::WallLeft));	// 左の壁

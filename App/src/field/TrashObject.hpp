@@ -4,14 +4,13 @@
 
 # include "../player/PlayerCharacter.hpp"
 # include "../core/ModelAssets.hpp"
-# include "../util/EEfectDrawer.hpp"
 
 class TrashObject
 {
 public:
 
 	// コンストラクタ
-	TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance);
+	TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance, const Box& fieldArea);
 
 	// 更新処理
 	void update(const double deltaTime);
@@ -25,16 +24,22 @@ public:
 	// 攻撃を受けたか
 	const bool isDamaged(const Model& model) const;
 
+	// 場外に出たか
+	const bool isOutside() const;
+
 	// 地面についたか
 	const bool isGrounded() const;
 
 private:
 
+	// モデル
+	const Model& m_model;
+
 	// プレイヤーのインスタンス
 	const PlayerCharacter& m_playerInstance;
 
-	// モデル
-	const Model& m_model;
+	// 場内判定
+	const Box& m_fieldArea;
 
 	// エフェクト
 	Effect m_effect;
@@ -45,6 +50,12 @@ private:
 	// 現在位置
 	Vec3 m_position;
 
-	// 現在の回転
+	// 回転
 	const double m_rotation;
+
+	// 直前に被弾したか
+	bool m_prevDamaged;
+
+	// 直前に場外になったか
+	bool m_prevOutside;
 };

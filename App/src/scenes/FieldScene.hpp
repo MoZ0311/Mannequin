@@ -3,9 +3,11 @@
 # pragma once
 
 # include "../core/Config.hpp"
+# include "../core/ModelAssets.hpp"
 # include "../player/PlayerCharacter.hpp"
 # include "../player/CameraController.hpp"
 # include "../field/TrashManager.hpp"
+# include "../ui/UIDrawer.hpp"
 # include "../util/EEfectDrawer.hpp"
 
 class FieldScene : public Config::Scene::SceneApp::Scene
@@ -34,6 +36,9 @@ private:
 
 	// フィールドの見えない壁
 	const Box m_fieldArea;
+
+	// UI
+	UIDrawer m_uiDrawer;
 
 	// エフェクト
 	Effect m_effect;

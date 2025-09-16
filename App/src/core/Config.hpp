@@ -116,7 +116,8 @@ namespace Assets
 	static inline const String Blocking{ U"Blocking" };
 	static inline const String BlowLite{ U"BlowLite" };
 	static inline const String BlowHeavy{ U"BlowHeavy" };
-	static inline const String Damage{ U"Damage" };
+	static inline const String DamageLite{ U"DamageLite" };
+	static inline const String DamageHeavy{ U"DamageHeavy" };
 	static inline const String Guard{ U"Guard" };
 
 	static inline const String Makinas{ U"Makinas" };
@@ -139,7 +140,8 @@ namespace Assets
 		AudioAsset::Register(Blocking, U"assets/audios/blocking.mp3");
 		AudioAsset::Register(BlowLite, U"assets/audios/blow_lite.mp3");
 		AudioAsset::Register(BlowHeavy, U"assets/audios/blow_heavy.mp3");
-		AudioAsset::Register(Damage, U"assets/audios/damage.mp3");
+		AudioAsset::Register(DamageLite, U"assets/audios/damage_lite.mp3");
+		AudioAsset::Register(DamageHeavy, U"assets/audios/damage_heavy.mp3");
 		AudioAsset::Register(Guard, U"assets/audios/guard.mp3");
 
 		// フォントのアセット化
@@ -188,7 +190,7 @@ namespace Components
 
 namespace UI
 {
-	static inline constexpr Point StatusWindowPoint{ 0, 200 };
+	static inline constexpr Point StatusWindowPoint{ 0, 100 };
 	static inline constexpr Size StatusWindowSize{ 400, StatusWindowPoint.y };
 	static inline constexpr float WindowRoundness{ StatusWindowSize.y / 1.5f };
 }

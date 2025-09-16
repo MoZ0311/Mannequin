@@ -5,9 +5,10 @@
 TrashManager::TrashManager(const Box& fieldArea, const PlayerCharacter& instance)
 	: m_fieldArea{ fieldArea }
 	, m_playerInstance{ instance }
-	, m_generateTimer{ 0.0 }
-	, m_trashObjectArray{}
 	, m_isCollided{ false }
+	, m_generateTimer{ 0.0 }
+	, m_deletedTrashCount{ 0 }
+	, m_trashObjectArray{}
 {
 
 }
@@ -30,6 +31,10 @@ void TrashManager::update(const double deltaTime)
 		}
 		else
 		{
+			if (it->get()->isOutside())
+			{
+				++m_deletedTrashCount;
+			}
 			++it;
 		}
 	}
@@ -44,6 +49,8 @@ void TrashManager::update(const double deltaTime)
 	m_isCollided = m_trashObjectArray.any([](const auto& trash) {
 		return trash.get()->isCollidedPlayer();
 	});
+
+	Print << m_deletedTrashCount;
 }
 
 void TrashManager::draw() const
@@ -62,7 +69,7 @@ void TrashManager::generateTrash()
 	randomPosition.y = 8;
 
 	// unique_ptrとして配列に追加
-	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa, m_playerInstance));
+	m_trashObjectArray.push_back(std::make_unique<TrashObject>(randomPosition, ModelAssets::GetInstance().qpKowa, m_playerInstance, m_fieldArea));
 }
 
 const bool TrashManager::isCollidedPlayer() const

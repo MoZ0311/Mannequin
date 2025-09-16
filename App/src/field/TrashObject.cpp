@@ -2,13 +2,15 @@
 
 # include "TrashObject.hpp"
 
-TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance)
+TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance, const Box& fieldArea)
 	: m_playerInstance{ instance }
 	, m_model{ model }
+	, m_fieldArea{ fieldArea }
 	, m_effect{}
 	, m_position{ position }
 	, m_velocity{ Vec3::Zero() }
 	, m_rotation{ Random(360_deg) }
+	, m_prevDamaged{ false }
 {
 
 }
@@ -16,37 +18,50 @@ TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerC
 void TrashObject::update(const double deltaTime)
 {
 	// 現在のモデルデータをキャッシュ
-	const Model& currentModel{ m_playerInstance.getCurrentModel() };
+	const Model& currentPlayerModel{ m_playerInstance.getCurrentModel() };
 
-	if (isDamaged(currentModel))
+	if (isDamaged(currentPlayerModel))
 	{
 		Vec3 addForce{ Vec3::Zero()};
 
-		if (currentModel == ModelAssets::GetInstance().attackingModelArray[5] ||
-			currentModel == ModelAssets::GetInstance().attackingModelArray[6])
+		if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[0] ||
+			currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[1])
 		{
-			// 弱二段 -> 強派生
-			addForce = Vec3{ 0.0, 120.0, 1500 } * m_playerInstance.getPlayerRotation();
-		}
-		else if (currentModel == ModelAssets::GetInstance().attackingModelArray[4])
-		{
-			// 弱一段 -> 強派生 の本当て
-			addForce = Vec3{ 0.0, 200, 600 } * m_playerInstance.getPlayerRotation();
-		}
-		else if (currentModel == ModelAssets::GetInstance().attackingModelArray[3])
-		{
-			// 弱一段 -> 強派生 のカス当て
-			addForce = -Vec3::Forward() * m_playerInstance.getPlayerRotation();
-		}
-		else if (currentModel == ModelAssets::GetInstance().attackingModelArray[2])
-		{
-			// 弱三段
-			addForce = Vec3{ 0.0, 50.0, 600.0 } *m_playerInstance.getPlayerRotation();
+			// 弱一段と二段
+			addForce = Vec3{ 0.0, 0.1, -0.2 } *m_playerInstance.getPlayerRotation();
+
+			if (!m_prevDamaged)
+			{
+				AudioAsset(Assets::DamageLite).playOneShot();
+			}
 		}
 		else
 		{
-			// 弱一段と二段
-			addForce = Vec3{ 0.0, 0.1, -0.2} * m_playerInstance.getPlayerRotation();
+			if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[2])
+			{
+				// 弱三段
+				addForce = Vec3{ 0.0, 50.0, 600.0 } *m_playerInstance.getPlayerRotation();
+			}
+			else if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[3])
+			{
+				// 弱一段 -> 強派生 のカス当て
+				addForce = -Vec3::Forward() * m_playerInstance.getPlayerRotation();
+			}
+			else if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[4])
+			{
+				// 弱一段 -> 強派生 の本当て
+				addForce = Vec3{ 0.0, 200, 600 } *m_playerInstance.getPlayerRotation();
+			}
+			else
+			{
+				// 弱二段 -> 強派生
+				addForce = Vec3{ 0.0, 120.0, 1500 } *m_playerInstance.getPlayerRotation();
+			}
+
+			if (!m_prevDamaged)
+			{
+				AudioAsset(Assets::DamageHeavy).playOneShot(0.4);
+			}
 		}
 		m_velocity += addForce;
 	}
@@ -72,6 +87,13 @@ void TrashObject::update(const double deltaTime)
 		}
 	}
 
+	// 直前の被弾をキャッシュ
+	m_prevDamaged = isDamaged(currentPlayerModel);
+
+	// 直前の場外をキャッシュ
+	m_prevOutside = !m_fieldArea.intersects(m_model.boundingBox().movedBy(m_position));
+
+	// モデルを速度に従って移動
 	m_position.moveBy(m_velocity / 2 * deltaTime);
 }
 
@@ -95,6 +117,14 @@ const bool TrashObject::isDamaged(const Model& model) const
 
 	// 両方揃ったら被弾
 	return isAttacking && canHit;
+}
+
+const bool TrashObject::isOutside() const
+{
+	const bool isOutside{ !m_fieldArea.intersects(m_model.boundingBox().movedBy(m_position)) };
+
+	// 場外に出た瞬間だけtrue
+	return isOutside && !m_prevOutside;
 }
 
 const bool TrashObject::isGrounded() const

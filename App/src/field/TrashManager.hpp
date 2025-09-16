@@ -39,6 +39,9 @@ private:
 	// 生成タイマー
 	double m_generateTimer;
 
+	// 片付けたゴミの数
+	uint8 m_deletedTrashCount;
+
 	// unique_ptrの配列
 	Array<std::unique_ptr<TrashObject>> m_trashObjectArray;
 };
