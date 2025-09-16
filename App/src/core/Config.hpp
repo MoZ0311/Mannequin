@@ -121,6 +121,8 @@ namespace Assets
 	static inline const String DamageLite{ U"DamageLite" };
 	static inline const String DamageHeavy{ U"DamageHeavy" };
 	static inline const String Guard{ U"Guard" };
+	static inline const String Explode{ U"Explode" };
+	static inline const String Select{ U"Select" };
 
 	static inline const String Makinas{ U"Makinas" };
 
@@ -146,6 +148,8 @@ namespace Assets
 		AudioAsset::Register(DamageLite, U"assets/audios/damage_lite.mp3");
 		AudioAsset::Register(DamageHeavy, U"assets/audios/damage_heavy.mp3");
 		AudioAsset::Register(Guard, U"assets/audios/guard.mp3");
+		AudioAsset::Register(Explode, U"assets/audios/explode.mp3");
+		AudioAsset::Register(Select, U"assets/audios/select.mp3");
 
 		// フォントのアセット化
 		FontAsset::Register(Makinas, FontMethod::MSDF, 48, U"assets/fonts/Makinas-4-Square.otf");

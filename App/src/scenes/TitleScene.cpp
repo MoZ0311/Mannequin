@@ -74,6 +74,7 @@ void TitleScene::update()
 		switch (m_currentSelectingButton)
 		{
 		case SelectingButton::Start:
+			AudioAsset(Assets::Select).playOneShot();
 			changeScene(State::Field, ChangeDuration);
 			break;
 

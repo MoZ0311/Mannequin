@@ -75,6 +75,7 @@ void ClearScene::update()
 		switch (m_currentSelectingButton)
 		{
 		case SelectingButton::Retry:
+			AudioAsset(Assets::Select).playOneShot();
 			changeScene(State::Field, ChangeDuration);
 			break;
 

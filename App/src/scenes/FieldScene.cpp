@@ -56,6 +56,7 @@ void FieldScene::update()
 	// debug
 	if (KeyQ.down())
 	{
+		AudioAsset(Assets::Explode).playOneShot();
 		const Vec2& effectPostion{ Util::WorldToScreenPosition(m_player.getInsideCollider().center, m_camera) };
 		m_effect.add<HexEffect>(effectPostion);
 		changeScene(State::Field, ChangeDuration);
