@@ -1,12 +1,16 @@
 ﻿// FieldScene class
 
-#pragma once
+# pragma once
 
-#include "../core/Constants.hpp"
+# include "../core/Config.hpp"
+# include "../core/ModelAssets.hpp"
+# include "../player/PlayerCharacter.hpp"
+# include "../player/CameraController.hpp"
+# include "../field/TrashManager.hpp"
+# include "../ui/UIDrawer.hpp"
+# include "../util/EEfectDrawer.hpp"
 
-using namespace SceneConfig;
-
-class FieldScene : public App::Scene
+class FieldScene : public Config::Scene::SceneApp::Scene
 {
 public:
 
@@ -16,17 +20,38 @@ public:
 	// 更新処理
 	void update() override;
 
-	// 描画処理
+  	// 描画処理
 	void draw() const override;
 
 private:
+
+	// 部屋の描画
+	void drawRoom() const;
 
 	// 光の設定
 	void initLighting() const;
 
 	// レンダーテクスチャ
-	const MSRenderTexture renderTexture;
+	const MSRenderTexture m_renderTexture;
+
+	// フィールドの見えない壁
+	const Box m_fieldArea;
+
+	// UI
+	UIDrawer m_uiDrawer;
+
+	// エフェクト
+	Effect m_effect;
+
+	// プレイヤー
+	PlayerCharacter m_player;
 
 	// カメラ
-	DebugCamera3D cam;
+	BasicCamera3D m_camera;
+
+	// カメラ操作クラス
+	CameraController m_cameraController;
+
+	// オブジェクト管理クラス
+	TrashManager m_trashManager;
 };

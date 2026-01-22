@@ -153,6 +153,30 @@
     <ClCompile Include="App\src\scenes\FieldScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="App\src\player\PlayerCharacter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\player\CameraController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\scenes\OverScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\ui\UIDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\core\ModelAssets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\field\TrashObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\field\TrashManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\src\scenes\ClearScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -821,7 +845,7 @@
     <ClInclude Include="App\src\core\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\core\Constants.hpp">
+    <ClInclude Include="App\src\core\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\src\scenes\TitleScene.hpp">
@@ -830,7 +854,37 @@
     <ClInclude Include="App\src\scenes\FieldScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\src\util\Assets.hpp">
+    <ClInclude Include="App\src\player\PlayerCharacter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\player\PlayerInput.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\player\CameraController.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\util\Util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\scenes\OverScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\ui\UIDrawer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\core\ModelAssets.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\util\EEfectDrawer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\field\TrashManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\field\TrashObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\src\scenes\ClearScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

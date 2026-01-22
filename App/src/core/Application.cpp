@@ -1,23 +1,32 @@
 ﻿// Application class
 
-#include "Application.hpp"
+# include "Application.hpp"
+
+using namespace Config;
+using namespace Config::Scene;
 
 Application::Application()
-	: manager{}
+	: m_sceneManager{}
 {
-	manager.add<TitleScene>(State::Title);
-	manager.add<FieldScene>(State::Field);
+	// ウィンドウサイズの設定
+	Window::Resize(ScreenSize);
+
+	// 各シーン登録
+	addScenes();
 
 	// 最初のシーンを設定
-	manager.init(State::Title, SceneConfig::ChangeDuration);
-}
-
-Application::~Application()
-{
-
+	m_sceneManager.init(State::Title, ChangeDuration);
 }
 
 bool Application::run()
 {
-	return manager.update();
+	return m_sceneManager.update();
+}
+
+void Application::addScenes()
+{
+	m_sceneManager.add<TitleScene>(State::Title);	// タイトルシーン
+	m_sceneManager.add<FieldScene>(State::Field);	// フィールド
+	m_sceneManager.add<OverScene>(State::Over);		// ゲームオーバー
+	m_sceneManager.add<ClearScene>(State::Clear);	// クリア
 }

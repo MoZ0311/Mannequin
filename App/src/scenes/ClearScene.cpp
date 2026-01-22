@@ -1,19 +1,19 @@
-﻿// TitleScene class
+﻿// ClearScene class
 
-# include "TitleScene.hpp"
+# include "ClearScene.hpp"
 
 using namespace Config::Scene;
 
-TitleScene::TitleScene(const InitData& init)
+ClearScene::ClearScene(const InitData& init)
 	: IScene{ init }
-	, m_backgroundImage{ TextureAsset(Assets::Title).resized(Scene::Size()) }
-	, m_startButton{
-		Arg::center = Components::TitleButtonPoint,
+	, m_backgroundImage{ TextureAsset(Assets::Clear).resized(Scene::Size()) }
+	, m_retryButton{
+		Arg::center = Components::OverButtonPoint,
 		Components::ButtonSize,
 		Components::ButtonRoundness
 	}
-	, m_exitButton{ m_startButton.movedBy(Components::ButtonOffset) }
-	, m_startTransition{ Components::ButtonTransition }
+	, m_exitButton{ m_retryButton.movedBy(Components::ButtonOffset) }
+	, m_retryTransition{ Components::ButtonTransition }
 	, m_exitTransition{ Components::ButtonTransition }
 	, m_currentSelectingButton{ SelectingButton::None }
 	, m_usingGamePad{ false }
@@ -21,11 +21,12 @@ TitleScene::TitleScene(const InitData& init)
 
 }
 
-void TitleScene::update()
+// 更新処理
+void ClearScene::update()
 {
 	if (PlayerInput::KeyUpper())
 	{
-		m_currentSelectingButton = SelectingButton::Start;
+		m_currentSelectingButton = SelectingButton::Retry;
 		m_usingGamePad = true;
 	}
 	else if (PlayerInput::KeyLower())
@@ -45,7 +46,7 @@ void TitleScene::update()
 	}
 	else
 	{
-		const bool onStart{ m_startButton.mouseOver() };
+		const bool onStart{ m_retryButton.mouseOver() };
 		const bool onExit{ m_exitButton.mouseOver() };
 
 		if (onStart || onExit)
@@ -53,7 +54,7 @@ void TitleScene::update()
 			Cursor::RequestStyle(CursorStyle::Hand);
 			if (onStart)
 			{
-				m_currentSelectingButton = SelectingButton::Start;
+				m_currentSelectingButton = SelectingButton::Retry;
 			}
 			else if (onExit)
 			{
@@ -65,15 +66,15 @@ void TitleScene::update()
 			m_currentSelectingButton = SelectingButton::None;
 		}
 	}
-	
-	m_startTransition.update(m_currentSelectingButton == SelectingButton::Start);
+
+	m_retryTransition.update(m_currentSelectingButton == SelectingButton::Retry);
 	m_exitTransition.update(m_currentSelectingButton == SelectingButton::Exit);
 
 	if (PlayerInput::KeyConfirm())
 	{
 		switch (m_currentSelectingButton)
 		{
-		case SelectingButton::Start:
+		case SelectingButton::Retry:
 			AudioAsset(Assets::Select).playOneShot();
 			changeScene(State::Field, ChangeDuration);
 			break;
@@ -88,14 +89,15 @@ void TitleScene::update()
 	}
 }
 
-void TitleScene::draw() const
+// 描画処理
+void ClearScene::draw() const
 {
 	// 背景の描画
 	m_backgroundImage.drawAt(Scene::CenterF());
 
 	// Startボタンの描画
-	m_startButton.draw(ColorF{ 1.0, m_startTransition.value() }).drawFrame(Components::ButtonThickness);
-	FontAsset(Assets::Makinas)(U"START").drawAt(m_startButton.center(), Components::ButtonTextCollor);
+	m_retryButton.draw(ColorF{ 1.0, m_retryTransition.value() }).drawFrame(Components::ButtonThickness);
+	FontAsset(Assets::Makinas)(U"RETRY").drawAt(m_retryButton.center(), Components::ButtonTextCollor);
 
 	// Exitボタンの描画
 	m_exitButton.draw(ColorF{ 1.0, m_exitTransition.value() }).drawFrame(Components::ButtonThickness);
