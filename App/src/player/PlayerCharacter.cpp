@@ -98,11 +98,6 @@ void PlayerCharacter::handleAttackInput()
 			// 強攻撃をキューに追加
 			switch (m_actionState)
 			{
-			case ActionState::None:		// 非攻撃状態 -> 強派生
-				m_actionState = ActionState::None;
-				m_attackInputBuffer.push(m_modelAssets.liteAttackAnimationArray03);
-				break;
-
 			case ActionState::Lite01:	// 弱一段 -> 強派生
 				m_actionState = ActionState::Heavy01;
 				m_attackInputBuffer.push(m_modelAssets.heavyAttackAnimationArray01);
