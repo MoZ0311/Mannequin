@@ -53,7 +53,7 @@ struct PlayerInput
 		}
 
 		// カーソルの移動量を取得
-		return -Cursor::DeltaF();
+		return Cursor::DeltaF();
 	}
 
 	// 決定ボタンが押されたか
@@ -119,7 +119,7 @@ struct PlayerInput
 	}
 
 	// 強攻撃ボタンが押されたか
-	static bool KeyHeavyAttack()
+	static inline bool KeyHeavyAttack()
 	{
 		static InputGroup heavyAttackKey{ MouseR | XInput(PlayerIndex).buttonY };
 		return heavyAttackKey.down();

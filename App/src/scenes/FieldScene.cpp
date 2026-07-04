@@ -22,6 +22,11 @@ FieldScene::FieldScene(const InitData& init)
 
 void FieldScene::update()
 {
+	// マウス位置を中央に固定
+	Cursor::RequestStyle(CursorStyle::Hidden);
+	Cursor::SetPos(Scene::Center());
+	Cursor::RequestStyle(CursorStyle::Hidden);
+
 	// シーンにおける前フレームからの経過時間
 	const double deltaTime{ Scene::DeltaTime() };
 
@@ -67,10 +72,6 @@ void FieldScene::draw() const
 {
 	// 3Dシーンにカメラを設定
 	Graphics3D::SetCameraTransform(m_camera);
-
-	// マウスカーソル表示設定
-	Cursor::RequestStyle(CursorStyle::Hidden);
-	Cursor::SetPos(Scene::Center());
 
 	// 3D描画
 	{
