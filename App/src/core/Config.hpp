@@ -64,6 +64,15 @@ namespace Config
 			static inline constexpr float Attack{ 11.0f };
 		}
 
+		// 攻撃の吹っ飛ばし力
+		namespace AttackForce
+		{
+			static inline constexpr Vec3 LightAttack{ 0.0, 5.0, -1.0 };
+			static inline constexpr Vec3 LightFinish{ 0.0, 10.0, 60.0 };
+			static inline constexpr Vec3 Uppercut{ 0.0, 30, 100.0 };
+			static inline constexpr Vec3 Kick{ 0.0, 5.0, 250.0 };
+		}
+
 		// 入力バッファの制限
 		static inline constexpr uint8 MaxBufferSize{ 1 };
 	}
@@ -95,6 +104,9 @@ namespace Config
 
 			// 部屋全体の広さ
 			static inline constexpr uint8 RoomSize{ 64 };
+
+			// 床の高さ
+			static inline constexpr int8 FloorHeight{ -19 };
 
 			// 部屋のオフセット
 			static inline constexpr float RoomOffset{ 16.0f };

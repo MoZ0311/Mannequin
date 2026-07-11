@@ -131,7 +131,6 @@ ModelAssets::ModelAssets()
 		m_mannequinLiteAttack03,
 		m_mannequinLiteAttack06,
 		m_mannequinLiteAttack10,
-		m_mannequinHeavyAttack03,
 		m_mannequinHeavyAttack04,
 		m_mannequinHeavyAttack08,
 		m_mannequinHeavyAttack09

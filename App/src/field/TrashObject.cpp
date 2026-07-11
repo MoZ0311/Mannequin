@@ -2,6 +2,9 @@
 
 # include "TrashObject.hpp"
 
+using namespace Config::Player::AttackForce;
+using namespace Config::Scene::Field;
+
 TrashObject::TrashObject(const Vec3& position, const Model& model, const PlayerCharacter& instance, const Box& fieldArea)
 	: m_playerInstance{ instance }
 	, m_model{ model }
@@ -22,69 +25,66 @@ void TrashObject::update(const double deltaTime)
 	// 現在のモデルデータをキャッシュ
 	const Model& currentPlayerModel{ m_playerInstance.getCurrentModel() };
 	m_isDamaged = isDamaged(currentPlayerModel);
-	if (m_isDamaged)
+
+	if (m_isDamaged && !m_prevDamaged)
 	{
+		m_velocity = Vec3::Zero();
 		Vec3 addForce{ Vec3::Zero()};
+
+		const Quaternion playerRotation{ m_playerInstance.getPlayerRotation() };
 
 		if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[0] ||
 			currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[1])
 		{
 			// 弱一段と二段
-			addForce = Vec3{ 0.0, 0.1, -0.2 } *m_playerInstance.getPlayerRotation();
-
-			if (!m_prevDamaged)
-			{
-				AudioAsset(Assets::DamageLite).playOneShot();
-			}
+			addForce = LightAttack * playerRotation;
+			AudioAsset(Assets::DamageLite).playOneShot();
 		}
 		else
 		{
 			if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[2])
 			{
 				// 弱三段
-				addForce = Vec3{ 0.0, 50.0, 600.0 } *m_playerInstance.getPlayerRotation();
+				addForce = LightFinish * playerRotation;
 			}
 			else if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[3])
 			{
-				// 弱一段 -> 強派生 のカス当て
-				addForce = -Vec3::Forward() * m_playerInstance.getPlayerRotation();
-			}
-			else if (currentPlayerModel == ModelAssets::GetInstance().attackingModelArray[4])
-			{
-				// 弱一段 -> 強派生 の本当て
-				addForce = Vec3{ 0.0, 200, 600 } *m_playerInstance.getPlayerRotation();
+				// 弱一段 -> 強派生
+				addForce = Uppercut * playerRotation;
 			}
 			else
 			{
 				// 弱二段 -> 強派生
-				addForce = Vec3{ 0.0, 120.0, 1500 } *m_playerInstance.getPlayerRotation();
+				addForce = Kick * playerRotation;
 			}
 
-			if (!m_prevDamaged)
-			{
-				AudioAsset(Assets::DamageHeavy).playOneShot(0.4);
-			}
+			AudioAsset(Assets::DamageHeavy).playOneShot(0.4);
 		}
 		m_velocity += addForce;
 	}
 	else
 	{
-		m_velocity.y -= 9.81f;
-		if (m_velocity.y < -25.0f)
+		const float gravity{ 45.0f };
+		m_velocity.y -= gravity * deltaTime;
+		if (m_velocity.y < -gravity)
 		{
-			m_velocity.y = -25.0f;
+			m_velocity.y = -gravity;
 		}
-		m_velocity.x *= 0.75f;
-		m_velocity.z *= 0.75f;
+
+		const float friction{ 0.98f };
+		m_velocity.x *= friction;
+		m_velocity.z *= friction;
 
 		if (isCollidedPlayer())
 		{
 			const Vec3 moveVector{ Vec3::Forward() * m_playerInstance.getPlayerRotation() };
 			m_velocity = moveVector;
 		}
-		if (m_model.boundingBox().movedBy(m_position).intersects(Box::FromPoints(Vec3{ -16, 0, -16 }, Vec3{ 16, -2, 16 })))
+
+		const Box tableCollider{ Box::FromPoints(Vec3{ -16, 0, -16 }, Vec3{ 16, -2, 16 }) };
+		if (m_model.boundingBox().movedBy(m_position).intersects(tableCollider))
 		{
-			m_velocity.y = -0.001f;
+			m_velocity.y = 0;
 			m_position.y = 0;
 		}
 	}
@@ -96,7 +96,7 @@ void TrashObject::update(const double deltaTime)
 	m_prevOutside = !m_fieldArea.intersects(m_model.boundingBox().movedBy(m_position));
 
 	// モデルを速度に従って移動
-	m_position.moveBy(m_velocity / 2 * deltaTime);
+	m_position.moveBy(m_velocity * deltaTime);
 }
 
 void TrashObject::draw() const
@@ -136,5 +136,5 @@ const bool TrashObject::isOutside() const
 
 const bool TrashObject::isGrounded() const
 {
-	return m_position.y < -19;
+	return m_position.y < FloorHeight;
 }
